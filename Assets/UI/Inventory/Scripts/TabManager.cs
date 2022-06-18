@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TabManager : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
+    public InventoryUI inventoryManager;
     public Image[] tabs;
     public Color activeColor, inactiveColor;
 
