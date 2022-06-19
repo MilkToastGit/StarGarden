@@ -3,17 +3,16 @@ using UnityEngine;
 
 public class TouchManager : MonoBehaviour
 {
-    List<Touchable> currentlyTouched;
+    List<Touchable> currentlyTouched = new List<Touchable>();
 
     private void OnStartTouch(Vector2 touchPosition)
     {
         foreach (Collider2D collider in Physics2D.OverlapPointAll(Camera.main.ScreenToWorldPoint(touchPosition)))
         {
-            print(collider.name);
             if (collider.TryGetComponent(out Touchable t))
             {
                 currentlyTouched.Add(t);
-                t.OnEndTouch();
+                t.OnStartTouch();
                 if (!t.Passthrough)
                     return;
             }

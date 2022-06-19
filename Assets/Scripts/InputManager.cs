@@ -6,6 +6,7 @@ public class InputManager : MonoBehaviour
     public static InputManager Main;
 
     public Vector2 TouchPosition => touchControls.Touch.TouchPosition.ReadValue<Vector2>();
+    public Vector2 WorldTouchPosition => Camera.main.ScreenToWorldPoint(TouchPosition);
 
     public delegate void StartTouchEvent(Vector2 position);
     public event StartTouchEvent OnStartTouch;
@@ -17,6 +18,17 @@ public class InputManager : MonoBehaviour
     private TouchControls touchControls;
 
     private Vector2 holdStartPosition;
+    private bool awaitingStartTouch;
+
+    private void Update()
+    {
+        if (awaitingStartTouch)
+        {
+            OnStartTouch?.Invoke(TouchPosition);
+            holdStartPosition = TouchPosition;
+            awaitingStartTouch = false;
+        }
+    }
 
     private void Awake()
     {
@@ -40,15 +52,9 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        touchControls.Touch.TouchPress.started += ctx => OnStartTouch?.Invoke(TouchPosition);
+        touchControls.Touch.TouchPress.started += ctx => awaitingStartTouch = true;
         touchControls.Touch.TouchPress.canceled += ctx => OnEndTouch?.Invoke(TouchPosition);
-        touchControls.Touch.TouchHold.started += ctx => HoldStarted(ctx);
         touchControls.Touch.TouchHold.performed += ctx => HoldPerformed(ctx);
-    }
-
-    private void HoldStarted(InputAction.CallbackContext ctx)
-    {
-        holdStartPosition = TouchPosition;
     }
 
     private void HoldPerformed(InputAction.CallbackContext ctx)

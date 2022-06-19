@@ -11,12 +11,14 @@ public class InventoryUI : MonoBehaviour
 
     private int activeTab = 0;
     private GameObject UIBase;
+    private bool showing = false;
 
     private void Awake()
     {
         UIBase = transform.GetChild(0).gameObject;
     }
 
+    // **PLACEHOLDER**
     private void Start()
     {
         foreach (Item item in itemsToAdd)
@@ -29,6 +31,7 @@ public class InventoryUI : MonoBehaviour
 
     public void Show()
     {
+        showing = true;
         for (int i = 0; i < 2; i++)
             SpawnItemPreviews(i);
         UIBase.SetActive(true);
@@ -36,6 +39,7 @@ public class InventoryUI : MonoBehaviour
 
     public void Hide()
     {
+        showing = false;
         UIBase.SetActive(false);
     }
 
