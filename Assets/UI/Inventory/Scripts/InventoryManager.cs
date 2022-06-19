@@ -6,7 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Main;
 
-    public InventoryItem[][] AllItems = new InventoryItem[2][];
+    public ItemInstances[][] AllItems = new ItemInstances[2][];
     [SerializeField] private Decoration[] serialisedAllDecorations;
     [SerializeField] private Hat[] serialisedAllHats;
 
@@ -22,16 +22,17 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        AllItems[item.ItemCategory][item.ItemIndex].Count++;
+        AllItems[item.ItemCategory][item.ItemIndex].IncreaseCount();
     }
 
     public void RemoveItem(Item item)
     {
-        if (--AllItems[item.ItemCategory][item.ItemIndex].Count < 0)
-            throw new System.Exception($"Could not remove item {item.Name}. Item count is zero");
+        if (AllItems[item.ItemCategory][item.ItemIndex].InventoryCount > 0)
+            AllItems[item.ItemCategory][item.ItemIndex].DecreaseCount();
+        else throw new System.Exception($"Could not remove item {item.Name}. Item count is zero");
     }
 
-    public InventoryItem[] GetAllItemsFromCategory(int category) => AllItems[category];
+    public ItemInstances[] GetAllItemsFromCategory(int category) => AllItems[category];
 
     private void UpdateAllItems()
     {
@@ -43,11 +44,11 @@ public class InventoryManager : MonoBehaviour
 
         for (int category = 0; category < 2; category++)
         {
-            AllItems[category] = new InventoryItem[serialisedAllItems[category].Length];
+            AllItems[category] = new ItemInstances[serialisedAllItems[category].Length];
 
             for (int i = 0; i < serialisedAllItems[category].Length; i++)
             {
-                AllItems[category][i] = new InventoryItem();
+                AllItems[category][i] = category == 0 ? new DecorationInstances() : new HatInstances();
                 if (serialisedAllItems[category][i])
                 {
                     AllItems[category][i].Item = serialisedAllItems[category][i];
@@ -61,11 +62,4 @@ public class InventoryManager : MonoBehaviour
     {
         UpdateAllItems();
     }
-}
-
-public class InventoryItem
-{
-    public Item Item;
-    public int Count;
-    public int InventoryIndex;
 }

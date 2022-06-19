@@ -4,5 +4,4 @@ using UnityEngine;
 public class Hat : Item
 {
     public override int ItemCategory => 1;
-    public override ItemInstance CreateInstance() => new HatInstance(this);
 }

@@ -4,19 +4,39 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
+    public Item[] itemsToAdd;
+
     [SerializeField] private GameObject itemPreview;
     [SerializeField] private Transform[] tabs;
 
     private int activeTab = 0;
+    private GameObject UIBase;
+
+    private void Awake()
+    {
+        UIBase = transform.GetChild(0).gameObject;
+    }
+
+    private void Start()
+    {
+        foreach (Item item in itemsToAdd)
+        {
+            for (int i = 0; i < Random.Range(0, 6); i++)
+                InventoryManager.Main.AddItem(item);
+        }
+        Show();
+    }
 
     public void Show()
     {
-
+        for (int i = 0; i < 2; i++)
+            SpawnItemPreviews(i);
+        UIBase.SetActive(true);
     }
 
     public void Hide()
     {
-
+        UIBase.SetActive(false);
     }
 
     public void SwitchTab (int tab)
@@ -30,21 +50,14 @@ public class InventoryUI : MonoBehaviour
     {
         tabs[tab].Order66();
 
-        InventoryItem[] items = InventoryManager.Main.GetAllItemsFromCategory(tab);
-        foreach (InventoryItem item in items)
+        ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(tab);
+        foreach (ItemInstances item in items)
         {
-            if (item.Count > 0)
+            if (item.InventoryCount > 0)
             {
                 GameObject preview = Instantiate(itemPreview, tabs[tab]);
                 preview.GetComponent<ItemPreview>().SetItem(item);
             }
         }
     }
-}
-
-[System.Serializable]
-public class InventoryTab
-{
-    public Transform Content;
-    public ItemInstance[] Items;
 }

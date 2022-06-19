@@ -9,6 +9,4 @@ public abstract class Item : ScriptableObject
     public Rarity Rarity;
 
     [HideInInspector] public int ItemIndex;
-
-    public abstract ItemInstance CreateInstance();
 }
