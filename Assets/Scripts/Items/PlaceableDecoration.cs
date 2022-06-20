@@ -2,73 +2,154 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceableDecoration : MonoBehaviour, Touchable
+public class PlaceableDecoration : MonoBehaviour, Interactable
 {
+    public static PlaceableDecoration currentlyMoving;
+
     public bool Passthrough => false;
 
     private DecorationInstances decor;
-    private bool touched = false, dragging = false;
+    private State state = State.Idle;
+    private bool firstPlacement, hoveringInventory, invalidSpace, tapPerformedLastFrame;
+    private SpriteRenderer sprite;
 
     private Vector2Int lastPlacedPosition;
 
-    private void Start()
-    {
-        SetItem(InventoryManager.Main.GetAllItemsFromCategory(0)[0] as DecorationInstances);
-    }
-
-    public void SetItem(DecorationInstances decor)
+    public void SetItem(DecorationInstances decor, bool firstPlacement)
     {
         this.decor = decor;
-        Instantiate(decor.Item.Prefab, transform.GetChild(0));
+        sprite = Instantiate(decor.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
+        if (firstPlacement)
+        {
+            state = State.AwaitingDrag;
+            this.firstPlacement = firstPlacement;
+        }
     }
 
     private void Place(Vector2Int position)
     {
-        decor.Place(position);
+        if (firstPlacement)
+        {
+            decor.Place(position);
+            firstPlacement = false;
+        }
+        else
+            decor.Move(lastPlacedPosition, position);
+
+        lastPlacedPosition = position;
+        currentlyMoving = null;
+        state = State.Idle;
         print(decor.InventoryCount);
     }
 
     private void ReturnToInventory()
     {
-        decor.Unplace(lastPlacedPosition);
+        if (!firstPlacement)
+            decor.Unplace(lastPlacedPosition);
+        print("destroying");
         Destroy(gameObject);
+    }
+
+    private void CancelDrag()
+    {
+        if (firstPlacement)
+            ReturnToInventory();
+        else
+        {
+            transform.position = WorldGrid.GridToWorld(lastPlacedPosition);
+            sprite.color = Color.white;
+            state = State.Idle;
+        }
+    }
+
+    private void StartDragging()
+    {
+        state = State.Dragging;
+        currentlyMoving = this;
     }
 
     private void Update()
     {
-        if (dragging)
+        if (tapPerformedLastFrame && state == State.AwaitingDrag)
+            CancelDrag();
+        else
+            tapPerformedLastFrame = false;
+        
+        if (state != State.Dragging) return;
+
+        Vector2 touchPos = InputManager.Main.TouchPosition / Screen.height;
+        hoveringInventory = touchPos.x < 0.15f && touchPos.y > 0.85f;
+
+        if (hoveringInventory)
+            transform.position = InputManager.Main.WorldTouchPosition;
+        else
         {
-            transform.position = WorldGrid.GridToWorld(WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition));
+            Vector2Int gridPos = WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition);
+            transform.position = WorldGrid.GridToWorld(gridPos);
+            if (gridPos == lastPlacedPosition)
+                invalidSpace = false;
+            else
+                invalidSpace = CheckInvalidSpace(gridPos);
+
+            sprite.color = invalidSpace ? Color.red : Color.white;
         }
+    }
+
+    private bool CheckInvalidSpace(Vector2Int position)
+    {
+        foreach (DecorationInstances decor in InventoryManager.Main.GetAllItemsFromCategory(0))
+            if (decor.IsPositionTaken(position)) return true;
+
+        return false;
     }
 
     public void OnStartTouch()
     {
-        touched = true;
+        if (state == State.AwaitingDrag)
+            StartDragging();
+        else
+            state = State.Touched;
     }
 
     public void OnEndTouch()
     {
-        if (dragging)
-            Place(WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition));
-
-        touched = false;
-        dragging = false;
+        if (state == State.Dragging)
+        {
+            if (hoveringInventory)
+                ReturnToInventory();
+            else if (invalidSpace)
+                state = State.AwaitingDrag;
+            else
+                Place(WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition));
+        }
+        else if (state == State.Touched)
+            state = State.Idle;
     }
 
     private void OnHoldTouch()
     {
-        if (touched)
-            dragging = true;
+        if (state == State.Touched)
+            StartDragging();
     }
 
     private void OnEnable()
     {
-        InputManager.Main.OnHoldTouch += pos => OnHoldTouch();
+        InputManager.Main.OnTouchHold += pos => OnHoldTouch();
+        InputManager.Main.OnTouchDown += pos => tapPerformedLastFrame = true;
     }
 
     private void OnDisable()
     {
-        InputManager.Main.OnStartTouch -= pos => OnHoldTouch();
+        InputManager.Main.OnTouchDown -= pos => OnHoldTouch();
+        InputManager.Main.OnTouchDown -= pos => tapPerformedLastFrame = true;
+    }
+
+    public enum State
+    {
+        Idle,
+        Touched,
+        Dragging,
+        AwaitingDrag
     }
 }
+

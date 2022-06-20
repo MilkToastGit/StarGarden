@@ -8,12 +8,12 @@ public class InputManager : MonoBehaviour
     public Vector2 TouchPosition => touchControls.Touch.TouchPosition.ReadValue<Vector2>();
     public Vector2 WorldTouchPosition => Camera.main.ScreenToWorldPoint(TouchPosition);
 
-    public delegate void StartTouchEvent(Vector2 position);
-    public event StartTouchEvent OnStartTouch;
-    public delegate void EndTouchEvent(Vector2 position);
-    public event EndTouchEvent OnEndTouch;
-    public delegate void HoldTouchEvent(Vector2 position);
-    public event HoldTouchEvent OnHoldTouch;
+    public delegate void TouchDownEvent(Vector2 position);
+    public event TouchDownEvent OnTouchDown;
+    public delegate void TouchUpEvent(Vector2 position);
+    public event TouchUpEvent OnTouchUp;
+    public delegate void TouchHoldEvent(Vector2 position);
+    public event TouchHoldEvent OnTouchHold;
 
     private TouchControls touchControls;
 
@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
     {
         if (awaitingStartTouch)
         {
-            OnStartTouch?.Invoke(TouchPosition);
+            OnTouchDown?.Invoke(TouchPosition);
             holdStartPosition = TouchPosition;
             awaitingStartTouch = false;
         }
@@ -53,13 +53,13 @@ public class InputManager : MonoBehaviour
     private void Start()
     {
         touchControls.Touch.TouchPress.started += ctx => awaitingStartTouch = true;
-        touchControls.Touch.TouchPress.canceled += ctx => OnEndTouch?.Invoke(TouchPosition);
+        touchControls.Touch.TouchPress.canceled += ctx => OnTouchUp?.Invoke(TouchPosition);
         touchControls.Touch.TouchHold.performed += ctx => HoldPerformed(ctx);
     }
 
     private void HoldPerformed(InputAction.CallbackContext ctx)
     {
         if (F.FastDistance(holdStartPosition, TouchPosition) < 1000)
-            OnHoldTouch?.Invoke(TouchPosition);
+            OnTouchHold?.Invoke(TouchPosition);
     }
 }

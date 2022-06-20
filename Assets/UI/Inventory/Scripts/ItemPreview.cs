@@ -22,7 +22,9 @@ public class ItemPreview : MonoBehaviour
 
         this.item = item;
         itemCount.text = item.InventoryCount.ToString();
-        Instantiate(item.Item.Prefab, transform.GetChild(0));
+        SpriteRenderer prefabSprite = Instantiate(item.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
+        prefabSprite.sortingLayerName = "Menus";
+        prefabSprite.sortingOrder = 1;
     }
 
     //public void OnPointerDown()

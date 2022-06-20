@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
     public Item[] itemsToAdd;
 
-    [SerializeField] private GameObject itemPreview;
+    [SerializeField] private GameObject itemPreview, placeableDecor;
     [SerializeField] private Transform[] tabs;
 
     private int activeTab = 0;
@@ -50,6 +51,18 @@ public class InventoryUI : MonoBehaviour
         tabs[activeTab].gameObject.SetActive(true);
     }
 
+    private void OnDecorationClicked(DecorationInstances item)
+    {
+        Instantiate(placeableDecor).GetComponent<PlaceableDecoration>().SetItem(item, true);
+        
+        Hide();
+    }
+
+    private void OnHatClicked(HatInstances item)
+    {
+
+    }
+
     private void SpawnItemPreviews(int tab)
     {
         tabs[tab].Order66();
@@ -61,6 +74,10 @@ public class InventoryUI : MonoBehaviour
             {
                 GameObject preview = Instantiate(itemPreview, tabs[tab]);
                 preview.GetComponent<ItemPreview>().SetItem(item);
+                if (tab == 0)
+                    preview.GetComponent<Button>().onClick.AddListener(() => OnDecorationClicked(item as DecorationInstances));
+                else
+                    preview.GetComponent<Button>().onClick.AddListener(() => OnHatClicked(item as HatInstances));
             }
         }
     }
