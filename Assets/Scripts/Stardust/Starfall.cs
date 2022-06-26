@@ -19,7 +19,10 @@ public class Starfall : MonoBehaviour, Interactable
     {
         circleCollider = GetComponent<CircleCollider2D>();
         circleCollider.enabled = false;
-        rarity = Random.value > 0.8f ? Rarity.Common : Rarity.Rare;
+
+        rarity = Random.value > 0.8f ? Rarity.Rare : Rarity.Common;
+        if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
+
         bounceHeight = Random.Range(0.5f, 1.5f);
         star.position = spawnPos;
     }

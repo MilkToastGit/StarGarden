@@ -100,17 +100,8 @@ namespace StarGarden.Items
 
         private bool CheckInvalidSpace(Vector2Int position)
         {
-            bool withinIsland = false;
-            Vector2 worldPosition = WorldGrid.GridToWorld(position);
-            foreach (Island island in IslandManager.Main.Islands)
-            {
-                if (F.WithinBounds(worldPosition, island.Bounds))
-                {
-                    withinIsland = true;
-                    continue;
-                }
-            }
-            if (!withinIsland) return true;
+            if  (IslandManager.Main.WithinIsland(WorldGrid.GridToWorld(position)) < 0)
+                return false;
 
             foreach (DecorationInstances decor in InventoryManager.Main.GetAllItemsFromCategory(0))
                 if (decor.IsPositionTaken(position)) return true;

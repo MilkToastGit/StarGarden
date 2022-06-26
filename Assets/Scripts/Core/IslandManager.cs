@@ -40,6 +40,16 @@ namespace StarGarden.Core
                 Debug.DrawLine(new Vector2(i.Bounds.xMax, i.Bounds.yMin), new Vector2(i.Bounds.xMin, i.Bounds.yMin), c);
             }
         }
+
+        public int WithinIsland(Vector2 point)
+        {
+            for (int i = 0; i < islands.Length; i++)
+            {
+                if (F.WithinBounds(point, islands[i].Bounds))
+                    return i;
+            }
+            return -1;
+        }
     }
 
     [System.Serializable]

@@ -14,7 +14,7 @@ namespace StarGarden.Stardust
             Invoke();
         }
 
-        private void Invoke() => Invoke("SpawnStarfall", Random.Range(5, 10));//Random.Range(15, 60));
+        private void Invoke() => Invoke("SpawnStarfall", Random.Range(1, 5));//Random.Range(15, 60));
 
         private void SpawnStarfall()
         {

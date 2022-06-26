@@ -6,6 +6,7 @@ namespace StarGarden.Core
 {
     public static class WorldGrid
     {
+        public static Vector2 Spacing => spacing;
         //private static readonly Vector2 worldSize = new Vector2 (0.3f, 0.1f);
         private static readonly Vector2 spacing = new Vector2(0.3f, 0.3f);
 
