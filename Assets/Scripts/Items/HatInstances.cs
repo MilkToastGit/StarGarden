@@ -2,18 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HatInstances : ItemInstances
+namespace StarGarden.Items
 {
-    public override int InventoryCount => totalCount - equippedInstances.Count;
-    private List<int> equippedInstances = new List<int>();
-
-    public void Equip(int character)
+    public class HatInstances : ItemInstances
     {
-        equippedInstances.Add(character);
-    }
+        public override int InventoryCount => totalCount - equippedInstances.Count;
+        private List<int> equippedInstances = new List<int>();
 
-    public void Unequip(int character)
-    {
-        equippedInstances.Remove(character);
+        public void Equip(int character)
+        {
+            equippedInstances.Add(character);
+        }
+
+        public void Unequip(int character)
+        {
+            equippedInstances.Remove(character);
+        }
     }
 }

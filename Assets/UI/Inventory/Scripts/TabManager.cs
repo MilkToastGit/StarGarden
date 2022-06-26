@@ -3,29 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TabManager : MonoBehaviour
+namespace StarGarden.UI
 {
-    public InventoryUI inventoryManager;
-    public Image[] tabs;
-    public Color activeColor, inactiveColor;
-
-    private int activeTab;
-
-    public void SwitchTab(int tab)
+    public class TabManager : MonoBehaviour
     {
-        tabs[activeTab].color = inactiveColor;
-        activeTab = tab;
-        tabs[activeTab].color = activeColor;
+        public InventoryUI inventoryManager;
+        public Image[] tabs;
+        public Color activeColor, inactiveColor;
 
-        int siblingIndex = tabs.Length - 1;
-        int tabIndex = tab;
+        private int activeTab;
 
-        while (tabIndex >= 0)
-            tabs[tabIndex--].transform.SetSiblingIndex(siblingIndex--);
-        tabIndex = tab + 1;
-        while (tabIndex < tabs.Length)
-            tabs[tabIndex++].transform.SetSiblingIndex(siblingIndex--);
+        public void SwitchTab(int tab)
+        {
+            tabs[activeTab].color = inactiveColor;
+            activeTab = tab;
+            tabs[activeTab].color = activeColor;
 
-        inventoryManager.SwitchTab(tab);
+            int siblingIndex = tabs.Length - 1;
+            int tabIndex = tab;
+
+            while (tabIndex >= 0)
+                tabs[tabIndex--].transform.SetSiblingIndex(siblingIndex--);
+            tabIndex = tab + 1;
+            while (tabIndex < tabs.Length)
+                tabs[tabIndex++].transform.SetSiblingIndex(siblingIndex--);
+
+            inventoryManager.SwitchTab(tab);
+        }
     }
 }

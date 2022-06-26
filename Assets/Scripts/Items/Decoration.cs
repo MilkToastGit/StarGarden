@@ -1,9 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu (fileName = "Decor", menuName = "StarGarden/Item/Decoration")]
-public class Decoration : Item
+namespace StarGarden.Items
 {
-    public override int ItemCategory => 0;
-    public Element Element;
-    public DecorationCategory Category;
+    [CreateAssetMenu(fileName = "Decor", menuName = "StarGarden/Item/Decoration")]
+    public class Decoration : Item
+    {
+        public override int ItemCategory => 0;
+        public Element Element;
+        public DecorationCategory Category;
+    }
 }

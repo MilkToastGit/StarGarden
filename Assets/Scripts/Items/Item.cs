@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public abstract class Item : ScriptableObject
+namespace StarGarden.Items
 {
-    public abstract int ItemCategory { get; }
+    public abstract class Item : ScriptableObject
+    {
+        public abstract int ItemCategory { get; }
 
-    public string Name;
-    public GameObject Prefab;
-    public Rarity Rarity;
+        public string Name;
+        public GameObject Prefab;
+        public Rarity Rarity;
 
-    [HideInInspector] public int ItemIndex;
+        [HideInInspector] public int ItemIndex;
+    }
 }
