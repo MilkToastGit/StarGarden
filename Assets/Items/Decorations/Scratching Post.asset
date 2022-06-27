@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Scratching Post
   Prefab: {fileID: 7231205281149985725, guid: 31b7b62a4d429e541b3428d58ddd5057, type: 3}
-  Rarity: 0
-  ItemIndex: 2
+  Rarity: 1
+  ItemIndex: 6
   Element: 1

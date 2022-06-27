@@ -9,6 +9,7 @@ namespace StarGarden.Pets
     public class WanderingPet : MonoBehaviour
     {
         public Pet Pet;
+        private HatInstances equippedHat;
         [SerializeField]private float speed;
         private int currentIsland;
 

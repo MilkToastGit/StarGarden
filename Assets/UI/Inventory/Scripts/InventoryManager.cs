@@ -36,6 +36,7 @@ namespace StarGarden.Core
         }
 
         public ItemInstances[] GetAllItemsFromCategory(int category) => AllItems[category];
+        public ItemInstances GetItemInstance(Item item) => AllItems[item.ItemCategory][item.ItemIndex];
 
         private void UpdateAllItems()
         {

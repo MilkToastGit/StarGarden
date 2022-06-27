@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Yarn
   Prefab: {fileID: 7231205281149985725, guid: c576ce778a18dea4989686c3afb5be4b, type: 3}
-  Rarity: 0
-  ItemIndex: 2
+  Rarity: 1
+  ItemIndex: 8
   Element: 1
