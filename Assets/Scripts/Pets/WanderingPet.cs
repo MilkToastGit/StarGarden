@@ -9,8 +9,13 @@ namespace StarGarden.Pets
     public class WanderingPet : MonoBehaviour
     {
         public Pet Pet;
+        [SerializeField]private float speed;
         private int currentIsland;
-        private float speed;
+
+        private void Start()
+        {
+            StartCoroutine(BehaviourCycle());
+        }
 
         private Vector2 RandomDirection()
         {
@@ -20,7 +25,7 @@ namespace StarGarden.Pets
 
         private Vector2 GridCast(Vector2 direction, float maxDistance)
         {
-            DecorationInstances[] allItems = InventoryManager.Main.GetAllItemsFromCategory(0) as DecorationInstances[];
+            ItemInstances[] allItems = InventoryManager.Main.GetAllItemsFromCategory(0);
 
             direction.Normalize();
             float increment = Mathf.Min(WorldGrid.Spacing.x, WorldGrid.Spacing.y);
@@ -28,11 +33,13 @@ namespace StarGarden.Pets
             Vector2 lastPoint = transform.position;
             while (distance < maxDistance)
             {
-                Vector2 nextPoint = lastPoint += direction * increment;
+                Vector2 nextPoint = lastPoint + direction * increment;
                 distance += increment;
 
                 if (IslandManager.Main.WithinIsland(nextPoint) != currentIsland)
                     return lastPoint;
+
+                Debug.DrawRay(WorldGrid.GridToWorld(WorldGrid.WorldToGrid(nextPoint)), Vector2.up / 5, Color.white, 7);
 
                 foreach (DecorationInstances instance in allItems)
                     if (instance.IsPositionTaken(WorldGrid.WorldToGrid(nextPoint)))
@@ -46,15 +53,30 @@ namespace StarGarden.Pets
 
         private IEnumerator BehaviourCycle()
         {
-            Vector2 target = GridCast(RandomDirection(), 5);
-            Vector2 direction = target.normalized;
-            float distanceTravelled = 0;
-            while (distanceTravelled < 5)
+            while (true)
             {
-                distanceTravelled += Time.deltaTime * speed;
-                if (distanceTravelled > 5)
-                transform.position += (Vector3)direction * Time.deltaTime * speed;
+                Vector2 target = GridCast(RandomDirection(), Random.Range(0.5f, 3f));
+                Debug.DrawRay(target, Vector2.up, Color.green, 7);
+                Vector2 direction = (target - (Vector2)transform.position).normalized;
+                float maxDistance = (target - (Vector2)transform.position).magnitude;
+                float distanceTravelled = 0;
+                while (distanceTravelled < maxDistance)
+                {
+                    float moveAmount = Time.deltaTime * speed;
+                    distanceTravelled += moveAmount;
+                    if (distanceTravelled > maxDistance)
+                    {
+                        transform.position = target;
+                        break;
+                    }
+
+                    transform.position += (Vector3)direction * moveAmount;
+                    yield return null;
+                }
+
+                yield return new WaitForSeconds(Random.Range(1f, 5f));
             }
+            
         }
 
         public enum State

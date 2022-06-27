@@ -14,6 +14,8 @@ namespace StarGarden.Core
         public event TouchDownEvent OnTouchDown;
         public delegate void TouchUpEvent(Vector2 position);
         public event TouchUpEvent OnTouchUp;
+        public delegate void TouchDragEvent(Vector2 position);
+        public event TouchDragEvent OnTouchDrag;
         public delegate void TouchHoldEvent(Vector2 position);
         public event TouchHoldEvent OnTouchHold;
 
@@ -21,6 +23,7 @@ namespace StarGarden.Core
 
         private Vector2 holdStartPosition;
         private bool awaitingStartTouch;
+        private bool awaitingDrag;
 
         private void Update()
         {
@@ -29,6 +32,12 @@ namespace StarGarden.Core
                 OnTouchDown?.Invoke(TouchPosition);
                 holdStartPosition = TouchPosition;
                 awaitingStartTouch = false;
+                awaitingDrag = true;
+            }
+            if (awaitingDrag && F.FastDistance(holdStartPosition, TouchPosition) >= 1000)
+            {
+                OnTouchDrag?.Invoke(TouchPosition);
+                awaitingDrag = false;
             }
         }
 
@@ -55,14 +64,17 @@ namespace StarGarden.Core
         private void Start()
         {
             touchControls.Touch.TouchPress.started += ctx => awaitingStartTouch = true;
-            touchControls.Touch.TouchPress.canceled += ctx => OnTouchUp?.Invoke(TouchPosition);
+            touchControls.Touch.TouchPress.canceled += ctx => { OnTouchUp?.Invoke(TouchPosition); awaitingDrag = false; };
             touchControls.Touch.TouchHold.performed += ctx => HoldPerformed(ctx);
         }
 
         private void HoldPerformed(InputAction.CallbackContext ctx)
         {
             if (F.FastDistance(holdStartPosition, TouchPosition) < 1000)
+            {
                 OnTouchHold?.Invoke(TouchPosition);
+                awaitingDrag = false;
+            }
         }
     }
 

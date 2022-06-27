@@ -19,12 +19,28 @@ public static class F
     public static Vector2 ClampPoint(this Vector2 point, Rect bounds) => new Vector2(Mathf.Clamp(point.x, bounds.xMin, bounds.xMax), Mathf.Clamp(point.y, bounds.yMin, bounds.yMax));
     public static Vector3 Ground(this Vector3 vector) => new Vector3(vector.x, 0, vector.z);
     public static bool WithinBounds (Vector2 point, Rect bounds) => point.x >= bounds.xMin && point.x <= bounds.xMax && point.y >= bounds.yMin && point.y <= bounds.yMax;
+    
+    public static Rect GetViewportRect(this Camera cam)
+    {
+        Rect viewRect = new Rect(cam.transform.position, Vector2.one);
+        viewRect.min = cam.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        viewRect.max = cam.ViewportToWorldPoint(new Vector3(1, 1, 0));
+        return viewRect;
+    }
 
     public static Rect ClampWithinBounds (ref this Rect rect, Rect bounds)
     {
         bounds.min += rect.size / 2;
         bounds.max -= rect.size / 2;
-        rect.position = rect.position.ClampPoint(bounds);
+        rect.position = rect.center.ClampPoint(bounds);
         return rect;
+    }
+
+    public static void DrawRect(Rect rect, Color color, float duration = 0)
+    {
+        Debug.DrawLine(new Vector2(rect.xMin, rect.yMin), new Vector2(rect.xMin, rect.yMax), color, duration);
+        Debug.DrawLine(new Vector2(rect.xMin, rect.yMax), new Vector2(rect.xMax, rect.yMax), color, duration);
+        Debug.DrawLine(new Vector2(rect.xMax, rect.yMax), new Vector2(rect.xMax, rect.yMin), color, duration);
+        Debug.DrawLine(new Vector2(rect.xMax, rect.yMin), new Vector2(rect.xMin, rect.yMin), color, duration);
     }
 }

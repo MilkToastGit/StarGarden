@@ -8,7 +8,6 @@ namespace StarGarden.Pets
     public class Pet : ScriptableObject
     {
         public Starsign Sign;
-        public Items.Hat EquippedHat;
         public Element Element;
         public PetBehaviour Behaviour1, Behaviour2;
     }

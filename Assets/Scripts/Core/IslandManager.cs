@@ -33,11 +33,7 @@ namespace StarGarden.Core
                     case Element.Air: c = Color.yellow; break;
                     case Element.Earth: c = Color.green; break;
                 }
-
-                Debug.DrawLine(new Vector2(i.Bounds.xMin, i.Bounds.yMin), new Vector2(i.Bounds.xMin, i.Bounds.yMax), c);
-                Debug.DrawLine(new Vector2(i.Bounds.xMin, i.Bounds.yMax), new Vector2(i.Bounds.xMax, i.Bounds.yMax), c);
-                Debug.DrawLine(new Vector2(i.Bounds.xMax, i.Bounds.yMax), new Vector2(i.Bounds.xMax, i.Bounds.yMin), c);
-                Debug.DrawLine(new Vector2(i.Bounds.xMax, i.Bounds.yMin), new Vector2(i.Bounds.xMin, i.Bounds.yMin), c);
+                F.DrawRect(i.Bounds, c);
             }
         }
 
