@@ -1,6 +1,6 @@
 namespace StarGarden.Pets
 {
-    public enum PetBehaviour
+    public enum PersonalityTrait
     {
 
     }

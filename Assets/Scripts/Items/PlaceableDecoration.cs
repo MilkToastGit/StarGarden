@@ -7,7 +7,7 @@ namespace StarGarden.Items
 {
     public class PlaceableDecoration : MonoBehaviour, Interactable
     {
-        public static PlaceableDecoration currentlyMoving;
+        public static bool placingDecoration = false;
 
         public bool Passthrough => false;
 
@@ -40,7 +40,7 @@ namespace StarGarden.Items
                 decor.Move(lastPlacedPosition, position);
 
             lastPlacedPosition = position;
-            currentlyMoving = null;
+            placingDecoration = false;
             state = State.Idle;
             print(decor.InventoryCount);
         }
@@ -49,7 +49,6 @@ namespace StarGarden.Items
         {
             if (!firstPlacement)
                 decor.Unplace(lastPlacedPosition);
-            print("destroying");
             Destroy(gameObject);
         }
 
@@ -63,12 +62,13 @@ namespace StarGarden.Items
                 sprite.color = Color.white;
                 state = State.Idle;
             }
+            placingDecoration = false;
         }
 
         private void StartDragging()
         {
             state = State.Dragging;
-            currentlyMoving = this;
+            placingDecoration = true;
         }
 
         private void Update()

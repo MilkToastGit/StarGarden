@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
-  m_Name: Chair 1
+  m_Name: Scratching Post
   m_EditorClassIdentifier: 
-  Name: Chair 1
-  Prefab: {fileID: 7231205281149985725, guid: 9b742e907057c704e9b3088c9e0207c0, type: 3}
+  Name: Scratching Post
+  Prefab: {fileID: 7231205281149985725, guid: 31b7b62a4d429e541b3428d58ddd5057, type: 3}
   Rarity: 0
-  ItemIndex: 0
-  Element: 0
-  Category: 0
+  ItemIndex: 2
+  Element: 1

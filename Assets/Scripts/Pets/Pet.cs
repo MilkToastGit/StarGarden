@@ -9,6 +9,6 @@ namespace StarGarden.Pets
     {
         public Starsign Sign;
         public Element Element;
-        public PetBehaviour Behaviour1, Behaviour2;
+        public PersonalityTrait Behaviour1, Behaviour2;
     }
 }

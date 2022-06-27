@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
-  m_Name: Chair 2
+  m_Name: Plant 2
   m_EditorClassIdentifier: 
-  Name: Chair 2
-  Prefab: {fileID: 7231205281149985725, guid: a5726be35eeae144da2a4cb624dd07b3, type: 3}
+  Name: Plant 2
+  Prefab: {fileID: 7231205281149985725, guid: b2748b7ce6fdd5044a3660a1aee05d47, type: 3}
   Rarity: 0
-  ItemIndex: 0
-  Element: 0
-  Category: 0
+  ItemIndex: 2
+  Element: 1

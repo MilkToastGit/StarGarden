@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
-  m_Name: Chair
+  m_Name: Yarn
   m_EditorClassIdentifier: 
-  Name: Chair
-  Prefab: {fileID: 7231205281149985725, guid: bca54a2edfe62c7459f9ff0a8b1bd6d0, type: 3}
-  Element: 0
-  Category: 0
+  Name: Yarn
+  Prefab: {fileID: 7231205281149985725, guid: c576ce778a18dea4989686c3afb5be4b, type: 3}
+  Rarity: 0
+  ItemIndex: 2
+  Element: 1

@@ -6,7 +6,7 @@ namespace StarGarden.Core
 {
     public class CameraControl : MonoBehaviour
     {
-        public float dragMultiplier = 1, slideFactor;
+        public float dragMultiplier = 1, placingMoveSpeed, slideFactor;
 
         private int currentIsland;
         private bool dragging = false;
@@ -36,10 +36,18 @@ namespace StarGarden.Core
 
         private void Update()
         {
+            if (Items.PlaceableDecoration.placingDecoration)
+            {
+                if (InputManager.Main.TouchPosition.x < Screen.width / 10)
+                    SetPosition(transform.position.x - placingMoveSpeed * Time.deltaTime);
+                else if (InputManager.Main.TouchPosition.x > Screen.width / 10 * 9)
+                    SetPosition(transform.position.x + placingMoveSpeed * Time.deltaTime);
+                return;
+            }
+
             if (!dragging)
             {
                 xVelocity *= slideFactor;
-                print(xVelocity);
                 SetPosition(transform.position.x + xVelocity);
                 return;
             }
@@ -50,6 +58,8 @@ namespace StarGarden.Core
 
         private void OnTouchDrag(Vector2 position)
         {
+            if (Items.PlaceableDecoration.placingDecoration) return;
+
             startTouchX = position.x;
             startCamX = transform.position.x;
             dragging = true;

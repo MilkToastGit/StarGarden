@@ -214,9 +214,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serialisedAllDecorations:
-  - {fileID: 11400000, guid: 892b33fa88d6d6f4d88a184d12986786, type: 2}
-  - {fileID: 11400000, guid: 62dcc6c3a6697ef47b2c550d5229c066, type: 2}
   - {fileID: 11400000, guid: fea73c487e066fc43989e06e3ff84cf5, type: 2}
+  - {fileID: 11400000, guid: 62dcc6c3a6697ef47b2c550d5229c066, type: 2}
+  - {fileID: 11400000, guid: 892b33fa88d6d6f4d88a184d12986786, type: 2}
+  - {fileID: 11400000, guid: 1fd27803b5856b347a7cecf113515306, type: 2}
+  - {fileID: 11400000, guid: 551d585a1afc200418b27f1aa5077c20, type: 2}
+  - {fileID: 11400000, guid: 7594d3b4f0b7daf4cb67bd2cc505d545, type: 2}
+  - {fileID: 11400000, guid: 0f2a8ae689d818a419b2ac0b602b6a55, type: 2}
+  - {fileID: 11400000, guid: d0e8af54f542cdc46ae91ddfb4af80d0, type: 2}
+  - {fileID: 11400000, guid: 4d30476e00268d644b5e91c4c222dc03, type: 2}
   serialisedAllHats:
   - {fileID: 11400000, guid: 0c1b31aa69dbb9543957621c667f21c0, type: 2}
   - {fileID: 11400000, guid: 4749af90021435f4e8d7ef285de7d11f, type: 2}
@@ -592,6 +598,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragMultiplier: 1
+  placingMoveSpeed: 5
   slideFactor: 0.95
 --- !u!1 &542228682
 GameObject:
@@ -2682,11 +2689,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToAdd:
-  - {fileID: 11400000, guid: 4749af90021435f4e8d7ef285de7d11f, type: 2}
-  - {fileID: 11400000, guid: 0c1b31aa69dbb9543957621c667f21c0, type: 2}
   - {fileID: 11400000, guid: fea73c487e066fc43989e06e3ff84cf5, type: 2}
   - {fileID: 11400000, guid: 62dcc6c3a6697ef47b2c550d5229c066, type: 2}
   - {fileID: 11400000, guid: 892b33fa88d6d6f4d88a184d12986786, type: 2}
+  - {fileID: 11400000, guid: 7594d3b4f0b7daf4cb67bd2cc505d545, type: 2}
+  - {fileID: 11400000, guid: 4d30476e00268d644b5e91c4c222dc03, type: 2}
+  - {fileID: 11400000, guid: d0e8af54f542cdc46ae91ddfb4af80d0, type: 2}
+  - {fileID: 11400000, guid: 0f2a8ae689d818a419b2ac0b602b6a55, type: 2}
+  - {fileID: 11400000, guid: 1fd27803b5856b347a7cecf113515306, type: 2}
+  - {fileID: 11400000, guid: 551d585a1afc200418b27f1aa5077c20, type: 2}
   itemPreview: {fileID: 8465521534075848558, guid: a139bff0839e68b4db1c7a395a3e33c5, type: 3}
   placeableDecor: {fileID: 3879647180055823420, guid: c7abf155b4a8b8a4f98d3ee9bfe27d3c, type: 3}
   tabs:

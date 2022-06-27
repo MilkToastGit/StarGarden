@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
+  m_Name: Fish Bowl
+  m_EditorClassIdentifier: 
+  Name: Fish Bowl
+  Prefab: {fileID: 7231205281149985725, guid: 9b742e907057c704e9b3088c9e0207c0, type: 3}
+  Rarity: 0
+  ItemIndex: 2
+  Element: 1

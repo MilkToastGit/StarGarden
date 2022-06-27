@@ -5,7 +5,22 @@ namespace StarGarden.Core
 {
     public class InteractionManager : MonoBehaviour
     {
+        public static InteractionManager Main { get; private set; }
+
+        public delegate void PassthroughEvent();
+        public event PassthroughEvent OnPassthrough;
+
         List<Interactable> held = new List<Interactable>();
+
+        private void Awake()
+        {
+            if (!Main)
+            {
+                Main = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else Destroy(gameObject);
+        }
 
         private void OnStartTouch(Vector2 touchPosition)
         {
@@ -19,6 +34,9 @@ namespace StarGarden.Core
                         return;
                 }
             }
+
+            print("passthrough");
+            OnPassthrough?.Invoke();
         }
 
         private void OnEndTouch()
