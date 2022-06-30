@@ -13,6 +13,9 @@ namespace StarGarden.Core
 
         public static ResourcesManager Main;
 
+        public delegate void StardustChangedEvent();
+        public event StardustChangedEvent OnStardustChanged;
+
         private void Awake()
         {
             if (!Main)
@@ -23,6 +26,8 @@ namespace StarGarden.Core
             else Destroy(gameObject);
         }
 
+        public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
+
         public void AddStardust(Rarity rarity, int amount)
         {
             switch (rarity)
@@ -31,6 +36,8 @@ namespace StarGarden.Core
                 case Rarity.Rare: rareStardust += amount; break;
                 case Rarity.Mythical: mythicalStardust += amount; break;
             }
+
+            OnStardustChanged?.Invoke();
         }
     }
 }

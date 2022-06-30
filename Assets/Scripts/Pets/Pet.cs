@@ -9,6 +9,7 @@ namespace StarGarden.Pets
     {
         public Starsign Sign;
         public Element Element;
+        public Vector2[] HatPosition;
         public PersonalityTrait Behaviour1, Behaviour2;
     }
 }

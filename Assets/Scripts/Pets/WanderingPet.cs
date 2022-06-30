@@ -12,10 +12,30 @@ namespace StarGarden.Pets
         private HatInstances equippedHat;
         [SerializeField]private float speed;
         private int currentIsland;
+        private Transform[] hatParent;
 
         private void Start()
         {
             StartCoroutine(BehaviourCycle());
+            SpawnHat();
+        }
+
+        private void SpawnHat()
+        {
+            if (hatParent == null)
+            {
+                hatParent = new Transform[Pet.HatPosition.Length];
+                for (int i = 0; i < hatParent.Length; i++)
+                {
+                    hatParent[i] = new GameObject().transform;
+                    hatParent[i].SetParent(transform);
+                    hatParent[i].position = Pet.HatPosition[i];
+                }
+            }
+            
+            foreach(Transform t in hatParent)
+                if (equippedHat != null)
+                    Instantiate(equippedHat.Item.Prefab, t);
         }
 
         private Vector2 RandomDirection()

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Pet
   m_EditorClassIdentifier: 
   Sign: 0
-  EquippedHat: {fileID: 0}
   Element: 0
+  HatPosition:
+  - {x: 0.23, y: 0}
   Behaviour1: 0
   Behaviour2: 0
