@@ -11,17 +11,23 @@ namespace StarGarden.Items
 
         public bool Passthrough => false;
 
-        private DecorationInstances decor;
+        private DecorationInstances decorInst;
+        private Decoration decor => decorInst.Item as Decoration;
         private State state = State.Idle;
         private bool firstPlacement, hoveringInventory, invalidSpace, tapPerformedLastFrame;
         private SpriteRenderer sprite;
+        private Vector2 centerOffset;
 
-        private Vector2Int lastPlacedPosition;
+        private Vector2Int lastPlacedPoint, lastHeldPoint;
 
-        public void SetItem(DecorationInstances decor, bool firstPlacement)
+        public void SetItem(DecorationInstances decoration, bool firstPlacement)
         {
-            this.decor = decor;
-            sprite = Instantiate(decor.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
+            decorInst = decoration;
+            centerOffset = new Vector2(
+                (decor.Size.x - 1) % 2 / 2f,
+                (decor.Size.y - 1) % 2 / 2f) * WorldGrid.Spacing;
+
+            sprite = Instantiate(decoration.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
             if (firstPlacement)
             {
                 state = State.AwaitingDrag;
@@ -29,26 +35,26 @@ namespace StarGarden.Items
             }
         }
 
-        private void Place(Vector2Int position)
+        private void Place(Vector2Int point)
         {
             if (firstPlacement)
             {
-                decor.Place(position);
+                decorInst.Place(point);
                 firstPlacement = false;
             }
             else
-                decor.Move(lastPlacedPosition, position);
+                decorInst.Move(lastPlacedPoint, point);
 
-            lastPlacedPosition = position;
+            lastPlacedPoint = point;
             placingDecoration = false;
             state = State.Idle;
-            print(decor.InventoryCount);
+            print(decorInst.InventoryCount);
         }
 
         private void ReturnToInventory()
         {
             if (!firstPlacement)
-                decor.Unplace(lastPlacedPosition);
+                decorInst.Unplace(lastPlacedPoint);
             Destroy(gameObject);
         }
 
@@ -58,7 +64,7 @@ namespace StarGarden.Items
                 ReturnToInventory();
             else
             {
-                transform.position = WorldGrid.GridToWorld(lastPlacedPosition);
+                transform.position = WorldGrid.GridToWorld(lastPlacedPoint) + centerOffset;
                 sprite.color = Color.white;
                 state = State.Idle;
             }
@@ -73,6 +79,9 @@ namespace StarGarden.Items
 
         private void Update()
         {
+            foreach (Vector2Int point in decorInst.GetGridPoints(WorldGrid.WorldToGrid((Vector2)transform.position - centerOffset)))
+                Debug.DrawRay(WorldGrid.GridToWorld(point), Vector2.up * 0.25f, Color.green);
+
             if (tapPerformedLastFrame && state == State.AwaitingDrag)
                 CancelDrag();
             else
@@ -88,8 +97,12 @@ namespace StarGarden.Items
             else
             {
                 Vector2Int gridPos = WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition);
-                transform.position = WorldGrid.GridToWorld(gridPos);
-                if (gridPos == lastPlacedPosition)
+
+                if (gridPos == lastHeldPoint) return;
+                else lastHeldPoint = gridPos;
+
+                transform.position = WorldGrid.GridToWorld(gridPos) + centerOffset;
+                if (gridPos == lastPlacedPoint)
                     invalidSpace = false;
                 else
                     invalidSpace = CheckInvalidSpace(gridPos);
@@ -98,13 +111,17 @@ namespace StarGarden.Items
             }
         }
 
-        private bool CheckInvalidSpace(Vector2Int position)
+        private bool CheckInvalidSpace(Vector2Int point)
         {
-            if  (IslandManager.Main.WithinIsland(WorldGrid.GridToWorld(position)) < 0)
-                return false;
+            decorInst.GetGridRange(point, out Vector2Int min, out Vector2Int max);
+
+            // If min or max points outside of islands
+            if (IslandManager.Main.WithinIsland(WorldGrid.GridToWorld(min)) < 0 ||
+                IslandManager.Main.WithinIsland(WorldGrid.GridToWorld(max)) < 0)
+                return true;
 
             foreach (DecorationInstances decor in InventoryManager.Main.GetAllItemsFromCategory(0))
-                if (decor.IsPositionTaken(position)) return true;
+                if (decor.DoDecorOverlap(min, max, lastPlacedPoint, !firstPlacement)) return true;
 
             return false;
         }

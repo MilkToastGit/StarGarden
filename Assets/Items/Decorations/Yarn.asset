@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: Yarn
   Prefab: {fileID: 7231205281149985725, guid: c576ce778a18dea4989686c3afb5be4b, type: 3}
   Rarity: 1
-  ItemIndex: 8
+  ItemIndex: 7
+  Size: {x: 1, y: 1}
   Element: 1

@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: Plant 2
   Prefab: {fileID: 7231205281149985725, guid: b2748b7ce6fdd5044a3660a1aee05d47, type: 3}
   Rarity: 0
-  ItemIndex: 2
+  ItemIndex: 4
+  Size: {x: 1, y: 1}
   Element: 1

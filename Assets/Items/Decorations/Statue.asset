@@ -15,5 +15,6 @@ MonoBehaviour:
   Name: Statue
   Prefab: {fileID: 7231205281149985725, guid: a70020281512b9844ad69398062b2cb1, type: 3}
   Rarity: 2
-  ItemIndex: 7
+  ItemIndex: 8
+  Size: {x: 1, y: 1}
   Element: 1
