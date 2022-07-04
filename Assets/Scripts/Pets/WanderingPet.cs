@@ -9,30 +9,23 @@ namespace StarGarden.Pets
     public class WanderingPet : MonoBehaviour
     {
         public Pet Pet;
+        public Transform[] hatParent;
+
         private HatInstances equippedHat;
         [SerializeField]private float speed;
         private int currentIsland;
-        private Transform[] hatParent;
+        private Animator anim;
 
         private void Start()
         {
+            anim = GetComponent<Animator>();
+
             StartCoroutine(BehaviourCycle());
             SpawnHat();
         }
 
         private void SpawnHat()
         {
-            if (hatParent == null)
-            {
-                hatParent = new Transform[Pet.HatPosition.Length];
-                for (int i = 0; i < hatParent.Length; i++)
-                {
-                    hatParent[i] = new GameObject().transform;
-                    hatParent[i].SetParent(transform);
-                    hatParent[i].position = Pet.HatPosition[i];
-                }
-            }
-            
             foreach(Transform t in hatParent)
                 if (equippedHat != null)
                     Instantiate(equippedHat.Item.Prefab, t);
@@ -77,9 +70,17 @@ namespace StarGarden.Pets
             while (true)
             {
                 Vector2 target = GridCast(RandomDirection(), Random.Range(0.5f, 3f));
-                Debug.DrawRay(target, Vector2.up, Color.green, 7);
                 Vector2 direction = (target - (Vector2)transform.position).normalized;
+                Debug.DrawRay(target, Vector2.up, Color.green, 7);
+
                 float maxDistance = (target - (Vector2)transform.position).magnitude;
+                if (maxDistance <= 0)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    continue;
+                }
+
+                anim.SetBool("Walking", true);
                 float distanceTravelled = 0;
                 while (distanceTravelled < maxDistance)
                 {
@@ -94,10 +95,22 @@ namespace StarGarden.Pets
                     transform.position += (Vector3)direction * moveAmount;
                     yield return null;
                 }
+                anim.SetBool("Walking", false);
 
-                yield return new WaitForSeconds(Random.Range(1f, 5f));
+                yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
+
+                if (Random.value > 0.7f)
+                {
+                    anim.SetInteger("Emote", Random.Range(0, 3));
+                    anim.SetTrigger("EmoteTrigger");
+
+                    yield return new WaitForSeconds(Random.Range(2.5f, 3f));
+                    anim.SetTrigger("UnemoteTrigger");
+                    yield return new WaitForSeconds(1f);
+                }
+                else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
-            
+
         }
 
         public enum State
