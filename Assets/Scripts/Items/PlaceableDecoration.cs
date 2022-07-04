@@ -55,6 +55,7 @@ namespace StarGarden.Items
         {
             if (!firstPlacement)
                 decorInst.Unplace(lastPlacedPoint);
+            placingDecoration = false;
             Destroy(gameObject);
         }
 
@@ -121,7 +122,8 @@ namespace StarGarden.Items
                 return true;
 
             foreach (DecorationInstances decor in InventoryManager.Main.GetAllItemsFromCategory(0))
-                if (decor.DoDecorOverlap(min, max, lastPlacedPoint, !firstPlacement)) return true;
+                if (decor.DoDecorOverlap(min, max, lastPlacedPoint, !firstPlacement))
+                    return true;
 
             return false;
         }
