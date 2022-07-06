@@ -6,7 +6,7 @@ using StarGarden.Items;
 
 namespace StarGarden.Pets
 {
-    public class WanderingPet : MonoBehaviour
+    public class WanderingPet : MonoBehaviour, Interactable
     {
         public Pet Pet;
         public Transform[] hatParent;
@@ -15,10 +15,14 @@ namespace StarGarden.Pets
         [SerializeField]private float speed;
         private int currentIsland;
         private Animator anim;
+        private SpriteRenderer sprite;
+
+        public bool Passthrough => false;
 
         private void Start()
         {
             anim = GetComponent<Animator>();
+            sprite = GetComponentInChildren<SpriteRenderer>();
 
             StartCoroutine(BehaviourCycle());
             SpawnHat();
@@ -81,6 +85,7 @@ namespace StarGarden.Pets
                 }
 
                 anim.SetBool("Walking", true);
+                sprite.flipX = direction.x > 0;
                 float distanceTravelled = 0;
                 while (distanceTravelled < maxDistance)
                 {
@@ -111,6 +116,16 @@ namespace StarGarden.Pets
                 else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
 
+        }
+
+        public void OnStartTouch()
+        {
+            
+        }
+
+        public void OnEndTouch()
+        {
+            
         }
 
         public enum State
