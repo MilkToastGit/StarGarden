@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f83f87f00e2d3d7409e6769b6e0a0332, type: 3}
-  m_Name: Hat
+  m_Name: Chicken
   m_EditorClassIdentifier: 
-  Name: Hat
-  Prefab: {fileID: 7231205281149985725, guid: 5d6d9b3da57b54141835fff5f2ada6e4, type: 3}
-  Rarity: 0
+  Name: Chicken
+  Prefab: {fileID: 7231205281149985725, guid: 043bd5e5c65ea8b4ea66b049e5e10f16, type: 3}
+  Rarity: 2
   ItemIndex: 0

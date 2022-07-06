@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarGarden.Items;
 
-namespace StarGarden.Core
+namespace StarGarden.Items
 {
     public class InventoryManager : MonoBehaviour
     {

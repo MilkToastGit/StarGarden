@@ -1,22 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Pets;
 
 namespace StarGarden.Items
 {
     public class HatInstances : ItemInstances
     {
         public override int InventoryCount => totalCount - equippedInstances.Count;
-        private List<int> equippedInstances = new List<int>();
+        private List<WanderingPet> equippedInstances = new List<WanderingPet>();
 
-        public void Equip(int character)
+        public void Equip(WanderingPet pet)
         {
-            equippedInstances.Add(character);
+            if (pet.EquippedHat != null)
+                pet.EquippedHat.Unequip(pet);
+            pet.EquippedHat = this;
+            equippedInstances.Add(pet);
         }
 
-        public void Unequip(int character)
+        public void Unequip(Pet pet)
         {
-            equippedInstances.Remove(character);
+            equippedInstances.Remove(pet);
         }
     }
 }

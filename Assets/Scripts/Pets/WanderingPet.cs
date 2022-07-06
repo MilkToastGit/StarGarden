@@ -10,8 +10,8 @@ namespace StarGarden.Pets
     {
         public Pet Pet;
         public Transform[] hatParent;
+        public HatInstances EquippedHat;
 
-        private HatInstances equippedHat;
         [SerializeField]private float speed;
         private int currentIsland;
         private Animator anim;
@@ -25,14 +25,22 @@ namespace StarGarden.Pets
             sprite = GetComponentInChildren<SpriteRenderer>();
 
             StartCoroutine(BehaviourCycle());
-            SpawnHat();
         }
 
-        private void SpawnHat()
+        public void SetHat(HatInstances hat)
         {
-            foreach(Transform t in hatParent)
-                if (equippedHat != null)
-                    Instantiate(equippedHat.Item.Prefab, t);
+            EquippedHat = hat;
+            foreach (Transform t in hatParent)
+            {
+                t.Order66();
+                if (EquippedHat != null)
+                {
+                    Transform spawnedHat = Instantiate(EquippedHat.Item.Prefab, t).transform;
+                    spawnedHat.localPosition = Vector3.zero;
+                    spawnedHat.localRotation = Quaternion.identity;
+                    spawnedHat.localScale = Vector3.one;
+                }
+            }
         }
 
         private Vector2 RandomDirection()
@@ -120,7 +128,7 @@ namespace StarGarden.Pets
 
         public void OnStartTouch()
         {
-            
+            UI.UIManager.Main.ShowPetMenu(Pet);
         }
 
         public void OnEndTouch()

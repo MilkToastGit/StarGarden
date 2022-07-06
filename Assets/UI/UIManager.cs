@@ -25,6 +25,8 @@ namespace StarGarden.UI
             selectionMenuItems = selectionMenuBase.GetChild(0);
         }
 
+        public void ShowPetMenu(Pets.Pet pet) => PetMenuUI.Main.Show(pet);
+
         public void ShowSelectionMenu(Sprite[] lst, SelectionCompleted onCompleted)
         {
             selectionMenuItems.Order66();

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f83f87f00e2d3d7409e6769b6e0a0332, type: 3}
-  m_Name: Hat 1
+  m_Name: Propeller
   m_EditorClassIdentifier: 
-  Name: Hat
-  Prefab: {fileID: 7231205281149985725, guid: 1216a6a945539694c8b6d0bf5d596794, type: 3}
-  Rarity: 0
+  Name: Propeller Hat
+  Prefab: {fileID: 7231205281149985725, guid: a1cfb94ef2ccc614ab885cc2ddce36c1, type: 3}
+  Rarity: 2
   ItemIndex: 0

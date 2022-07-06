@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using StarGarden.Core;
 using StarGarden.Items;
+using StarGarden.Pets;
+using UnityEngine.UI;
+using TMPro;
 
 namespace StarGarden.UI
 {
     public class PetMenuUI : MonoBehaviour
     {
         public static PetMenuUI Main;
+        [SerializeField] private TextMeshProUGUI petName, personalityText;
+        [SerializeField] private Image petImage, hatImage, signImage;
 
         private GameObject UIBase;
+        private WanderingPet selectedPet;
         private bool showing;
 
         private void Awake()
@@ -25,23 +30,39 @@ namespace StarGarden.UI
             UIBase = transform.GetChild(0).gameObject;
         }
 
-        private void Start()
+        public void ShowHatSelectMenu()
         {
-            ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(0);
+            ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(1);
             Sprite[] sprites = new Sprite[items.Length];
             for (int i = 0; i < items.Length; i++)
                 sprites[i] = items[i].Item.Prefab.GetComponent<SpriteRenderer>().sprite;
 
-            UIManager.Main.ShowSelectionMenu(sprites, OnSelectionMade);
+            UIManager.Main.ShowSelectionMenu(sprites, OnHatSelected);
         }
 
-        private void OnSelectionMade(int selectedIndex)
+        private void OnHatSelected(int selectedIndex)
         {
-            print(selectedIndex);
+            HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
+            hat.Equip(selectedPet.Pet);
+            selectedPet.SetHat(hat);
         }
 
-        public void Show()
+        private void SetPet(WanderingPet pet)
         {
+            petName.text = pet.Pet.Name;
+            petImage.sprite = pet.Pet.Sprite;
+            signImage.sprite = pet.Pet.SignSprite;
+            personalityText.text = pet.Pet.PersonalityTraits;
+            if (pet.EquippedHat != null)
+                hatImage.sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            selectedPet = pet;
+        }
+
+        public void Show(Pet pet = null)
+        {
+            if (pet) SetPet(pet);
+            else SetPet(PetManager.Main.GetActivePets()[0]);
+
             showing = true;
             UIBase.SetActive(true);
         }

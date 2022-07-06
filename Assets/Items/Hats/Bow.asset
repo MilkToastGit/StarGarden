@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2efc8356aaa7342811e8d5b2c668ac, type: 3}
-  m_Name: Pet
+  m_Script: {fileID: 11500000, guid: f83f87f00e2d3d7409e6769b6e0a0332, type: 3}
+  m_Name: Bow
   m_EditorClassIdentifier: 
-  Sign: 0
-  Element: 0
-  HatPosition:
-  - {x: 0.23, y: 0}
-  Behaviour1: 0
-  Behaviour2: 0
+  Name: Bow
+  Prefab: {fileID: 7231205281149985725, guid: 5d6d9b3da57b54141835fff5f2ada6e4, type: 3}
+  Rarity: 0
+  ItemIndex: 0

@@ -7,9 +7,10 @@ namespace StarGarden.Pets
     [CreateAssetMenu(fileName = "Pet", menuName = "StarGarden/Pet")]
     public class Pet : ScriptableObject
     {
-        public Starsign Sign;
+        public string Name;
+        public Sprite Sprite;
+        public Sprite SignSprite;
         public Element Element;
-        public Vector2[] HatPosition;
-        public PersonalityTrait Behaviour1, Behaviour2;
+        public string PersonalityTraits;
     }
 }
