@@ -29,5 +29,21 @@ namespace StarGarden.UI
             float fillAmount = (float)current / (float)maximum;
             mask.fillAmount = fillAmount;
         }
+
+        public void CommonCookie()
+        {
+            current += 10;
+        }
+        
+        public void CelestialCookie()
+        {
+            current += 30;
+        }
+
+        //placeholder
+        public void ResetHappiness()
+        {
+            current = 0;
+        }
     }
 }
