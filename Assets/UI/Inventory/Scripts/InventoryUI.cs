@@ -60,7 +60,7 @@ namespace StarGarden.UI
             Instantiate(placeableDecor, (Vector2)Camera.main.transform.position, Quaternion.identity)
                 .GetComponent<PlaceableDecoration>().SetItem(item, true);
 
-            Hide();
+            UIManager.Main.HideCurrentPanel();
         }
 
         private void OnHatClicked(HatInstances item)

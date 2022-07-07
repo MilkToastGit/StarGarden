@@ -37,7 +37,7 @@ namespace StarGarden.UI
             ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(1);
             Sprite[] sprites = new Sprite[items.Length];
             for (int i = 0; i < items.Length; i++)
-                sprites[i] = items[i].Item.Prefab.GetComponent<SpriteRenderer>().sprite;
+                sprites[i] = items[i].Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
 
             UIManager.Main.ShowSelectionMenu(sprites, OnHatSelected);
         }
@@ -47,7 +47,7 @@ namespace StarGarden.UI
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
             hat.Equip(selectedPet);
             selectedPet.SetHat(hat);
-            hatImage.sprite = hat.Item.Prefab.GetComponent<SpriteRenderer>().sprite;
+            hatImage.sprite = hat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
         }
 
         public void SetPet(WanderingPet pet)
@@ -58,6 +58,7 @@ namespace StarGarden.UI
             personalityText.text = pet.Pet.PersonalityTraits;
             if (pet.EquippedHat != null)
                 hatImage.sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            else hatImage.sprite = null;
             selectedPet = pet;
         }
 
@@ -65,6 +66,8 @@ namespace StarGarden.UI
         {
             //if (pet) SetPet(pet);
             //else SetPet(PetManager.Main.GetActivePets()[0]);
+            if (selectedPet == null)
+                SetPet(PetManager.Main.GetActivePets()[0]);
 
             showing = true;
             UIBase.SetActive(true);

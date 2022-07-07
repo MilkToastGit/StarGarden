@@ -68,6 +68,7 @@ namespace StarGarden.UI
             if (activePanel >= 0)
                 panels[activePanel].Hide();
             activePanel = -1;
+            print(activePanel);
         }
 
         private void HideSelectionMenu()
