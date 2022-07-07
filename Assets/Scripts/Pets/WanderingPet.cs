@@ -9,7 +9,9 @@ namespace StarGarden.Pets
     public class WanderingPet : MonoBehaviour, Interactable
     {
         public Pet Pet;
-        public Transform[] hatParent;
+        public bool flip;
+        public Transform hatParentBase;
+        private Transform[] hatParents;
         public HatInstances EquippedHat;
 
         [SerializeField]private float speed;
@@ -24,13 +26,17 @@ namespace StarGarden.Pets
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
 
+            hatParents = new Transform[hatParentBase.childCount];
+            for (int i = 0; i < hatParentBase.childCount; i++)
+                hatParents[i] = hatParentBase.GetChild(i).transform;
+
             StartCoroutine(BehaviourCycle());
         }
 
         public void SetHat(HatInstances hat)
         {
             EquippedHat = hat;
-            foreach (Transform t in hatParent)
+            foreach (Transform t in hatParents)
             {
                 t.Order66();
                 if (EquippedHat != null)
@@ -77,6 +83,15 @@ namespace StarGarden.Pets
             return lastPoint;
         }
 
+        private void FlipX(bool flip)
+        {
+            sprite.flipX = flip;
+
+            Vector2 scale = hatParentBase.localScale;
+            scale.x = Mathf.Abs(scale.x) * (flip ? -1 : 1);
+            hatParentBase.localScale = scale;
+        }
+
         private IEnumerator BehaviourCycle()
         {
             while (true)
@@ -93,7 +108,9 @@ namespace StarGarden.Pets
                 }
 
                 anim.SetBool("Walking", true);
-                sprite.flipX = direction.x > 0;
+                if (flip)
+                    FlipX(direction.x > 0);
+
                 float distanceTravelled = 0;
                 while (distanceTravelled < maxDistance)
                 {

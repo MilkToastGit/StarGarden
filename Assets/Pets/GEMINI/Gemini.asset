@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2efc8356aaa7342811e8d5b2c668ac, type: 3}
+  m_Name: Gemini
+  m_EditorClassIdentifier: 
+  Name: Gemini
+  Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
+  SignSprite: {fileID: 0}
+  Element: 0
+  PersonalityTraits: Very Cool

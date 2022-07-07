@@ -79,7 +79,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Waddle1
+  m_Name: Walk1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -94,7 +94,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e70c0f65b3aae1c4d987e0955e9d777d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1ce258a361073544f9a3e3d11bb69f18, type: 2}
   m_Tag: 
   m_SpeedParameter: WalkSpeed
   m_MirrorParameter: 
@@ -157,7 +157,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmoteMirror
+  m_Name: Emote2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -171,7 +171,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 0dfbadb3101665f43849608241c7e7d6, type: 2}
+  m_Motion: {fileID: 7400000, guid: aab6249063c2cf6468a1fe5bd0585409, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -184,7 +184,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmoteHappy
+  m_Name: Emote0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -198,7 +198,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 48f8c4931b7def3408466f0a3a028957, type: 2}
+  m_Motion: {fileID: 7400000, guid: 255c948314677a64694bf5fb921e49d0, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -282,31 +282,31 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: WalkSpeed
     m_Type: 1
     m_DefaultFloat: 3
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Emote
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: EmoteTrigger
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: UnemoteTrigger
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -433,7 +433,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmoteAngry
+  m_Name: Emote1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -447,7 +447,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1090389206fc2dc468a1f122f2173ab3, type: 2}
+  m_Motion: {fileID: 7400000, guid: 5721ed457694eb043aa484fc427eb8b0, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -551,12 +551,12 @@ AnimatorStateMachine:
   - {fileID: 865727646890430534}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -3682106186717161961}
-    second:
-    - {fileID: 2022017063951021607}
   - first: {fileID: -4073193952903736470}
     second:
     - {fileID: 86312938009715577}
+  - first: {fileID: -3682106186717161961}
+    second:
+    - {fileID: 2022017063951021607}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: -130, z: 0}
   m_EntryPosition: {x: 320, y: -150, z: 0}
@@ -570,7 +570,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Waddle0
+  m_Name: Walk0
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -585,7 +585,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fc89e19f6bdf43b4d8dc1db02617de4a, type: 2}
+  m_Motion: {fileID: 7400000, guid: e5b5b50a7149e364dbad3196bcc0cadf, type: 2}
   m_Tag: 
   m_SpeedParameter: WalkSpeed
   m_MirrorParameter: 
@@ -613,7 +613,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 803fa41a24dcc5e4fb169b73d7ae9a4f, type: 2}
+  m_Motion: {fileID: 7400000, guid: b972e0103f542864cb7866966229bd81, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

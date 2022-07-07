@@ -7,7 +7,7 @@ using StarGarden.Items;
 
 namespace StarGarden.UI
 {
-    public class InventoryUI : MonoBehaviour
+    public class InventoryUI : MonoBehaviour, UIPanel
     {
         public Item[] itemsToAdd;
 
@@ -31,7 +31,7 @@ namespace StarGarden.UI
                 for (int i = 0; i < Random.Range(0, 6); i++)
                     InventoryManager.Main.AddItem(item);
             }
-            Show();
+            //Show();
         }
 
         public void Show()
