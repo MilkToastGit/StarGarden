@@ -9,7 +9,7 @@ using StarGarden.Pets;
 
 namespace StarGarden.UI
 {
-    public class PetMenuUI : MonoBehaviour
+    public class PetMenuUI : MonoBehaviour, UIPanel
     {
         public static PetMenuUI Main;
         [SerializeField] private TextMeshProUGUI petName, personalityText;
@@ -29,6 +29,7 @@ namespace StarGarden.UI
             else Destroy(gameObject);
 
             UIBase = transform.GetChild(0).gameObject;
+            Debug.Log(UIBase.name);
         }
 
         public void ShowHatSelectMenu()
@@ -46,9 +47,10 @@ namespace StarGarden.UI
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
             hat.Equip(selectedPet);
             selectedPet.SetHat(hat);
+            hatImage.sprite = hat.Item.Prefab.GetComponent<SpriteRenderer>().sprite;
         }
 
-        private void SetPet(WanderingPet pet)
+        public void SetPet(WanderingPet pet)
         {
             petName.text = pet.Pet.Name;
             petImage.sprite = pet.Pet.Sprite;
@@ -59,10 +61,10 @@ namespace StarGarden.UI
             selectedPet = pet;
         }
 
-        public void Show(WanderingPet pet = null)
+        public void Show()
         {
-            if (pet) SetPet(pet);
-            else SetPet(PetManager.Main.GetActivePets()[0]);
+            //if (pet) SetPet(pet);
+            //else SetPet(PetManager.Main.GetActivePets()[0]);
 
             showing = true;
             UIBase.SetActive(true);

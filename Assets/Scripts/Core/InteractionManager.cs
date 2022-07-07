@@ -24,6 +24,7 @@ namespace StarGarden.Core
 
         private void OnStartTouch(Vector2 touchPosition)
         {
+            if (UI.UIManager.Main.PanelShowing) return;
             foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
             {
                 if (collider.TryGetComponent(out Interactable t))
