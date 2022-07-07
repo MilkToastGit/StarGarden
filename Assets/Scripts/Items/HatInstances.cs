@@ -18,7 +18,7 @@ namespace StarGarden.Items
             equippedInstances.Add(pet);
         }
 
-        public void Unequip(Pet pet)
+        public void Unequip(WanderingPet pet)
         {
             equippedInstances.Remove(pet);
         }

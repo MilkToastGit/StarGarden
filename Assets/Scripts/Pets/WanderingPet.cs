@@ -128,7 +128,7 @@ namespace StarGarden.Pets
 
         public void OnStartTouch()
         {
-            UI.UIManager.Main.ShowPetMenu(Pet);
+            UI.UIManager.Main.ShowPetMenu(this);
         }
 
         public void OnEndTouch()

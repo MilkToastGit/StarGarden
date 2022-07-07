@@ -5,6 +5,7 @@ using StarGarden.Items;
 using StarGarden.Pets;
 using UnityEngine.UI;
 using TMPro;
+using StarGarden.Pets;
 
 namespace StarGarden.UI
 {
@@ -43,7 +44,7 @@ namespace StarGarden.UI
         private void OnHatSelected(int selectedIndex)
         {
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
-            hat.Equip(selectedPet.Pet);
+            hat.Equip(selectedPet);
             selectedPet.SetHat(hat);
         }
 
@@ -58,7 +59,7 @@ namespace StarGarden.UI
             selectedPet = pet;
         }
 
-        public void Show(Pet pet = null)
+        public void Show(WanderingPet pet = null)
         {
             if (pet) SetPet(pet);
             else SetPet(PetManager.Main.GetActivePets()[0]);

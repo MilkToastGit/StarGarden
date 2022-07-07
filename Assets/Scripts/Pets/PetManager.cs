@@ -20,9 +20,9 @@ namespace StarGarden.Pets
             else Destroy(gameObject);
         }
 
-        public Pet[] GetActivePets()
+        public WanderingPet[] GetActivePets()
         {
-            List<Pet> pets = new List<Pet>();
+            List<WanderingPet> pets = new List<WanderingPet>();
             for (int i = 0; i < AllPets.Length; i++)
             {
                 if(AllPets[i].Island >= 0)
