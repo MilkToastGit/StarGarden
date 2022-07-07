@@ -16,5 +16,5 @@ MonoBehaviour:
   Prefab: {fileID: 7231205281149985725, guid: 31b7b62a4d429e541b3428d58ddd5057, type: 3}
   Rarity: 1
   ItemIndex: 6
-  Size: {x: 1, y: 1}
+  Size: {x: 3, y: 1}
   Element: 1
