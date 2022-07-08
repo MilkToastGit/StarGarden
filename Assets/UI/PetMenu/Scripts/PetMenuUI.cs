@@ -5,7 +5,6 @@ using StarGarden.Items;
 using StarGarden.Pets;
 using UnityEngine.UI;
 using TMPro;
-using StarGarden.Pets;
 
 namespace StarGarden.UI
 {
@@ -14,9 +13,11 @@ namespace StarGarden.UI
         public static PetMenuUI Main;
         [SerializeField] private TextMeshProUGUI petName, personalityText;
         [SerializeField] private Image petImage, hatImage, signImage;
+        [SerializeField] private HappinessBar happinessBar;
 
         private GameObject UIBase;
-        private WanderingPet selectedPet;
+        private WanderingPet[] pets;
+        private int currentPet;
         private bool showing;
 
         private void Awake()
@@ -29,7 +30,7 @@ namespace StarGarden.UI
             else Destroy(gameObject);
 
             UIBase = transform.GetChild(0).gameObject;
-            Debug.Log(UIBase.name);
+            pets = PetManager.Main.GetActivePets();
         }
 
         public void ShowHatSelectMenu()
@@ -45,29 +46,43 @@ namespace StarGarden.UI
         private void OnHatSelected(int selectedIndex)
         {
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
-            hat.Equip(selectedPet);
-            selectedPet.SetHat(hat);
+            hat.Equip(pets[currentPet]);
+            pets[currentPet].SetHat(hat);
             hatImage.sprite = hat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
         }
 
-        public void SetPet(WanderingPet pet)
+        public void SetPet(int pet)
         {
-            petName.text = pet.Pet.Name;
-            petImage.sprite = pet.Pet.Sprite;
-            signImage.sprite = pet.Pet.SignSprite;
-            personalityText.text = pet.Pet.PersonalityTraits;
-            if (pet.EquippedHat != null)
-                hatImage.sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            if (pet == currentPet) return;
+
+            currentPet = F.Wrap(pet, 0, pets.Length);
+
+            //Transform hatParent;
+            //pets[currentPet].
+
+            petName.text = pets[currentPet].Pet.Name;
+            petImage.sprite = pets[currentPet].Pet.Sprite;
+            signImage.sprite = pets[currentPet].Pet.SignSprite;
+            personalityText.text = pets[currentPet].Pet.PersonalityTraits;
+            if (pets[currentPet].EquippedHat != null)
+                hatImage.sprite = pets[currentPet].EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
             else hatImage.sprite = null;
-            selectedPet = pet;
+            happinessBar.SetHappiness(pets[currentPet].Happiness);
         }
+
+        public void FeedCookie(bool isCommon)
+        {
+            float amount = isCommon ? 0.75f : 0.15f;
+            pets[currentPet].IncreaseHappiness(amount);
+            happinessBar.SetHappiness(pets[currentPet].Happiness);
+        }
+
+        public void NextPet() => SetPet(currentPet + 1);
+        public void PreviousPet() => SetPet(currentPet - 1);
 
         public void Show()
         {
-            //if (pet) SetPet(pet);
-            //else SetPet(PetManager.Main.GetActivePets()[0]);
-            if (selectedPet == null)
-                SetPet(PetManager.Main.GetActivePets()[0]);
+            SetPet(currentPet);
 
             showing = true;
             UIBase.SetActive(true);

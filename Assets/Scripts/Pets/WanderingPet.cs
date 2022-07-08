@@ -13,6 +13,7 @@ namespace StarGarden.Pets
         public Transform hatParentBase;
         private Transform[] hatParents;
         public HatInstances EquippedHat;
+        public float Happiness;
 
         [SerializeField]private float speed;
         private int currentIsland;
@@ -47,6 +48,11 @@ namespace StarGarden.Pets
                     spawnedHat.localScale = Vector3.one;
                 }
             }
+        }
+
+        public void IncreaseHappiness(float amount)
+        {
+            Happiness = Mathf.Min(Happiness + amount, 1);
         }
 
         private Vector2 RandomDirection()
@@ -143,15 +149,14 @@ namespace StarGarden.Pets
 
         }
 
-        public void OnStartTouch()
+        public void OnTap()
         {
-            UI.UIManager.Main.ShowPetMenu(this);
+            UI.UIManager.Main.ShowPetMenu(Pet.PetIndex);
         }
 
-        public void OnEndTouch()
-        {
-            
-        }
+        public void OnStartTouch() { }
+
+        public void OnEndTouch() { }
 
         public enum State
         {

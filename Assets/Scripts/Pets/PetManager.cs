@@ -18,6 +18,9 @@ namespace StarGarden.Pets
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+
+            for (int i = 0; i < AllPets.Length; i++)
+                AllPets[i].Pet.Pet.PetIndex = i;
         }
 
         public WanderingPet[] GetActivePets()

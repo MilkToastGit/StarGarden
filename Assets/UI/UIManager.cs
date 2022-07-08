@@ -33,9 +33,9 @@ namespace StarGarden.UI
                 panels[i] = PanelObjects[i].GetComponent<UIPanel>();
         }
 
-        public void ShowPetMenu(Pets.WanderingPet pet)
+        public void ShowPetMenu(int petIndex)
         {
-            PetMenuUI.Main.SetPet(pet);
+            PetMenuUI.Main.SetPet(petIndex);
             ShowPanel(2);
         }
 

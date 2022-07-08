@@ -21,6 +21,8 @@ namespace StarGarden.Items
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+
+            UpdateAllItems();
         }
 
         public void AddItem(Item item)

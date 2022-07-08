@@ -11,6 +11,7 @@ public static class F
     public static bool Between (this Vector2Int value, Vector2Int min, Vector2Int max) => value.x >= min.x && value.x <= max.x && value.y >= min.y && value.y <= max.y;
     public static bool Within (this float value, float target, float threshold) => value >= target - threshold / 2f && value <= target + threshold / 2f;
     public static float Wrap (this float value, float min = 0, float max = 1) => value - (max - min) * Mathf.Floor (value / (max - min));
+    public static int Wrap (this int value, int min = 0, int max = 1) => value - (max - min) * Mathf.FloorToInt((float)value / (max - min));
     public static float Heading (this Vector2 vector) => Mathf.Atan2 (vector.x, vector.y) * Mathf.Rad2Deg;
     public static float NormalizeAngle (this float a) => a - 180f * Mathf.Floor ((a + 180f) / 180f);
     public static T Last<T> (this List<T> list) => list.Count > 0 ? list[list.Count - 1] : default(T);

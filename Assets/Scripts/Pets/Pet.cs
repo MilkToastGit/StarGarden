@@ -12,5 +12,6 @@ namespace StarGarden.Pets
         public Sprite SignSprite;
         public Element Element;
         public string PersonalityTraits;
+        [HideInInspector] public int PetIndex;
     }
 }

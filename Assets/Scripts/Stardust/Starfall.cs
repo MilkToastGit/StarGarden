@@ -51,15 +51,13 @@ namespace StarGarden.Stardust
                 circleCollider.enabled = true;
         }
 
-        public void OnStartTouch()
+        public void OnTap()
         {
             ResourcesManager.Main.AddStardust(rarity, 1);
             Destroy(gameObject);
         }
 
-        public void OnEndTouch()
-        {
-
-        }
+        public void OnStartTouch() { }
+        public void OnEndTouch() { }
     }
 }

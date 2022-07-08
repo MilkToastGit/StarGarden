@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8888112827561333912}
+  - component: {fileID: 3789603715836559437}
   - component: {fileID: 8888112827561333911}
   - component: {fileID: 8888112827561333909}
   - component: {fileID: 8888112827561333913}
@@ -37,6 +38,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!210 &3789603715836559437
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888112827561333915}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!95 &8888112827561333911
 Animator:
   serializedVersion: 4
@@ -88,6 +100,7 @@ MonoBehaviour:
   Pet: {fileID: 11400000, guid: 9adaa61f6272afd4b8b876ff26688007, type: 2}
   flip: 1
   hatParentBase: {fileID: 8888112828897297920}
+  Happiness: 0
   speed: 1
 --- !u!114 &8888112827561333910
 MonoBehaviour:

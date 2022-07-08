@@ -879,7 +879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc71fe5dfc4bc0649be16e4edacf054d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximum: 100
   current: 0
   mask: {fileID: 928180877}
 --- !u!114 &209805870
@@ -1796,6 +1795,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 449226116}
   m_CullTransparentMesh: 1
+--- !u!1 &494164842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 494164843}
+  m_Layer: 5
+  m_Name: HatParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &494164843
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494164842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1858491685}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &498463583
 GameObject:
   m_ObjectHideFlags: 0
@@ -2123,7 +2158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragMultiplier: 1
   placingMoveSpeed: 5
-  slideFactor: 0.98
+  slideFactor: 0.95
 --- !u!1 &542228682
 GameObject:
   m_ObjectHideFlags: 0
@@ -3674,17 +3709,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 209805869}
-        m_TargetAssemblyTypeName: StarGarden.UI.HappinessBar, Assembly-CSharp
-        m_MethodName: CommonCookie
-        m_Mode: 1
+      - m_Target: {fileID: 1071762393}
+        m_TargetAssemblyTypeName: StarGarden.UI.PetMenuUI, Assembly-CSharp
+        m_MethodName: FeedCookie
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &930803402
 MonoBehaviour:
@@ -4479,6 +4514,7 @@ MonoBehaviour:
   petImage: {fileID: 1858491686}
   hatImage: {fileID: 2080509163}
   signImage: {fileID: 255652657}
+  happinessBar: {fileID: 209805869}
 --- !u!1 &1090434075
 GameObject:
   m_ObjectHideFlags: 0
@@ -6370,7 +6406,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1396074694}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1071762393}
+        m_TargetAssemblyTypeName: StarGarden.UI.PetMenuUI, Assembly-CSharp
+        m_MethodName: PreviousPet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1396074694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7763,7 +7811,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1739313483}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1071762393}
+        m_TargetAssemblyTypeName: StarGarden.UI.PetMenuUI, Assembly-CSharp
+        m_MethodName: NextPet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1739313483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8472,6 +8532,7 @@ GameObject:
   - component: {fileID: 1858491685}
   - component: {fileID: 1858491687}
   - component: {fileID: 1858491686}
+  - component: {fileID: 1858491688}
   m_Layer: 5
   m_Name: PetSprite
   m_TagString: Untagged
@@ -8490,7 +8551,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 494164843}
   m_Father: {fileID: 1465841702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8537,6 +8599,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1858491684}
   m_CullTransparentMesh: 1
+--- !u!95 &1858491688
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858491684}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e12753c7d9187a43b91cd76870e1029, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1875686162
 GameObject:
   m_ObjectHideFlags: 0
@@ -9152,10 +9234,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 209805869}
-        m_TargetAssemblyTypeName: StarGarden.UI.HappinessBar, Assembly-CSharp
-        m_MethodName: CelestialCookie
-        m_Mode: 1
+      - m_Target: {fileID: 1071762393}
+        m_TargetAssemblyTypeName: StarGarden.UI.PetMenuUI, Assembly-CSharp
+        m_MethodName: FeedCookie
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9529,9 +9611,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4c1f74f41c63c88449f3b24a0e72fbc0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 98f846c8e13fae34aa73263699d31ce1, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

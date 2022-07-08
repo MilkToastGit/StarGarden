@@ -158,6 +158,8 @@ namespace StarGarden.Items
                 StartDragging();
         }
 
+        public void OnTap() { }
+
         private void OnEnable()
         {
             InputManager.Main.OnTouchHold += pos => OnHoldTouch();

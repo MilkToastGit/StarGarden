@@ -14,6 +14,8 @@ namespace StarGarden.Core
         public event TouchDownEvent OnTouchDown;
         public delegate void TouchUpEvent(Vector2 position);
         public event TouchUpEvent OnTouchUp;
+        public delegate void TapCompletedEvent(Vector2 position);
+        public event TapCompletedEvent OnTapCompleted;
         public delegate void TouchDragEvent(Vector2 position);
         public event TouchDragEvent OnTouchDrag;
         public delegate void TouchHoldEvent(Vector2 position);
@@ -65,7 +67,13 @@ namespace StarGarden.Core
         {
             touchControls.Touch.TouchPress.started += ctx => awaitingStartTouch = true;
             touchControls.Touch.TouchPress.canceled += ctx => { OnTouchUp?.Invoke(TouchPosition); awaitingDrag = false; };
+            touchControls.Touch.TouchTap.performed += ctx => { OnTapCompleted?.Invoke(TouchPosition); };
             touchControls.Touch.TouchHold.performed += ctx => HoldPerformed(ctx);
+        }
+
+        private void PressCanceled(InputAction.CallbackContext ctx)
+        {
+
         }
 
         private void HoldPerformed(InputAction.CallbackContext ctx)

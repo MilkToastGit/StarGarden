@@ -22,9 +22,8 @@ namespace StarGarden.Core
             else Destroy(gameObject);
         }
 
-        private void OnStartTouch(Vector2 touchPosition)
+        private void OnStartTouch()
         {
-            print(UI.UIManager.Main.PanelShowing);
             if (UI.UIManager.Main.PanelShowing) return;
             foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
             {
@@ -37,7 +36,6 @@ namespace StarGarden.Core
                 }
             }
 
-            print("passthrough");
             OnPassthrough?.Invoke();
         }
 
@@ -48,16 +46,33 @@ namespace StarGarden.Core
             held.Clear();
         }
 
+        private void OnTap()
+        {
+            if (UI.UIManager.Main.PanelShowing) return;
+            foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
+            {
+                if (collider.TryGetComponent(out Interactable t))
+                {
+                    held.Add(t);
+                    t.OnTap();
+                    if (!t.Passthrough)
+                        return;
+                }
+            }
+        }
+
         private void OnEnable()
         {
-            InputManager.Main.OnTouchDown += pos => OnStartTouch(pos);
+            InputManager.Main.OnTouchDown += pos => OnStartTouch();
             InputManager.Main.OnTouchUp += pos => OnEndTouch();
+            InputManager.Main.OnTapCompleted += pos => OnTap();
         }
 
         private void OnDisable()
         {
-            InputManager.Main.OnTouchDown -= pos => OnStartTouch(pos);
+            InputManager.Main.OnTouchDown -= pos => OnStartTouch();
             InputManager.Main.OnTouchUp -= pos => OnEndTouch();
+            InputManager.Main.OnTapCompleted += pos => OnTap();
         }
     }
 }
