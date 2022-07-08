@@ -26,7 +26,7 @@ namespace StarGarden.Items
             centerOffset = new Vector2(
                 (decor.Size.x - 1) % 2 / 2f,
                 (decor.Size.y - 1) % 2 / 2f) * WorldGrid.Spacing;
-            GetComponent<CircleCollider2D>().radius = Mathf.Max(decor.Size.x * WorldGrid.Spacing.x, decor.Size.y * WorldGrid.Spacing.y);
+            GetComponent<CircleCollider2D>().radius = Mathf.Max(Mathf.Max(decor.Size.x * WorldGrid.Spacing.x, decor.Size.y * WorldGrid.Spacing.y) / 2f, 0.5f);
 
             sprite = Instantiate(decoration.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
             if (firstPlacement)

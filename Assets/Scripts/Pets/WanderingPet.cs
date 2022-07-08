@@ -10,12 +10,16 @@ namespace StarGarden.Pets
     {
         public Pet Pet;
         public bool flip;
-        public Transform hatParentBase;
-        private Transform[] hatParents;
-        public HatInstances EquippedHat;
-        public float Happiness;
+        [SerializeField] private Transform hatParentBase;
+        [SerializeField] private float speed;
 
-        [SerializeField]private float speed;
+        [HideInInspector] public Vector2[] DefaultHatPositions;
+        [HideInInspector] public Quaternion[] DefaultHatRotations;
+        [HideInInspector] public Vector2[] DefaultHatScales;
+
+        [HideInInspector] public float Happiness;
+        public HatInstances EquippedHat;
+        private Transform[] hatParents;
         private int currentIsland;
         private Animator anim;
         private SpriteRenderer sprite;
@@ -30,6 +34,16 @@ namespace StarGarden.Pets
             hatParents = new Transform[hatParentBase.childCount];
             for (int i = 0; i < hatParentBase.childCount; i++)
                 hatParents[i] = hatParentBase.GetChild(i).transform;
+
+            DefaultHatPositions = new Vector2[hatParents.Length];
+            DefaultHatRotations = new Quaternion[hatParents.Length];
+            DefaultHatScales = new Vector2[hatParents.Length];
+            for (int i = 0; i < hatParents.Length; i++)
+            {
+                DefaultHatPositions[i] = hatParents[i].localPosition;//GetComponentInChildren<PetSpriteShifter>().sprites[0].LocalHatPositions;
+                DefaultHatRotations[i] = hatParents[i].localRotation;
+                DefaultHatScales[i] = hatParents[i].localScale;
+            }
 
             StartCoroutine(BehaviourCycle());
         }

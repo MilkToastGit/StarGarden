@@ -14,6 +14,8 @@ namespace StarGarden.UI
         [SerializeField] private TextMeshProUGUI petName, personalityText;
         [SerializeField] private Image petImage, hatImage, signImage;
         [SerializeField] private HappinessBar happinessBar;
+        [SerializeField] private Sprite defaultHatSprite;
+        [SerializeField] private Transform hatParent;
 
         private GameObject UIBase;
         private WanderingPet[] pets;
@@ -51,29 +53,53 @@ namespace StarGarden.UI
             hatImage.sprite = hat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
         }
 
-        public void SetPet(int pet)
+        public void SetPet(int petIndex)
         {
-            if (pet == currentPet) return;
+            if (petIndex == currentPet) return;
 
-            currentPet = F.Wrap(pet, 0, pets.Length);
+            currentPet = F.Wrap(petIndex, 0, pets.Length);
+            WanderingPet pet = pets[currentPet];
 
-            //Transform hatParent;
-            //pets[currentPet].
+            petImage.sprite = pet.Pet.Sprite;
 
-            petName.text = pets[currentPet].Pet.Name;
-            petImage.sprite = pets[currentPet].Pet.Sprite;
-            signImage.sprite = pets[currentPet].Pet.SignSprite;
-            personalityText.text = pets[currentPet].Pet.PersonalityTraits;
-            if (pets[currentPet].EquippedHat != null)
-                hatImage.sprite = pets[currentPet].EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
-            else hatImage.sprite = null;
-            happinessBar.SetHappiness(pets[currentPet].Happiness);
+            if (pet.EquippedHat != null)
+            {
+                //Sprite petSprite = pet.Pet.Sprite;
+                //(hatParent as RectTransform).pivot = (Vector3)(petSprite.pivot / petSprite.rect.size);
+
+                hatImage.sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                //hatParent.Order66();
+                //for (int i = 0; i < pet.DefaultHatPositions.Length; i++)
+                //{
+                //    GameObject hat = new GameObject("hat", typeof(RectTransform), typeof(Image));
+                //    hat.GetComponent<Image>().sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                //    //Transform spawnedHat = Instantiate(pet.EquippedHat.Item.Prefab, hatParent).transform;
+                //    Transform spawnedHat = hat.transform;
+                //    spawnedHat.SetParent(hatParent);
+                //    spawnedHat.localPosition = pet.DefaultHatPositions[i];
+                //    spawnedHat.localRotation = pet.DefaultHatRotations[i];
+                //    spawnedHat.localScale = pet.DefaultHatScales[i];
+                //}
+            }
+            else hatImage.sprite = defaultHatSprite;
+
+            petName.text = pet.Pet.Name;
+            signImage.sprite = pet.Pet.SignSprite;
+            personalityText.text = pet.Pet.PersonalityTraits;
+            happinessBar.SetHappiness(pet.Happiness);
         }
 
         public void FeedCookie(bool isCommon)
         {
-            float amount = isCommon ? 0.75f : 0.15f;
+            float amount = isCommon ? 0.1f : 0.175f;
             pets[currentPet].IncreaseHappiness(amount);
+            happinessBar.SetHappiness(pets[currentPet].Happiness);
+        }
+
+        // Placeholder
+        public void ResetHappiness()
+        {
+            pets[currentPet].Happiness = 0f;
             happinessBar.SetHappiness(pets[currentPet].Happiness);
         }
 

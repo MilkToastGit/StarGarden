@@ -18,7 +18,7 @@ namespace StarGarden.Stardust
 
         private void SpawnStarfall()
         {
-            Island island = IslandManager.Main.Islands.Random();
+            Island island = IslandManager.Main.Islands[0];//.Random();
             float randX = Random.Range(island.Bounds.xMin, island.Bounds.xMax);
             float randY = Random.Range(island.Bounds.yMin, island.Bounds.yMax);
 
