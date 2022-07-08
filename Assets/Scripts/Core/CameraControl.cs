@@ -36,6 +36,8 @@ namespace StarGarden.Core
 
         private void Update()
         {
+            if (UI.UIManager.Main.PanelShowing) return;
+
             if (Items.PlaceableDecoration.placingDecoration)
             {
                 if (InputManager.Main.TouchPosition.x < Screen.width / 10)
