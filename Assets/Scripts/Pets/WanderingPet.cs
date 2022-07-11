@@ -151,7 +151,12 @@ namespace StarGarden.Pets
 
                 if (Random.value > 0.7f)
                 {
-                    anim.SetInteger("Emote", Random.Range(0, 3));
+                    // Lower chance for neutral emote
+                    if (Random.value > 0.6f)
+                        anim.SetInteger("Emote", 1);
+                    // Emote negative or positive based on happiness
+                    else
+                        anim.SetInteger("Emote", Random.value < Happiness ? 2 : 0);
                     anim.SetTrigger("EmoteTrigger");
 
                     yield return new WaitForSeconds(Random.Range(2.5f, 3f));
