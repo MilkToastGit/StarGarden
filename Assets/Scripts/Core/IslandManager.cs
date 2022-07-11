@@ -8,6 +8,8 @@ namespace StarGarden.Core
     {
         public static IslandManager Main { get; private set; }
 
+        public int activeIsland;
+
         private void Awake()
         {
             if (!Main)
@@ -46,11 +48,29 @@ namespace StarGarden.Core
             }
             return -1;
         }
+
+        public void SetActiveIsland(int island)
+        {
+            if (activeIsland >= 0)
+                islands[activeIsland].IslandObject.SetActive(false);
+            islands[island].IslandObject.SetActive(true);
+
+            activeIsland = island;
+        }
+
+        public void DisableActiveIsland()
+        {
+            if (activeIsland < 0) return;
+
+            islands[activeIsland].IslandObject.SetActive(false);
+            activeIsland = -1;
+        }
     }
 
     [System.Serializable]
     public class Island
     {
+        public GameObject IslandObject;
         public Rect Bounds;
         public Element Element;
     }
