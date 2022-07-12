@@ -79,7 +79,7 @@ namespace StarGarden.Core
                 t = t * t * (3f - 2f * t);
 
                 cam.orthographicSize = Mathf.Lerp(islandOverviewCameraSize, defaultCameraSize, t);
-                cloudsOut.transform.localScale = Mathf.Lerp(cloudStartScale, 1f, t) * Vector2.one;
+                cloudsIn.transform.localScale = Mathf.Lerp(cloudStartScale, 1f, t) * Vector2.one;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
                     
                 if (!islandEnabled && t > 0.5f)
