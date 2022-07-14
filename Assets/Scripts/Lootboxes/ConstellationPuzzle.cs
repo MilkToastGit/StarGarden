@@ -7,6 +7,7 @@ namespace StarGarden.LootBoxes
 {
     public class ConstellationPuzzle : MonoBehaviour
     {
+        public int previewConstellation = 0;
         [Range(0f, 1f)]
         public float rotateSensitivity;
         [Range(0f, 1f)]
@@ -14,7 +15,7 @@ namespace StarGarden.LootBoxes
         public float angleThreshold;
         public float checkDuration;
         public GameObject LinePrefab;
-        public ConstellationPoint[] ConstellationPoints;
+        public Constellation[] Constellations;
 
         private bool dragging = false;
         private bool atCorrectAngle = false;
@@ -24,8 +25,8 @@ namespace StarGarden.LootBoxes
 
         private void Awake()
         {
-            SpawnConstellation();
-            transform.Rotate(Vector3.up, Random.Range(30f, 180f) * (Random.value > 0.5f ? 1 : -1));
+            SpawnConstellation(Random.Range(0, Constellations.Length));
+            transform.Rotate(Vector3.up, Random.Range(30f, 150f) * (Random.value > 0.5f ? 1 : -1));
         }
 
         private void Update()
@@ -62,22 +63,28 @@ namespace StarGarden.LootBoxes
             }
         }
 
-        private void SpawnConstellation()
+        private void SpawnConstellation(int index)
         {
-            List<ConstellationPoint> nextPoints = new List<ConstellationPoint>() { ConstellationPoints[0] };
-            while (nextPoints.Count > 0)
-            {
-                ConstellationPoint[] lastPoints = nextPoints.ToArray();
-                nextPoints.Clear();
+            //List<ConstellationPoint> nextPoints = new List<ConstellationPoint>() { constellation[0] };
+            //while (nextPoints.Count > 0)
+            //{
+            //    ConstellationPoint[] lastPoints = nextPoints.ToArray();
+            //    nextPoints.Clear();
 
-                foreach(ConstellationPoint lastPoint in lastPoints)
-                {
-                    foreach (int nextPoint in lastPoint.NextPoints)
-                    {
-                        SpawnLine(lastPoint.Position3D, ConstellationPoints[nextPoint].Position3D);
-                        nextPoints.Add(ConstellationPoints[nextPoint]);
-                    }
-                }
+            //    foreach(ConstellationPoint lastPoint in lastPoints)
+            //    {
+            //        foreach (int nextPoint in lastPoint.NextPoints)
+            //        {
+            //            SpawnLine(lastPoint.Position3D, constellation[nextPoint].Position3D);
+            //            nextPoints.Add(constellation[nextPoint]);
+            //        }
+            //    }
+            //}
+
+            foreach (ConstellationPoint point in Constellations[index])
+            {
+                foreach (int nextPoint in point.NextPoints)
+                    SpawnLine(point.Position3D, Constellations[index][nextPoint].Position3D);
             }
         }
 
@@ -89,8 +96,8 @@ namespace StarGarden.LootBoxes
 
         private void OnDrawGizmos()
         {
-            foreach (ConstellationPoint point in ConstellationPoints)
-                Gizmos.DrawWireSphere(point.Position, 0.2f);
+            foreach (ConstellationPoint point in Constellations[previewConstellation])
+                Gizmos.DrawWireSphere(point.Position, point.radius);
         }
 
         private void OnTouchDrag(Vector2 position)
@@ -118,25 +125,5 @@ namespace StarGarden.LootBoxes
             InputManager.Main.OnTouchDrag -= OnTouchDrag;
             InputManager.Main.OnTouchUp -= OnTouchUp;
         }
-    }
-
-    [System.Serializable]
-    public class ConstellationPoint
-    {
-        public Vector2 Position;
-        public int[] NextPoints;
-        public Vector3 Position3D { 
-            get {
-                if (!zPosSet)
-                {
-                    zPosition = Random.Range(-2f, 2f);
-                    zPosSet = true;
-                }
-                return new Vector3(Position.x, Position.y, zPosition);
-            }
-        }
-
-        private float zPosition;
-        private bool zPosSet = false;
     }
 }

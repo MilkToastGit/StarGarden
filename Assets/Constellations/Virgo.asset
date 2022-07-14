@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 800f2230ae5c40d46a0d06a17e4a7b1e, type: 3}
+  m_Name: Virgo
+  m_EditorClassIdentifier: 
+  Points:
+  - Position: {x: 1.99, y: 0.97}
+    radius: 0.09
+    NextPoints: 01000000
+  - Position: {x: 1.87, y: 0.09}
+    radius: 0.12
+    NextPoints: 02000000
+  - Position: {x: 0.49, y: -0.39}
+    radius: 0.08
+    NextPoints: 03000000
+  - Position: {x: -0.35, y: -0.54}
+    radius: 0.17
+    NextPoints: 0400000006000000
+  - Position: {x: -0.89, y: 0.4}
+    radius: 0.08
+    NextPoints: 05000000
+  - Position: {x: -1.04, y: 1.42}
+    radius: 0.2
+    NextPoints: 
+  - Position: {x: -1.14, y: -0.79}
+    radius: 0.1
+    NextPoints: 0700000008000000
+  - Position: {x: -1.98, y: 0.1}
+    radius: 0.11
+    NextPoints: 
+  - Position: {x: -1.67, y: -1.33}
+    radius: 0.17
+    NextPoints: 
