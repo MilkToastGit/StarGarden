@@ -12,6 +12,7 @@ namespace StarGarden.LootBoxes
         private Transform constellation;
         private SpriteRenderer sprite;
         private float angleThreshold, startScale, fadeInTime, fadeInDuration;
+        private float fade => Mathf.Pow(Mathf.Min(1, fadeInTime / fadeInDuration), 2);
 
         private void Awake()
         {
@@ -30,7 +31,7 @@ namespace StarGarden.LootBoxes
 
             float t = Mathf.Abs(F.NormalizeAngle(constellation.localEulerAngles.y)).Map(180f, angleThreshold / 2f);
             t = tCurve.Evaluate(t);
-            SetSpriteAlpha(Mathf.Lerp(AlphaRange.x, AlphaRange.y, t) * Mathf.Pow(fadeInTime / fadeInDuration, 2));
+            SetSpriteAlpha(Mathf.Lerp(AlphaRange.x, AlphaRange.y, t) * fade);
             SetSize(Mathf.Lerp(SizeRange.x, SizeRange.y, t));
 
             fadeInTime += Time.deltaTime;

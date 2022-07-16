@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Lamp
   m_EditorClassIdentifier: 
   Name: Lamp
-  Prefab: {fileID: 7231205281149985725, guid: a5726be35eeae144da2a4cb624dd07b3, type: 3}
   Rarity: 0
+  Sprite: {fileID: 21300000, guid: 04888b94395ba054aa3c89177fd8b22c, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: a5726be35eeae144da2a4cb624dd07b3, type: 3}
   ItemIndex: 1
   Size: {x: 1, y: 1}
   Element: 0

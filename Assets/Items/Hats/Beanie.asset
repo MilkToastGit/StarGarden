@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Beanie
   m_EditorClassIdentifier: 
   Name: Beanie
-  Prefab: {fileID: 7231205281149985725, guid: 1216a6a945539694c8b6d0bf5d596794, type: 3}
   Rarity: 0
+  Sprite: {fileID: 21300000, guid: 21e7bf827098bc444a67bc94c2defe95, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 1216a6a945539694c8b6d0bf5d596794, type: 3}
   ItemIndex: 0

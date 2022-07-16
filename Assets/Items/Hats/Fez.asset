@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fez
   m_EditorClassIdentifier: 
   Name: Fez
-  Prefab: {fileID: 7231205281149985725, guid: 5b7fc8a07ba9a304bae8ee798c42076b, type: 3}
   Rarity: 1
-  ItemIndex: 0
+  Sprite: {fileID: 21300000, guid: 4c1f74f41c63c88449f3b24a0e72fbc0, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 5b7fc8a07ba9a304bae8ee798c42076b, type: 3}
+  ItemIndex: 1

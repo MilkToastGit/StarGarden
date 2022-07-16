@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Party Hat
   m_EditorClassIdentifier: 
   Name: Party Hat
-  Prefab: {fileID: 7231205281149985725, guid: 140eb235474d1904fa5b38911d48c010, type: 3}
   Rarity: 1
-  ItemIndex: 0
+  Sprite: {fileID: 21300000, guid: 7bac111210de2f94196ae5c76cd119a3, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 140eb235474d1904fa5b38911d48c010, type: 3}
+  ItemIndex: 4

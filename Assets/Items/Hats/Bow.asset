@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bow
   m_EditorClassIdentifier: 
   Name: Bow
-  Prefab: {fileID: 7231205281149985725, guid: 5d6d9b3da57b54141835fff5f2ada6e4, type: 3}
   Rarity: 0
-  ItemIndex: 0
+  Sprite: {fileID: 21300000, guid: 49daaf52a9293d245a8b339815e56be4, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 5d6d9b3da57b54141835fff5f2ada6e4, type: 3}
+  ItemIndex: 3

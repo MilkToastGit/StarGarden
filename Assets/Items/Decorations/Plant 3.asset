@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Plant 3
   m_EditorClassIdentifier: 
   Name: Plant 3
-  Prefab: {fileID: 7231205281149985725, guid: dc8cd424def05154ba0903711134a41e, type: 3}
   Rarity: 0
+  Sprite: {fileID: 21300000, guid: b2ba64c76a7306a4e8397c43adf79477, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: dc8cd424def05154ba0903711134a41e, type: 3}
   ItemIndex: 5
   Size: {x: 2, y: 1}
   Element: 1

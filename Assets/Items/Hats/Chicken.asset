@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Chicken
   m_EditorClassIdentifier: 
   Name: Chicken
-  Prefab: {fileID: 7231205281149985725, guid: 043bd5e5c65ea8b4ea66b049e5e10f16, type: 3}
   Rarity: 2
-  ItemIndex: 0
+  Sprite: {fileID: 21300000, guid: 3a9e28d58a46a054da8efa8f8c349242, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 043bd5e5c65ea8b4ea66b049e5e10f16, type: 3}
+  ItemIndex: 5

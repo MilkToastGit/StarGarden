@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Scratching Post
   m_EditorClassIdentifier: 
   Name: Scratching Post
-  Prefab: {fileID: 7231205281149985725, guid: 31b7b62a4d429e541b3428d58ddd5057, type: 3}
   Rarity: 1
+  Sprite: {fileID: 21300000, guid: 6255e2cd867089447bb2a2236e384a04, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 31b7b62a4d429e541b3428d58ddd5057, type: 3}
   ItemIndex: 6
   Size: {x: 3, y: 1}
   Element: 1

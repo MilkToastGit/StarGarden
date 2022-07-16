@@ -7,8 +7,9 @@ namespace StarGarden.Items
         public abstract int ItemCategory { get; }
 
         public string Name;
-        public GameObject Prefab;
         public Rarity Rarity;
+        public Sprite Sprite;
+        public GameObject Prefab;
 
         [HideInInspector] public int ItemIndex;
     }

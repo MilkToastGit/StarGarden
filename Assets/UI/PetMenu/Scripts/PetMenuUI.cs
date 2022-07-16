@@ -40,7 +40,7 @@ namespace StarGarden.UI
             ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(1);
             Sprite[] sprites = new Sprite[items.Length];
             for (int i = 0; i < items.Length; i++)
-                sprites[i] = items[i].Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                sprites[i] = items[i].Item.Sprite;
 
             UIManager.Main.ShowSelectionMenu(sprites, OnHatSelected);
         }
@@ -50,7 +50,7 @@ namespace StarGarden.UI
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
             hat.Equip(pets[currentPet]);
             pets[currentPet].SetHat(hat);
-            hatImage.sprite = hat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+            hatImage.sprite = hat.Item.Sprite;
         }
 
         public void SetPet(int petIndex)
@@ -67,12 +67,12 @@ namespace StarGarden.UI
                 //Sprite petSprite = pet.Pet.Sprite;
                 //(hatParent as RectTransform).pivot = (Vector3)(petSprite.pivot / petSprite.rect.size);
 
-                hatImage.sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                hatImage.sprite = pet.EquippedHat.Item.Sprite;
                 //hatParent.Order66();
                 //for (int i = 0; i < pet.DefaultHatPositions.Length; i++)
                 //{
                 //    GameObject hat = new GameObject("hat", typeof(RectTransform), typeof(Image));
-                //    hat.GetComponent<Image>().sprite = pet.EquippedHat.Item.Prefab.GetComponentInChildren<SpriteRenderer>().sprite;
+                //    hat.GetComponent<Image>().sprite = pet.EquippedHat.Item.Sprite;
                 //    //Transform spawnedHat = Instantiate(pet.EquippedHat.Item.Prefab, hatParent).transform;
                 //    Transform spawnedHat = hat.transform;
                 //    spawnedHat.SetParent(hatParent);

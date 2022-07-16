@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using StarGarden.Items;
+using UnityEngine.UI;
 
 namespace StarGarden.UI
 {
@@ -11,6 +12,7 @@ namespace StarGarden.UI
         public ItemInstances Item => item;
         private ItemInstances item;
 
+        [SerializeField] private Image itemImage;
         private TextMeshProUGUI itemCount;
         private bool touched = false;
 
@@ -25,9 +27,10 @@ namespace StarGarden.UI
 
             this.item = item;
             itemCount.text = item.InventoryCount.ToString();
-            SpriteRenderer prefabSprite = Instantiate(item.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
-            prefabSprite.sortingLayerName = "Menus";
-            prefabSprite.sortingOrder = 1;
+            itemImage.sprite = item.Item.Sprite;
+            //SpriteRenderer prefabSprite = Instantiate(item.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
+            //prefabSprite.sortingLayerName = "Menus";
+            //prefabSprite.sortingOrder = 1;
         }
 
         //public void OnPointerDown()

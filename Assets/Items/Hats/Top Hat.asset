@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Top Hat
   m_EditorClassIdentifier: 
   Name: Top Hat
-  Prefab: {fileID: 7231205281149985725, guid: a98d7b31c903b4c4c95d802fb9443183, type: 3}
   Rarity: 0
-  ItemIndex: 0
+  Sprite: {fileID: 21300000, guid: 16222f4188c1edf4597e0dfc2324d59e, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: a98d7b31c903b4c4c95d802fb9443183, type: 3}
+  ItemIndex: 2

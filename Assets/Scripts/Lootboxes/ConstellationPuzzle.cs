@@ -18,23 +18,39 @@ namespace StarGarden.LootBoxes
         public AnimationCurve spinIntro;
         public GameObject linePrefab, starPrefab, starGlowPrefab;
         public Constellation[] Constellations;
+        public delegate void PuzzleCompleted();
 
         private float introTime = 0f;
         private float introRotationTarget;
         private bool dragging = false;
         private bool atCorrectAngle = false;
+        private bool puzzleComplete = false;
         private float lastXDelta = 0f;
         private float xDelta = 0f;
         private Vector2 lastTouchPos;
+        private Transform starGlowParent = new GameObject().transform;
+        private PuzzleCompleted onPuzzleCompleted;
 
         private void Awake()
         {
+            
+        }
+
+        public void SetPuzzle(PuzzleCompleted puzzleCompleted)
+        {
+            onPuzzleCompleted = puzzleCompleted;
+            transform.Order66();
+            starGlowParent.Order66();
             SpawnConstellation(Random.Range(0, Constellations.Length));
             introRotationTarget = Random.Range(90f, 170f) * (Random.value > 0.5f ? 1 : -1);
+            introTime = 0f;
+            puzzleComplete = false;
         }
 
         private void Update()
         {
+            if (puzzleComplete) return;
+
             if (introTime < introDuration)
                 Spin();
             else
@@ -75,6 +91,8 @@ namespace StarGarden.LootBoxes
             {
                 xDelta = 0f;
                 transform.rotation = Quaternion.identity;
+                puzzleComplete = true;
+                onPuzzleCompleted?.Invoke();
                 print("You Di d i  t.");
             }
         }
@@ -115,7 +133,7 @@ namespace StarGarden.LootBoxes
         private void SpawnStar(Vector3 position, float radius)
         {
             Instantiate(starPrefab, position, Quaternion.identity, transform).transform.localScale = radius * Vector3.one;
-            Instantiate(starGlowPrefab, (Vector2)position, Quaternion.identity).transform.localScale = radius * Vector3.one;
+            Instantiate(starGlowPrefab, (Vector2)position, Quaternion.identity, starGlowParent).transform.localScale = radius * Vector3.one;
         }
 
         private void OnDrawGizmos()
