@@ -239,9 +239,36 @@ MonoBehaviour:
   previewConstellation: 11
   rotateSensitivity: 0.112
   inertia: 0.931
-  angleThreshold: 20
+  angleThreshold: 35
   checkDuration: 1
-  LinePrefab: {fileID: 524478968626114515, guid: cb6656507bbbe784da6beb03a16f4a2c, type: 3}
+  introDuration: 1.5
+  spinIntro:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  linePrefab: {fileID: 524478968626114515, guid: cb6656507bbbe784da6beb03a16f4a2c, type: 3}
+  starPrefab: {fileID: 2414652474509215835, guid: e40ddfc7bfb40c440a2c047feece76bd, type: 3}
+  starGlowPrefab: {fileID: 3629269767096778914, guid: 5a2dbbe416eb4ae45bd7b5b13af4d83b, type: 3}
   Constellations:
   - {fileID: 11400000, guid: ddfecbdf7689d394e9ef903116b6c0db, type: 2}
   - {fileID: 11400000, guid: 7a4db76493e299d4398964be154bcf3f, type: 2}

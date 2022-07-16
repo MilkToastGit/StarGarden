@@ -14,9 +14,13 @@ namespace StarGarden.LootBoxes
         public float inertia;
         public float angleThreshold;
         public float checkDuration;
-        public GameObject LinePrefab;
+        public float introDuration;
+        public AnimationCurve spinIntro;
+        public GameObject linePrefab, starPrefab, starGlowPrefab;
         public Constellation[] Constellations;
 
+        private float introTime = 0f;
+        private float introRotationTarget;
         private bool dragging = false;
         private bool atCorrectAngle = false;
         private float lastXDelta = 0f;
@@ -26,12 +30,24 @@ namespace StarGarden.LootBoxes
         private void Awake()
         {
             SpawnConstellation(Random.Range(0, Constellations.Length));
-            transform.Rotate(Vector3.up, Random.Range(30f, 150f) * (Random.value > 0.5f ? 1 : -1));
+            introRotationTarget = Random.Range(90f, 170f) * (Random.value > 0.5f ? 1 : -1);
         }
 
         private void Update()
         {
-            Rotate();
+            if (introTime < introDuration)
+                Spin();
+            else
+                Rotate();
+        }
+
+        private void Spin()
+        {
+            float t = introTime / introDuration;
+            t = spinIntro.Evaluate(t);
+            float rotation = t * 360 * 3 + introRotationTarget;
+            transform.rotation = Quaternion.Euler(0, rotation, 0);
+            introTime += Time.deltaTime;
         }
 
         private void Rotate()
@@ -83,6 +99,8 @@ namespace StarGarden.LootBoxes
 
             foreach (ConstellationPoint point in Constellations[index])
             {
+                SpawnStar(point.Position3D, point.radius);
+
                 foreach (int nextPoint in point.NextPoints)
                     SpawnLine(point.Position3D, Constellations[index][nextPoint].Position3D);
             }
@@ -91,7 +109,13 @@ namespace StarGarden.LootBoxes
         private void SpawnLine(Vector3 start, Vector3 end)
         {
             Vector3[] positions = new Vector3[] { start, end };
-            Instantiate(LinePrefab, transform).GetComponent<LineRenderer>().SetPositions(positions);
+            Instantiate(linePrefab, transform).GetComponent<LineRenderer>().SetPositions(positions);
+        }
+
+        private void SpawnStar(Vector3 position, float radius)
+        {
+            Instantiate(starPrefab, position, Quaternion.identity, transform).transform.localScale = radius * Vector3.one;
+            Instantiate(starGlowPrefab, (Vector2)position, Quaternion.identity).transform.localScale = radius * Vector3.one;
         }
 
         private void OnDrawGizmos()
