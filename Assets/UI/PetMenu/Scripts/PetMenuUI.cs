@@ -38,15 +38,17 @@ namespace StarGarden.UI
         public void ShowHatSelectMenu()
         {
             ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(1);
-            Sprite[] sprites = new Sprite[items.Length];
-            for (int i = 0; i < items.Length; i++)
-                sprites[i] = items[i].Item.Sprite;
+            //Sprite[] sprites = new Sprite[items.Length];
+            //for (int i = 0; i < items.Length; i++)
+            //    sprites[i] = items[i].Item.Sprite;
 
-            UIManager.Main.ShowSelectionMenu(sprites, OnHatSelected);
+            UIManager.Main.ShowSelectionMenu(items, OnHatSelected);
         }
 
         private void OnHatSelected(int selectedIndex)
         {
+            if (selectedIndex < 0) return;
+
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
             hat.Equip(pets[currentPet]);
             pets[currentPet].SetHat(hat);

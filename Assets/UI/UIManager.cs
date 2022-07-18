@@ -53,6 +53,29 @@ namespace StarGarden.UI
                 preview.GetComponent<Button>().onClick.AddListener(() => HideSelectionMenu());
             }
         }
+        
+        public void ShowSelectionMenu(Items.ItemInstances[] lst, SelectionCompleted onCompleted)
+        {
+            selectionMenuItems.Order66();
+
+            bool atLeastOneSpawned = false;
+            for (int i = 0; i < lst.Length; i++)
+            {
+                if (lst[i].InventoryCount <= 0) continue;
+
+                atLeastOneSpawned = true;
+                int index = i;
+                GameObject preview = Instantiate(selectionItemPreview, selectionMenuItems);
+                preview.GetComponent<ItemPreview>().SetItem(lst[i]);
+                preview.GetComponent<Button>().onClick.AddListener(() => onCompleted(index));
+                preview.GetComponent<Button>().onClick.AddListener(() => HideSelectionMenu());
+            }
+
+            if (atLeastOneSpawned)
+                selectionMenuBase.gameObject.SetActive(true);
+            else
+                onCompleted(-1);
+        }
 
         public void ShowPanel(int panel)
         {
