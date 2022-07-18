@@ -22,7 +22,8 @@ namespace StarGarden.Stardust
             circleCollider = GetComponent<CircleCollider2D>();
             circleCollider.enabled = false;
 
-            rarity = Random.value > 0.8f ? Rarity.Rare : Rarity.Common;
+            rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, 0.1f, 0.6f) ?
+                Rarity.Common : Rarity.Rare;
             if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
 
             bounceHeight = Random.Range(0.5f, 1.5f);

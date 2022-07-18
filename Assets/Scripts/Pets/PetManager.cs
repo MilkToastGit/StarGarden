@@ -9,6 +9,7 @@ namespace StarGarden.Pets
         public static PetManager Main;
 
         public PetInstance[] AllPets;
+        public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) h += pet.Pet.Happiness; return h / AllPets.Length; } }
 
         private void Awake()
         {
