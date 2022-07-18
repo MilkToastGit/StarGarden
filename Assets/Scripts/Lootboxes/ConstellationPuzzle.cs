@@ -28,22 +28,32 @@ namespace StarGarden.LootBoxes
         private float lastXDelta = 0f;
         private float xDelta = 0f;
         private Vector2 lastTouchPos;
-        private Transform starGlowParent = new GameObject().transform;
+        private Transform starGlowParent;
         private PuzzleCompleted onPuzzleCompleted;
 
         private void Awake()
         {
-            
+            starGlowParent = new GameObject().transform;
+            starGlowParent.SetParent(transform.parent);
+            starGlowParent.localPosition = Vector3.zero;
+            //SetPuzzle(()=>print("done"));
         }
 
         public void SetPuzzle(PuzzleCompleted puzzleCompleted)
         {
             onPuzzleCompleted = puzzleCompleted;
+
+            transform.rotation = Quaternion.identity;
             transform.Order66();
             starGlowParent.Order66();
             SpawnConstellation(Random.Range(0, Constellations.Length));
+
             introRotationTarget = Random.Range(90f, 170f) * (Random.value > 0.5f ? 1 : -1);
+
             introTime = 0f;
+            lastXDelta = 0f;
+            xDelta = 0f;
+            lastTouchPos = Vector2.zero;
             puzzleComplete = false;
         }
 
@@ -132,8 +142,12 @@ namespace StarGarden.LootBoxes
 
         private void SpawnStar(Vector3 position, float radius)
         {
-            Instantiate(starPrefab, position, Quaternion.identity, transform).transform.localScale = radius * Vector3.one;
-            Instantiate(starGlowPrefab, (Vector2)position, Quaternion.identity, starGlowParent).transform.localScale = radius * Vector3.one;
+            Transform star = Instantiate(starPrefab, transform).transform;
+            star.localPosition = position;
+            star.localScale = radius * Vector3.one;
+            Transform starGlow = Instantiate(starGlowPrefab, starGlowParent).transform;
+            starGlow.localPosition = (Vector2)position;
+            starGlow.localScale = radius * Vector3.one;
         }
 
         private void OnDrawGizmos()
@@ -144,8 +158,6 @@ namespace StarGarden.LootBoxes
 
         private void OnTouchDrag(Vector2 position)
         {
-            if (Items.PlaceableDecoration.placingDecoration) return;
-
             lastTouchPos = position;
             dragging = true;
         }

@@ -24,15 +24,15 @@ namespace StarGarden.UI
         }
 
         // **PLACEHOLDER**
-        private void Start()
-        {
-            foreach (Item item in itemsToAdd)
-            {
-                for (int i = 0; i < Random.Range(0, 6); i++)
-                    InventoryManager.Main.AddItem(item);
-            }
-            //Show();
-        }
+        //private void Start()
+        //{
+        //    foreach (Item item in itemsToAdd)
+        //    {
+        //        for (int i = 0; i < Random.Range(0, 6); i++)
+        //            InventoryManager.Main.AddItem(item);
+        //    }
+        //    //Show();
+        //}
 
         public void Show()
         {

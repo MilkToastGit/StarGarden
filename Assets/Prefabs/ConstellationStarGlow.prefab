@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3629269767096778913}
   - component: {fileID: 3629269767096778912}
   - component: {fileID: 3629269767096778915}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ConstellationStarGlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using StarGarden.Core;
 using StarGarden.Items;
 
@@ -8,27 +9,33 @@ namespace StarGarden.LootBoxes
 {
     public class StarWishSequence : MonoBehaviour
     {
+        public GameObject puzzleHolder, itemHolder;
         public ConstellationPuzzle puzzle;
         public int commonCost, rareCost, mythicalCost;
 
-        public SpriteRenderer itemPreview;
+        public Image itemPreview;
+        public Image itemBackground;
 
-        public void MakeWish(Rarity rarity)
+        public void MakeWish(int rarity)
         {
+            Rarity boxRarity = Rarity.Common;
             int cost = 0;
             int held = 0;
 
             switch (rarity)
             {
-                case Rarity.Common:
+                case 0:
+                    boxRarity = Rarity.Common;
                     cost = commonCost;
                     held = ResourcesManager.Main.CommonStardust;
                     break;
-                case Rarity.Rare:
+                case 1:
+                    boxRarity = Rarity.Rare;
                     cost = rareCost;
                     held = ResourcesManager.Main.RareStardust;
                     break;
-                case Rarity.Mythical:
+                case 2:
+                    boxRarity = Rarity.Mythical;
                     cost = mythicalCost;
                     held = ResourcesManager.Main.MythicalStardust;
                     break;
@@ -37,17 +44,30 @@ namespace StarGarden.LootBoxes
             if (cost > held)
                 print("NOT ENOUGH STARDUST");
             else
-                ResourcesManager.Main.RemoveStardust(rarity, cost);
+                ResourcesManager.Main.RemoveStardust(boxRarity, cost);
 
-            puzzle.gameObject.SetActive(true);
-            puzzle.SetPuzzle(() => OnPuzzleCompleted(rarity));
+            puzzleHolder.SetActive(true);
+            puzzle.SetPuzzle(() => OnPuzzleCompleted(boxRarity));
         }
 
         private void OnPuzzleCompleted(Rarity rarity)
         {
-            puzzle.gameObject.SetActive(false);
-            ItemInstances item = RollItem(((int)rarity));
+            puzzleHolder.SetActive(false);
+            itemHolder.SetActive(true);
+            ItemInstances item = RollItem((int)rarity);
             itemPreview.sprite = item.Item.Sprite;
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    itemBackground.color = new Color(0.96f, 1f, 0.38f);
+                    break;
+                case Rarity.Rare:
+                    itemBackground.color = new Color(0.9f, 0f, 1f);
+                    break;
+                case Rarity.Mythical:
+                    itemBackground.color = new Color(0f, 1f, 0.85f);
+                    break;
+            }
         }
 
         private ItemInstances RollItem(int rarity)

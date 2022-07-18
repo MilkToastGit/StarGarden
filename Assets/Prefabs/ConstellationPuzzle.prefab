@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3123006587556049473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3123006587556049475}
+  - component: {fileID: 3123006587556049474}
+  m_Layer: 0
+  m_Name: ConstellationPuzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3123006587556049475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3123006587556049473}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3123006587556049474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3123006587556049473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd848b6f63d2ce2479a69935060e8cc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  previewConstellation: 11
+  rotateSensitivity: 0.112
+  inertia: 0.931
+  angleThreshold: 35
+  checkDuration: 1
+  introDuration: 1.5
+  spinIntro:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  linePrefab: {fileID: 524478968626114515, guid: cb6656507bbbe784da6beb03a16f4a2c, type: 3}
+  starPrefab: {fileID: 2414652474509215835, guid: e40ddfc7bfb40c440a2c047feece76bd, type: 3}
+  starGlowPrefab: {fileID: 3629269767096778914, guid: 5a2dbbe416eb4ae45bd7b5b13af4d83b, type: 3}
+  Constellations:
+  - {fileID: 11400000, guid: ddfecbdf7689d394e9ef903116b6c0db, type: 2}
+  - {fileID: 11400000, guid: 7a4db76493e299d4398964be154bcf3f, type: 2}
+  - {fileID: 11400000, guid: 0ae93f02cf7b32440bda79d4aa81a2c3, type: 2}
+  - {fileID: 11400000, guid: 288595973b1b9ee40a9437a3dce25af7, type: 2}
+  - {fileID: 11400000, guid: 593167e2a266b8b47825466162c34c31, type: 2}
+  - {fileID: 11400000, guid: 65267b585c4097648b5c395b48922131, type: 2}
+  - {fileID: 11400000, guid: a754c4e025d44c74c895e2e889d52558, type: 2}
+  - {fileID: 11400000, guid: d31769ace44cb9e4db73df8ade2416dc, type: 2}
+  - {fileID: 11400000, guid: 1738c678e4ae46446b127051fe8038c1, type: 2}
+  - {fileID: 11400000, guid: ab9b0e15c65ff934f89a9d3b1cc3ffa2, type: 2}
+  - {fileID: 11400000, guid: acb56c7a9f5603b4ebd5bb6568d2c969, type: 2}
+  - {fileID: 11400000, guid: c9d9af8f456db0b4e8135511eb167996, type: 2}

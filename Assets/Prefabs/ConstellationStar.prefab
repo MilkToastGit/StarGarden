@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9043910525085946447}
   - component: {fileID: 291469855421373947}
   - component: {fileID: 1362124337831427947}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ConstellationStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
