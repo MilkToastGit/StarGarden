@@ -42,7 +42,10 @@ namespace StarGarden.LootBoxes
             }
 
             if (cost > held)
+            {
                 print("NOT ENOUGH STARDUST");
+                return;
+            }
             else
                 ResourcesManager.Main.RemoveStardust(boxRarity, cost);
 

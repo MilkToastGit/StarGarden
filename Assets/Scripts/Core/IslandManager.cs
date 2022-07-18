@@ -7,6 +7,7 @@ namespace StarGarden.Core
     public class IslandManager : MonoBehaviour
     {
         public static IslandManager Main { get; private set; }
+        public LayerMask IslandMask;
 
         public int activeIsland;
 
@@ -39,13 +40,25 @@ namespace StarGarden.Core
             }
         }
 
-        public int WithinIsland(Vector2 point)
+        public int WithinIslandBounds(Vector2 point)
         {
             for (int i = 0; i < islands.Length; i++)
             {
                 if (F.WithinBounds(point, islands[i].Bounds))
                     return i;
             }
+            return -1;
+        }
+
+        public int WithinIsland(Vector2 point)
+        {
+            Collider2D col = Physics2D.OverlapPoint(point, IslandMask);
+            if (!col) return -1;
+
+            for (int i = 0; i < Islands.Length; i++)
+                if (col.gameObject == Islands[i].IslandObject)
+                    return i;
+
             return -1;
         }
 
