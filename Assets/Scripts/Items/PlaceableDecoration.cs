@@ -20,7 +20,7 @@ namespace StarGarden.Items
 
         private Vector2Int lastPlacedPoint, lastHeldPoint;
 
-        public void SetItem(DecorationInstances decoration, bool firstPlacement)
+        public void SetItem(DecorationInstances decoration, bool place, Vector2Int point = default)
         {
             decorInst = decoration;
             centerOffset = new Vector2(
@@ -29,10 +29,17 @@ namespace StarGarden.Items
             GetComponent<CircleCollider2D>().radius = Mathf.Max(Mathf.Max(decor.Size.x * WorldGrid.Spacing.x, decor.Size.y * WorldGrid.Spacing.y) / 2f, 0.5f);
 
             sprite = Instantiate(decoration.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
-            if (firstPlacement)
+            if (place)
+            {
+                lastPlacedPoint = point;
+                placingDecoration = false;
+                state = State.Idle;
+                firstPlacement = false;
+            }
+            else
             {
                 state = State.AwaitingDrag;
-                this.firstPlacement = firstPlacement;
+                firstPlacement = true;
             }
         }
 

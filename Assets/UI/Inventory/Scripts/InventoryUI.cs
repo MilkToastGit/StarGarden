@@ -57,8 +57,7 @@ namespace StarGarden.UI
 
         private void OnDecorationClicked(DecorationInstances item)
         {
-            Instantiate(placeableDecor, (Vector2)Camera.main.transform.position, Quaternion.identity)
-                .GetComponent<PlaceableDecoration>().SetItem(item, true);
+            InventoryManager.Main.SpawnItem(item, false);
 
             UIManager.Main.HideCurrentPanel();
         }

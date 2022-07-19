@@ -7,8 +7,17 @@ namespace StarGarden.Items
     public class DecorationInstances : ItemInstances
     {
         public override int InventoryCount => totalCount - placedInstances.Count;
-        private List<Vector2Int> placedInstances = new List<Vector2Int>();
+        public List<Vector2Int> placedInstances { get; private set; } = new List<Vector2Int>();
         private Decoration decor => Item as Decoration;
+
+        public DecorationInstances(Core.SaveData.DecorationSaveData data, Decoration item)
+        {
+            Item = item;
+            totalCount = data.TotalCount;
+            placedInstances = new List<Vector2Int>();
+            foreach (Core.SaveData.SerializableVector2Int v in data.PlacedInstances)
+                placedInstances.Add(v);
+        }
 
         public void Place(Vector2Int position)
         {
