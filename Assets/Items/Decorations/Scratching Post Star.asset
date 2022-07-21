@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
+  m_Name: Scratching Post Star
+  m_EditorClassIdentifier: 
+  Name: Scratching Post Star
+  Rarity: 2
+  Sprite: {fileID: 21300000, guid: c791d6956d5ac4841b5db44c7de5f793, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 6543801c353662245a729c951d37f621, type: 3}
+  ItemIndex: 0
+  Size: {x: 1, y: 1}
+  Element: 0
