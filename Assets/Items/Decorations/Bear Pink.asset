@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
+  m_Name: Bear Pink
+  m_EditorClassIdentifier: 
+  Name: Bear Pink
+  Rarity: 1
+  Sprite: {fileID: 21300000, guid: 0f4b8155df74cb1449388a12db550674, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 67295b948c1ba994eb0cd0e2af0aa9ee, type: 3}
+  ItemIndex: 1
+  Size: {x: 3, y: 1}
+  Element: 0
