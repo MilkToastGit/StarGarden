@@ -8,12 +8,11 @@ public class SaveLoadTester : MonoBehaviour
 {
     public void SaveAll()
     {
-        SaveDataManager.SavePetData();
-        SaveDataManager.SaveItemData();
+        SaveDataManager.SaveAll();
     }
 
-    public void LoadItems()
-    {
-        SaveDataManager.ReadItemData();
-    }
+    //public void LoadItems()
+    //{
+    //    SaveDataManager.ReadAll();
+    //}
 }

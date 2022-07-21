@@ -15,8 +15,7 @@ namespace StarGarden.Core.SaveData
         {
             GetManagers();
             InitialiseAll();
-            SetupPets();
-            SetupItems();
+            LoadSave();
             LateInitialiseAll();
         }
 
@@ -39,22 +38,34 @@ namespace StarGarden.Core.SaveData
                 m.LateInitialise();
         }
 
-        private void SetupItems()
+        private void LoadSave()
         {
-            ItemSaveData data = SaveDataManager.ReadItemData();
+            AllSaveData data = SaveDataManager.ReadAll();
+            SetupPets(data == null ? null : data.PetSaveData);
+            SetupItems(data == null ? null : data.ItemSaveData);
+            SetupResources(data == null ? null : data.ResourceSaveData);
+        }
+
+        private void SetupPets(PetSaveData[] data)
+        {
+            if (data == null)
+                PetManager.Main.UpdateAllPets();
+            else
+                PetManager.Main.UpdateAllPets(data);
+        }
+
+        private void SetupItems(ItemSaveData data)
+        {
             if (data == null)
                 InventoryManager.Main.UpdateAllItems();
             else
                 InventoryManager.Main.UpdateAllItems(data);
         }
 
-        private void SetupPets()
+        private void SetupResources(ResourceSaveData data)
         {
-            PetSaveData[] data = SaveDataManager.ReadPetData();
-            if (data == null)
-                PetManager.Main.UpdateAllPets();
-            else
-                PetManager.Main.UpdateAllPets(data);
+            if (data != null)
+                ResourcesManager.Main.UpdateResources(data);
         }
     }
 }

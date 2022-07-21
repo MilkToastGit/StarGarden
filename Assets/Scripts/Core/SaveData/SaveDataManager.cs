@@ -10,8 +10,9 @@ namespace StarGarden.Core.SaveData
 {
     public static class SaveDataManager
     {
-        private static readonly string itemsDataPath = "/itemsData.dat";
-        private static readonly string petsDataPath = "/petsData.dat";
+        private static readonly string dataPath = "/gameData.dat";
+
+        private static AllSaveData allData = new AllSaveData();
 
         public static void SaveItemData()
         {
@@ -20,10 +21,9 @@ namespace StarGarden.Core.SaveData
             foreach(ItemInstances[] items in allItems)
                 data.AddItems(items);
 
-            WriteDataToFile(data, itemsDataPath);
+            allData.ItemSaveData = data;
+            WriteDataToFile(allData, dataPath);
         }
-
-        public static ItemSaveData ReadItemData() => (ItemSaveData)ReadDataFromFile(itemsDataPath);
 
         public static void SavePetData()
         {
@@ -32,10 +32,31 @@ namespace StarGarden.Core.SaveData
             for (int i = 0; i < allPets.Length; i++)
                 data[i] = new PetSaveData(allPets[i]);
 
-            WriteDataToFile(data, petsDataPath);
+            allData.PetSaveData = data;
+            WriteDataToFile(allData, dataPath);
         }
 
-        public static PetSaveData[] ReadPetData() => (PetSaveData[])ReadDataFromFile(petsDataPath);
+        public static void SaveResourceData()
+        {
+            int common = ResourcesManager.Main.CommonStardust;
+            int rare = ResourcesManager.Main.RareStardust;
+            int mythical = ResourcesManager.Main.MythicalStardust;
+            ResourceSaveData data = new ResourceSaveData(common, rare, mythical);
+
+            allData.ResourceSaveData = data;
+            WriteDataToFile(allData, dataPath);
+        }
+
+        public static void SaveAll()
+        {
+            SaveItemData();
+            SavePetData();
+            SaveResourceData();
+
+            WriteDataToFile(allData, dataPath);
+        }
+
+        public static AllSaveData ReadAll() => (AllSaveData)ReadDataFromFile(dataPath);
 
         private static void WriteDataToFile(object data, string subPath)
         {

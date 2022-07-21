@@ -30,6 +30,13 @@ namespace StarGarden.Core
 
         public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
 
+        public void UpdateResources(SaveData.ResourceSaveData data)
+        {
+            commonStardust = data.CommonStardust;
+            rareStardust = data.RareStardust;
+            mythicalStardust = data.MythicalStardust;
+        }
+
         public void AddStardust(Rarity rarity, int amount)
         {
             switch (rarity)
