@@ -10,6 +10,7 @@ namespace StarGarden.Pets
         public string Name;
         public Sprite Sprite;
         public Sprite SignSprite;
+        public GameObject Prefab;
         public Element Element;
         public string PersonalityTraits;
         [HideInInspector] public int PetIndex;

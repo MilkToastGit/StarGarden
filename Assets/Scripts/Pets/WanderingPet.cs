@@ -77,6 +77,7 @@ namespace StarGarden.Pets
 
         private Vector2 GridCast(Vector2 direction, float maxDistance)
         {
+            print("Grabbing");
             ItemInstances[] allItems = InventoryManager.Main.GetAllItemsFromCategory(0);
 
             direction.Normalize();

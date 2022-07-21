@@ -65,7 +65,6 @@ namespace StarGarden.Items
                 Decoration decorItem = serialisedAllDecorations[decorData.Decoration];
                 AllItems[0][i] = new DecorationInstances(decorData, decorItem);
                 AllItems[0][i].Item.ItemIndex = i;
-                print(AllItems[0][i].Item.Name);
 
                 DecorationInstances instance = AllItems[0][i] as DecorationInstances;
                 foreach (Vector2Int point in instance.placedInstances)
@@ -78,33 +77,36 @@ namespace StarGarden.Items
                 Hat hatItem = serialisedAllHats[hatData.Hat];
                 AllItems[1][i] = new HatInstances(hatData, hatItem);
                 AllItems[1][i].Item.ItemIndex = i;
+
+
                 print(AllItems[1][i].Item.Name);
             }
         }
 
-        //private void UpdateAllItems()
-        //{
-        //    if (serialisedAllDecorations.Length <= 0) return;
+        public void UpdateAllItems()
+        {
+            if (serialisedAllDecorations.Length <= 0) return;
 
-        //    Item[][] serialisedAllItems = new Item[2][];
-        //    serialisedAllItems[0] = serialisedAllDecorations;
-        //    serialisedAllItems[1] = serialisedAllHats;
+            Item[][] serialisedAllItems = new Item[2][];
+            serialisedAllItems[0] = serialisedAllDecorations;
+            serialisedAllItems[1] = serialisedAllHats;
 
-        //    for (int category = 0; category < 2; category++)
-        //    {
-        //        AllItems[category] = new ItemInstances[serialisedAllItems[category].Length];
+            for (int category = 0; category < 2; category++)
+            {
+                AllItems[category] = new ItemInstances[serialisedAllItems[category].Length];
 
-        //        for (int i = 0; i < serialisedAllItems[category].Length; i++)
-        //        {
-        //            AllItems[category][i] = category == 0 ? new DecorationInstances() : new HatInstances();
-        //            if (serialisedAllItems[category][i])
-        //            {
-        //                AllItems[category][i].Item = serialisedAllItems[category][i];
-        //                AllItems[category][i].Item.ItemIndex = i;
-        //            }
-        //        }
-        //    }
-        //}
+                for (int i = 0; i < serialisedAllItems[category].Length; i++)
+                {
+                    AllItems[category][i] = category == 0 ? new DecorationInstances() : new HatInstances();
+                    if (serialisedAllItems[category][i])
+                    {
+                        AllItems[category][i].Item = serialisedAllItems[category][i];
+                        AllItems[category][i].Item.ItemIndex = i;
+                    }
+                }
+            }
+            print("Generated");
+        }
 
         private void OnValidate()
         {

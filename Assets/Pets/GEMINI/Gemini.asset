@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Gemini
   Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
   SignSprite: {fileID: 0}
+  Prefab: {fileID: 7464248382517352699, guid: 3207b8f2c9903584690e02082e97e8c4, type: 3}
   Element: 0
   PersonalityTraits: Neutral
   PetIndex: 1

@@ -15,9 +15,10 @@ namespace StarGarden.Core.SaveData
         private void SetupItems()
         {
             ItemSaveData data = SaveDataManager.ReadItemData();
-            if (data == null) return;
-
-            InventoryManager.Main.UpdateAllItems(data);
+            if (data == null)
+                InventoryManager.Main.UpdateAllItems();
+            else
+                InventoryManager.Main.UpdateAllItems(data);
         }
     }
 }

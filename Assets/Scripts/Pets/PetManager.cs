@@ -9,7 +9,7 @@ namespace StarGarden.Pets
         public static PetManager Main;
 
         public PetInstance[] AllPets;
-        public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) h += pet.Pet.Happiness; return h / AllPets.Length; } }
+        public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) h += pet.WanderingPet.Happiness; return h / AllPets.Length; } }
 
         private void Awake()
         {
@@ -21,7 +21,14 @@ namespace StarGarden.Pets
             else Destroy(gameObject);
 
             for (int i = 0; i < AllPets.Length; i++)
-                AllPets[i].Pet.Pet.PetIndex = i;
+            {
+                AllPets[i].Pet.PetIndex = i;
+                if (AllPets[i].Obtained)
+                {
+                    Transform island = Core.IslandManager.Main.Islands[AllPets[i].Island].IslandObject.transform;
+                    AllPets[i].WanderingPet = Instantiate(AllPets[i].Pet.Prefab, island).GetComponent<WanderingPet>();
+                }
+            }
         }
 
         public WanderingPet[] GetActivePets()
@@ -30,7 +37,7 @@ namespace StarGarden.Pets
             for (int i = 0; i < AllPets.Length; i++)
             {
                 if(AllPets[i].Island >= 0)
-                    pets.Add(AllPets[i].Pet);
+                    pets.Add(AllPets[i].WanderingPet);
             }
 
             return pets.ToArray();

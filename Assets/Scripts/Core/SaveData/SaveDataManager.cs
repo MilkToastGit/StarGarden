@@ -27,7 +27,7 @@ namespace StarGarden.Core.SaveData
         public static ItemSaveData ReadItemData()
         {
             if (!File.Exists(Application.persistentDataPath + itemsDataPath))
-                throw new System.Exception("Fuck You");
+                return null;
 
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + itemsDataPath, FileMode.Open);

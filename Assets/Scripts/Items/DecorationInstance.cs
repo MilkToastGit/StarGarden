@@ -10,6 +10,8 @@ namespace StarGarden.Items
         public List<Vector2Int> placedInstances { get; private set; } = new List<Vector2Int>();
         private Decoration decor => Item as Decoration;
 
+        public DecorationInstances() { }
+        
         public DecorationInstances(Core.SaveData.DecorationSaveData data, Decoration item)
         {
             Item = item;

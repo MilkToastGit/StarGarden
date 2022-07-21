@@ -7,7 +7,9 @@ namespace StarGarden.Pets
     [System.Serializable]
     public class PetInstance
     {
-        public WanderingPet Pet;
+        public Pet Pet;
+        public WanderingPet WanderingPet;
+        public bool Obtained;
         public int Island;
     }
 }

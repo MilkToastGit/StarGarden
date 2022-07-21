@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: Leo
   Sprite: {fileID: 21300000, guid: 3d75c10511e4bf34caa9c1187c3a07d1, type: 3}
   SignSprite: {fileID: 21300000, guid: c9b4526f85789e4478af3d950b5fa79b, type: 3}
+  Prefab: {fileID: 8888112827561333915, guid: 76531ad19709e5548996d5ec6d7297d1, type: 3}
   Element: 0
   PersonalityTraits: Aggressive, Happy, Vain
   PetIndex: 0
