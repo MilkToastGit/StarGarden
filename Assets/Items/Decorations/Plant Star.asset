@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
-  m_Name: Yarn
+  m_Name: Plant Star
   m_EditorClassIdentifier: 
-  Name: Yarn
-  Rarity: 0
-  Sprite: {fileID: 21300000, guid: c0336cb5f847852438e527de28c60bf4, type: 3}
-  Prefab: {fileID: 7231205281149985725, guid: c576ce778a18dea4989686c3afb5be4b, type: 3}
-  ItemIndex: 7
+  Name: Plant Star
+  Rarity: 2
+  Sprite: {fileID: 21300000, guid: a486f7965b1344f4fadb66483fb5e74c, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 5a760b408df2e4e4681f41ecbc71218c, type: 3}
+  ItemIndex: 0
   Size: {x: 1, y: 1}
-  Element: 1
+  Element: 0
