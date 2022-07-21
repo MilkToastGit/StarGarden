@@ -17,5 +17,5 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: ecbfedcef0ca80746a28824ae0ad1d8f, type: 3}
   Prefab: {fileID: 7231205281149985725, guid: b8b36b95a396f50418286d15947e00c3, type: 3}
   ItemIndex: 0
-  Size: {x: 1, y: 1}
+  Size: {x: 3, y: 1}
   Element: 0

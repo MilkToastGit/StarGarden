@@ -16,6 +16,6 @@ MonoBehaviour:
   Rarity: 2
   Sprite: {fileID: 21300000, guid: c791d6956d5ac4841b5db44c7de5f793, type: 3}
   Prefab: {fileID: 7231205281149985725, guid: 6543801c353662245a729c951d37f621, type: 3}
-  ItemIndex: 0
-  Size: {x: 1, y: 1}
+  ItemIndex: 17
+  Size: {x: 4, y: 2}
   Element: 0
