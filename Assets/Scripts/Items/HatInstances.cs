@@ -16,9 +16,9 @@ namespace StarGarden.Items
         {
             Item = item;
             totalCount = data.TotalCount;
-            equippedInstances = new List<WanderingPet>();
-            foreach (int index in data.EquippedInstances)
-                equippedInstances.Add(PetManager.Main.AllPets[index].WanderingPet);
+            //equippedInstances = new List<WanderingPet>();
+            //foreach (int index in data.EquippedInstances)
+            //    equippedInstances.Add(PetManager.Main.AllPets[index].WanderingPet);
         }
 
         public void Equip(WanderingPet pet)
