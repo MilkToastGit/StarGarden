@@ -5,7 +5,7 @@ using StarGarden.Core.SaveData;
 
 namespace StarGarden.Items
 {
-    public class InventoryManager : MonoBehaviour
+    public class InventoryManager : MonoBehaviour, Manager
     {
         public static InventoryManager Main;
 
@@ -14,7 +14,7 @@ namespace StarGarden.Items
         [SerializeField] private Hat[] serialisedAllHats;
         [SerializeField] private GameObject decorationPrefab;
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -22,9 +22,9 @@ namespace StarGarden.Items
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
-
-            //UpdateAllItems();
         }
+
+        public void LateInitialise() { }
 
         public void AddItem(Item item)
         {
@@ -78,6 +78,9 @@ namespace StarGarden.Items
                 AllItems[1][i] = new HatInstances(hatData, hatItem);
                 AllItems[1][i].Item.ItemIndex = i;
 
+                HatInstances instance = AllItems[1][i] as HatInstances;
+                foreach (int pet in hatData.EquippedInstances)
+                    instance.Equip(Pets.PetManager.Main.AllPets[pet].WanderingPet);
 
                 print(AllItems[1][i].Item.Name);
             }

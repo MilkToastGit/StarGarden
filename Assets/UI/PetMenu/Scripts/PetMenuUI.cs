@@ -51,7 +51,6 @@ namespace StarGarden.UI
 
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
             hat.Equip(pets[currentPet]);
-            pets[currentPet].SetHat(hat);
             hatImage.sprite = hat.Item.Sprite;
         }
 

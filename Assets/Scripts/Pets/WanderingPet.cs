@@ -26,7 +26,7 @@ namespace StarGarden.Pets
 
         public bool Passthrough => false;
 
-        private void Start()
+        public void Initialise()
         {
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
@@ -44,7 +44,10 @@ namespace StarGarden.Pets
                 DefaultHatRotations[i] = hatParents[i].localRotation;
                 DefaultHatScales[i] = hatParents[i].localScale;
             }
+        }
 
+        private void Start()
+        {
             StartCoroutine(BehaviourCycle());
         }
 
@@ -77,7 +80,6 @@ namespace StarGarden.Pets
 
         private Vector2 GridCast(Vector2 direction, float maxDistance)
         {
-            print("Grabbing");
             ItemInstances[] allItems = InventoryManager.Main.GetAllItemsFromCategory(0);
 
             direction.Normalize();

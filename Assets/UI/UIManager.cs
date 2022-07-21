@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace StarGarden.UI
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour, Manager
     {
         public static UIManager Main;
         public bool PanelShowing => activePanel >= 0;
@@ -18,7 +18,7 @@ namespace StarGarden.UI
         [SerializeField] private GameObject selectionItemPreview;
         private Transform selectionMenuItems;
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -32,6 +32,8 @@ namespace StarGarden.UI
             for (int i = 0; i < PanelObjects.Length; i++)
                 panels[i] = PanelObjects[i].GetComponent<UIPanel>();
         }
+        
+        public void LateInitialise() { }
 
         public void ShowPetMenu(int petIndex)
         {

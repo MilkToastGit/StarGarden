@@ -46,6 +46,7 @@ namespace StarGarden.LootBoxes
             transform.rotation = Quaternion.identity;
             transform.Order66();
             starGlowParent.Order66();
+            ConstellationPoint.RandomiseSeed();
             SpawnConstellation(Random.Range(0, Constellations.Length));
 
             introRotationTarget = Random.Range(90f, 170f) * (Random.value > 0.5f ? 1 : -1);

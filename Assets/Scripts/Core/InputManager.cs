@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace StarGarden.Core
 {
-    public class InputManager : MonoBehaviour
+    public class InputManager : MonoBehaviour, Manager
     {
         public static InputManager Main { get; private set; }
 
@@ -27,6 +27,20 @@ namespace StarGarden.Core
         private bool awaitingStartTouch;
         private bool awaitingDrag;
 
+        public void Initialise()
+        {
+            if (!Main)
+            {
+                Main = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else Destroy(gameObject); 
+            touchControls = new TouchControls();
+            touchControls.Enable();
+        }
+
+        public void LateInitialise() { }
+
         private void Update()
         {
             if (awaitingStartTouch)
@@ -43,24 +57,16 @@ namespace StarGarden.Core
             }
         }
 
-        private void Awake()
-        {
-            if (!Main)
-            {
-                Main = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else Destroy(gameObject); touchControls = new TouchControls();
-        }
-
         private void OnEnable()
         {
-            touchControls.Enable();
+            if(touchControls != null)
+                touchControls.Enable();
         }
 
         private void OnDisable()
         {
-            touchControls.Disable();
+            if(touchControls != null)
+                touchControls.Disable();
         }
 
         private void Start()

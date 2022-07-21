@@ -4108,15 +4108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d31113bef45e98341b6cc0e9e85fb359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AllPets:
-  - Pet: {fileID: 11400000, guid: 9adaa61f6272afd4b8b876ff26688007, type: 2}
-    WanderingPet: {fileID: 0}
-    Obtained: 1
-    Island: 0
-  - Pet: {fileID: 11400000, guid: 0a557168b5c4a064280b5079ec87a4fa, type: 2}
-    WanderingPet: {fileID: 0}
-    Obtained: 1
-    Island: 0
+  serialisedAllPets:
+  - {fileID: 11400000, guid: 9adaa61f6272afd4b8b876ff26688007, type: 2}
+  - {fileID: 11400000, guid: 0a557168b5c4a064280b5079ec87a4fa, type: 2}
 --- !u!1 &774225997
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,6 +5097,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ca05f1403be6c418598292d1571e50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ManagerObjects:
+  - {fileID: 384629341}
+  - {fileID: 1125322672}
+  - {fileID: 163626001}
+  - {fileID: 870950685}
+  - {fileID: 816671157}
+  - {fileID: 1883365852}
+  - {fileID: 760876164}
 --- !u!198 &1015801671 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 1307330569789080226, guid: d18613011d7fb714680cef82ee548ca3, type: 3}
@@ -6506,7 +6508,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 519420035}
         m_TargetAssemblyTypeName: SaveLoadTester, Assembly-CSharp
-        m_MethodName: SaveItems
+        m_MethodName: SaveAll
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

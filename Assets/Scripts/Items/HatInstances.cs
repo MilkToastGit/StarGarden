@@ -27,6 +27,7 @@ namespace StarGarden.Items
                 pet.EquippedHat.Unequip(pet);
             pet.EquippedHat = this;
             equippedInstances.Add(pet);
+            pet.SetHat(this);
         }
 
         public void Unequip(WanderingPet pet)

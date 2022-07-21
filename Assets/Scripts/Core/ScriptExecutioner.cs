@@ -9,6 +9,6 @@ public class ScriptExecutioner : MonoBehaviour
     private void Awake()
     {
         foreach (GameObject manager in Managers)
-            manager.GetComponent<ExecutionOrderDependent>().Initialise();
+            manager.GetComponent<Manager>().Initialise();
     }
 }

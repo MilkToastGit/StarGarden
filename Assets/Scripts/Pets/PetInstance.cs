@@ -11,5 +11,14 @@ namespace StarGarden.Pets
         public WanderingPet WanderingPet;
         public bool Obtained;
         public int Island;
+
+        public PetInstance() { }
+
+        public PetInstance(Core.SaveData.PetSaveData data, Pet pet)
+        {
+            Pet = pet;
+            Obtained = data.Obtained;
+            Island = data.Island;
+        }
     }
 }

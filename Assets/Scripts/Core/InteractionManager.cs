@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace StarGarden.Core
 {
-    public class InteractionManager : MonoBehaviour
+    public class InteractionManager : MonoBehaviour, Manager
     {
         public static InteractionManager Main { get; private set; }
 
@@ -12,7 +12,7 @@ namespace StarGarden.Core
 
         List<Interactable> held = new List<Interactable>();
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -20,7 +20,10 @@ namespace StarGarden.Core
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+            OnEnable();
         }
+
+        public void LateInitialise() { }
 
         private void OnStartTouch()
         {
@@ -63,6 +66,7 @@ namespace StarGarden.Core
 
         private void OnEnable()
         {
+            if (!InputManager.Main) return;
             InputManager.Main.OnTouchDown += pos => OnStartTouch();
             InputManager.Main.OnTouchUp += pos => OnEndTouch();
             InputManager.Main.OnTapCompleted += pos => OnTap();
@@ -70,6 +74,7 @@ namespace StarGarden.Core
 
         private void OnDisable()
         {
+            if (!InputManager.Main) return;
             InputManager.Main.OnTouchDown -= pos => OnStartTouch();
             InputManager.Main.OnTouchUp -= pos => OnEndTouch();
             InputManager.Main.OnTapCompleted += pos => OnTap();

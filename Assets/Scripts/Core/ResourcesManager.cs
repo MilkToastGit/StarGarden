@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace StarGarden.Core
 {
-    public class ResourcesManager : MonoBehaviour
+    public class ResourcesManager : MonoBehaviour, Manager
     {
         public int CommonStardust => commonStardust;
         public int RareStardust => rareStardust;
@@ -16,7 +16,7 @@ namespace StarGarden.Core
         public delegate void StardustChangedEvent();
         public event StardustChangedEvent OnStardustChanged;
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -25,6 +25,8 @@ namespace StarGarden.Core
             }
             else Destroy(gameObject);
         }
+
+        public void LateInitialise() { }
 
         public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
 

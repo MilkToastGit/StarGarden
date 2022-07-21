@@ -6,8 +6,9 @@ using StarGarden.Items;
 
 public class SaveLoadTester : MonoBehaviour
 {
-    public void SaveItems()
+    public void SaveAll()
     {
+        SaveDataManager.SavePetData();
         SaveDataManager.SaveItemData();
     }
 

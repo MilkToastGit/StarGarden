@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace StarGarden.Core
 {
-    public class IslandManager : MonoBehaviour
+    public class IslandManager : MonoBehaviour, Manager
     {
         public static IslandManager Main { get; private set; }
         public LayerMask IslandMask;
 
         public int activeIsland;
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -20,6 +20,8 @@ namespace StarGarden.Core
             }
             else Destroy(gameObject);
         }
+
+        public void LateInitialise() { }
 
         public Island[] Islands => islands;
         [SerializeField] private Island[] islands;
