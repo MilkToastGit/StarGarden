@@ -2,19 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarGarden.Core;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Stardust
 {
-    public class StarfallSpawner : MonoBehaviour
+    public class StarfallSpawner : MonoBehaviour, Manager
     {
         public GameObject starFall;
 
-        private void Start()
+        public void Initialise()
         {
             Invoke();
         }
 
-        private void Invoke() => Invoke("SpawnStarfall", Random.Range(2, 3));//Random.Range(15, 60));
+        public void LateInitialise()
+        {
+            System.TimeSpan sinceLastSave = System.DateTime.Now - SaveDataManager.SaveData.LastSave;
+            float totalHours = (float)sinceLastSave.TotalHours;
+            float timeMult = F.Map(totalHours, 0f, 12f);
+            float maxSpawnAmount = Random.Range(20f, 35f);
+
+            print($"Time since last: {sinceLastSave.Hours}:{sinceLastSave.Minutes}:{sinceLastSave.Seconds}");
+            print($"Spawn Amount: {maxSpawnAmount} x {timeMult} = {maxSpawnAmount * timeMult}");
+
+            for (int i = 0; i < maxSpawnAmount * timeMult; i++)
+                SpawnStarfall();
+        }
+
+        private void Invoke() => Invoke("SpawnStarfall", Random.Range(15, 60));//Random.Range(15, 60));
 
         private void SpawnStarfall()
         {

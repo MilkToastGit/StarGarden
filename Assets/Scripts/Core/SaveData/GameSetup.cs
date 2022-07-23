@@ -8,8 +8,10 @@ namespace StarGarden.Core.SaveData
 {
     public class GameSetup : MonoBehaviour
     {
-        public GameObject[] ManagerObjects;
+        public GameObject[] InitialiseOrder;
+        public GameObject[] LateInitialiseOrder;
         private Manager[] Managers;
+        private Manager[] LateInitManagers;
 
         private void Awake()
         {
@@ -21,9 +23,13 @@ namespace StarGarden.Core.SaveData
 
         private void GetManagers()
         {
-            Managers = new Manager[ManagerObjects.Length];
-            for (int i = 0; i < ManagerObjects.Length; i++)
-                Managers[i] = ManagerObjects[i].GetComponent<Manager>();
+            Managers = new Manager[InitialiseOrder.Length];
+            for (int i = 0; i < InitialiseOrder.Length; i++)
+                Managers[i] = InitialiseOrder[i].GetComponent<Manager>();
+
+            LateInitManagers = new Manager[LateInitialiseOrder.Length];
+            for (int i = 0; i < LateInitialiseOrder.Length; i++)
+                LateInitManagers[i] = LateInitialiseOrder[i].GetComponent<Manager>();
         }
 
         private void InitialiseAll()
@@ -34,16 +40,16 @@ namespace StarGarden.Core.SaveData
 
         private void LateInitialiseAll()
         {
-            foreach (Manager m in Managers)
+            foreach (Manager m in LateInitManagers)
                 m.LateInitialise();
         }
 
         private void LoadSave()
         {
-            AllSaveData data = SaveDataManager.ReadAll();
-            SetupPets(data == null ? null : data.PetSaveData);
-            SetupItems(data == null ? null : data.ItemSaveData);
-            SetupResources(data == null ? null : data.ResourceSaveData);
+            SaveDataManager.ReadAll();
+            //SetupPets(data == null ? null : data.PetSaveData);
+            //SetupItems(data == null ? null : data.ItemSaveData);
+            //SetupResources(data == null ? null : data.ResourceSaveData);
         }
 
         private void SetupPets(PetSaveData[] data)

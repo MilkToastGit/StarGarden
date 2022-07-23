@@ -17,7 +17,7 @@ namespace StarGarden.Pets
         [HideInInspector] public Quaternion[] DefaultHatRotations;
         [HideInInspector] public Vector2[] DefaultHatScales;
 
-        [HideInInspector] public float Happiness;
+        [HideInInspector] public float Happiness { get; private set; }
         public HatInstances EquippedHat;
         private Transform[] hatParents;
         private int currentIsland;
@@ -26,7 +26,7 @@ namespace StarGarden.Pets
 
         public bool Passthrough => false;
 
-        public void Initialise()
+        public void Initialise(float happiness)
         {
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
@@ -44,6 +44,8 @@ namespace StarGarden.Pets
                 DefaultHatRotations[i] = hatParents[i].localRotation;
                 DefaultHatScales[i] = hatParents[i].localScale;
             }
+
+            Happiness = happiness;
         }
 
         private void Start()
@@ -67,10 +69,8 @@ namespace StarGarden.Pets
             }
         }
 
-        public void IncreaseHappiness(float amount)
-        {
-            Happiness = Mathf.Min(Happiness + amount, 1);
-        }
+        public void IncreaseHappiness(float amount) => Happiness = Mathf.Min(Happiness + amount, 1);
+        public void SetHappiness(float amount) => Happiness = Mathf.Clamp01(amount);
 
         private Vector2 RandomDirection()
         {

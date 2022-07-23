@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Pets
 {
@@ -22,7 +23,14 @@ namespace StarGarden.Pets
             else Destroy(gameObject);
         }
 
-        public void LateInitialise() { }
+        public void LateInitialise() 
+        {
+            AllSaveData data = SaveDataManager.SaveData;
+            if (data == null)
+                UpdateAllPets();
+            else
+                UpdateAllPets(data.PetSaveData);
+        }
 
         public void UpdateAllPets()
         {
@@ -37,7 +45,7 @@ namespace StarGarden.Pets
             }
         }
 
-        public void UpdateAllPets(Core.SaveData.PetSaveData[] data)
+        public void UpdateAllPets(PetSaveData[] data)
         {
             AllPets = new PetInstance[serialisedAllPets.Length];
 
@@ -50,9 +58,18 @@ namespace StarGarden.Pets
                 {
                     Transform island = Core.IslandManager.Main.Islands[AllPets[i].Island].IslandObject.transform;
                     AllPets[i].WanderingPet = Instantiate(AllPets[i].Pet.Prefab, island).GetComponent<WanderingPet>();
-                    AllPets[i].WanderingPet.Initialise();
+                    float newHappiness = CalculateNewHappiness(data[i].Happiness, SaveDataManager.SaveData.LastSave);
+                    AllPets[i].WanderingPet.Initialise(newHappiness);
                 }
             }
+        }
+
+        private float CalculateNewHappiness(float initialHappiness, System.DateTime lastSave)
+        {
+            System.TimeSpan sinceLast = System.DateTime.Now - lastSave;
+            float decrease = F.Map((float)sinceLast.TotalHours, 0f, 48f);
+            print($"Happiness Decrease: {initialHappiness} - {decrease} = {initialHappiness - decrease}");
+            return Mathf.Max(initialHappiness - decrease, 0);
         }
 
         public WanderingPet[] GetActivePets()

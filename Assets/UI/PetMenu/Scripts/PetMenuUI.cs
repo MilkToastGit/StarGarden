@@ -100,7 +100,7 @@ namespace StarGarden.UI
         // Placeholder
         public void ResetHappiness()
         {
-            pets[currentPet].Happiness = 0f;
+            pets[currentPet].SetHappiness(0f);
             happinessBar.SetHappiness(pets[currentPet].Happiness);
         }
 

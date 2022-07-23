@@ -24,7 +24,14 @@ namespace StarGarden.Items
             else Destroy(gameObject);
         }
 
-        public void LateInitialise() { }
+        public void LateInitialise() 
+        {
+            AllSaveData data = SaveDataManager.SaveData;
+            if (data == null)
+                UpdateAllItems();
+            else
+                UpdateAllItems(data.ItemSaveData);
+        }
 
         public void AddItem(Item item)
         {
