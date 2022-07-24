@@ -7,9 +7,12 @@ namespace StarGarden.Core
     public class IslandManager : MonoBehaviour, Manager
     {
         public static IslandManager Main { get; private set; }
-        public LayerMask IslandMask;
+        public Island ActiveIsland => activeIsland < 0 ? null : islands[activeIsland];
+        public Island[] Islands => islands;
 
-        public int activeIsland;
+        [SerializeField] private LayerMask IslandMask;
+        [SerializeField] private Island[] islands;
+        private int activeIsland;
 
         public void Initialise()
         {
@@ -23,8 +26,6 @@ namespace StarGarden.Core
 
         public void LateInitialise() { }
 
-        public Island[] Islands => islands;
-        [SerializeField] private Island[] islands;
 
         private void OnDrawGizmos()
         {
@@ -86,6 +87,7 @@ namespace StarGarden.Core
     public class Island
     {
         public GameObject IslandObject;
+        public GameObject IslandNavigationObject;
         public Rect Bounds;
         public Element Element;
     }

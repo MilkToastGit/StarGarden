@@ -26,14 +26,24 @@ namespace StarGarden.Stardust
             print($"Spawn Amount: {maxSpawnAmount} x {timeMult} = {maxSpawnAmount * timeMult}");
 
             for (int i = 0; i < maxSpawnAmount * timeMult; i++)
-                SpawnStarfall();
+                SpawnStarfall(true);
         }
 
-        private void Invoke() => Invoke("SpawnStarfall", Random.Range(15, 60));//Random.Range(15, 60));
+        private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(2f, 4f));//Random.Range(15f, 60f));
 
-        private void SpawnStarfall()
+        private void SpawnStarfall(bool instant = false)
         {
             Island island = IslandManager.Main.Islands[0];//.Random();
+
+            if (IslandManager.Main.ActiveIsland == null)
+            {
+                instant = true;
+                Vector2 islandPos = island.IslandNavigationObject.transform.position;
+                Vector2 random = new Vector2(Random.Range(-2f, 2f), Random.Range(-1f, 1f));
+                Starfall trail = Instantiate(starFall, islandPos + random, Quaternion.identity, island.IslandNavigationObject.transform).GetComponentInChildren<Starfall>();
+                trail.Initialise(false, true);
+            }
+
             float randX = Random.Range(island.Bounds.xMin, island.Bounds.xMax);
             float randY = Random.Range(island.Bounds.yMin, island.Bounds.yMax);
             Vector2 point = new Vector2(randX, randY);
@@ -42,8 +52,13 @@ namespace StarGarden.Stardust
             for (int i = 0; IslandManager.Main.WithinIsland(point) < 0 && i < 20; i++)
                 point += centreBound * 0.5f;
 
-            Instantiate(starFall, point, Quaternion.identity, transform);
+            Starfall s = Instantiate(starFall, point, Quaternion.identity, island.IslandObject.transform).GetComponentInChildren<Starfall>();
+            s.Initialise(instant, false);
+        }
 
+        private void SpawnStarfallRepeating()
+        {
+            SpawnStarfall();
             Invoke();
         }
     }

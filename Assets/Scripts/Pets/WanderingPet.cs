@@ -25,6 +25,7 @@ namespace StarGarden.Pets
         private SpriteRenderer sprite;
 
         public bool Passthrough => false;
+        private bool initialised = false;
 
         public void Initialise(float happiness)
         {
@@ -46,6 +47,7 @@ namespace StarGarden.Pets
             }
 
             Happiness = happiness;
+            initialised = true;
         }
 
         private void Start()
@@ -168,7 +170,14 @@ namespace StarGarden.Pets
                 }
                 else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
+        }
 
+        private void StopBehaviourCycle()
+        {
+            StopAllCoroutines();
+            anim.SetBool("Walking", false);
+            anim.ResetTrigger("EmoteTrigger");
+            anim.ResetTrigger("UnemoteTrigger");
         }
 
         public void OnTap()
@@ -179,6 +188,20 @@ namespace StarGarden.Pets
         public void OnStartTouch() { }
 
         public void OnEndTouch() { }
+
+        private void OnEnable()
+        {
+            if (initialised)
+            {
+                StopAllCoroutines();
+                StartCoroutine(BehaviourCycle());
+            }
+        }
+
+        private void OnDisable()
+        {
+            StopBehaviourCycle();
+        }
 
         public enum State
         {

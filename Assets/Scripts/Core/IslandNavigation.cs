@@ -11,6 +11,7 @@ namespace StarGarden.Core
         public SpriteRenderer cloudFill;
         public GameObject islandSelect;
 
+        private bool zoomedOut = false;
         private Camera cam;
         private CameraControl camControl;
         private float defaultCameraSize;
@@ -22,7 +23,7 @@ namespace StarGarden.Core
             defaultCameraSize = cam.orthographicSize;
         }
 
-        public void ZoomOut() => StartCoroutine(IZoomOut());
+        public void ZoomOut() { if (!zoomedOut) StartCoroutine(IZoomOut()); }
         private IEnumerator IZoomOut()
         {
             camControl.enabled = false;
@@ -51,13 +52,14 @@ namespace StarGarden.Core
                 {
                     IslandManager.Main.DisableActiveIsland();
                     islandSelect.SetActive(true);
+                    zoomedOut = true;
                 }
 
                 yield return null;
             }
         }
 
-        public void ZoomIntoIsland(int island) => StartCoroutine(IZoomIntoIsland(island));
+        public void ZoomIntoIsland(int island) { if (zoomedOut) StartCoroutine(IZoomIntoIsland(island)); }
         private IEnumerator IZoomIntoIsland(int island)
         {
             camControl.enabled = false;
@@ -86,6 +88,7 @@ namespace StarGarden.Core
                 {
                     IslandManager.Main.SetActiveIsland(island);
                     islandSelect.SetActive(false);
+                    zoomedOut = false;
                 }
 
                 yield return null;
