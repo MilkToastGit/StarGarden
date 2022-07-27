@@ -81,6 +81,14 @@ namespace StarGarden.Core
             islands[activeIsland].IslandObject.SetActive(false);
             activeIsland = -1;
         }
+
+        public Island GetIslandFromElement(Element element)
+        {
+            foreach (Island i in islands)
+                if (i.Element == element)
+                    return i;
+            throw new System.Exception($"Error: Island of element {element} does not exist.");
+        }
     }
 
     [System.Serializable]

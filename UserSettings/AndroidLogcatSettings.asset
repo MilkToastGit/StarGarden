@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "09141JEC203049",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 19395,
+        "processId": 7504,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,73 +11,67 @@
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 14695,
+            "processId": 19395,
             "exited": true
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 17556,
+            "processId": 24425,
+            "exited": true
+        },
+        {
+            "deviceId": "09141JEC203049",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 30159,
+            "exited": true
+        },
+        {
+            "deviceId": "09141JEC203049",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 30515,
+            "exited": true
+        },
+        {
+            "deviceId": "09141JEC203049",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 30730,
             "exited": true
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.google.android.apps.nexuslauncher",
-            "processId": 22259,
+            "processId": 17835,
             "exited": false
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 18186,
-            "exited": true
-        },
-        {
-            "deviceId": "09141JEC203049",
-            "name": "com.google.android.keep",
-            "processId": 27853,
+            "processId": 30971,
             "exited": false
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 4513,
+            "processId": 1977,
             "exited": false
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 5387,
+            "processId": 2426,
             "exited": false
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 17538,
+            "processId": 7149,
             "exited": false
         },
         {
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 18522,
-            "exited": false
-        },
-        {
-            "deviceId": "09141JEC203049",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 30709,
-            "exited": false
-        },
-        {
-            "deviceId": "09141JEC203049",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 14842,
-            "exited": false
-        },
-        {
-            "deviceId": "09141JEC203049",
-            "name": "com.DefaultCompany.com.unity.template.mobile2D",
-            "processId": 19395,
+            "processId": 7504,
             "exited": false
         }
     ],

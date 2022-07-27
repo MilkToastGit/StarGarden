@@ -8,6 +8,7 @@ namespace StarGarden.Pets
     public class Pet : ScriptableObject
     {
         public string Name;
+        public Starsign Starsign;
         public Sprite Sprite;
         public Sprite SignSprite;
         public GameObject Prefab;
