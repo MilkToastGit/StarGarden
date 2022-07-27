@@ -6752,7 +6752,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   petName: {fileID: 1993122959}
-  personalityText: {fileID: 460978874}
+  negativeTrait: {fileID: 460978874}
+  neutralTrait: {fileID: 1397736766}
+  positiveTrait: {fileID: 1379749485}
   petImage: {fileID: 263701733}
   hatImage: {fileID: 1746808086}
   signImage: {fileID: 2112207874}

@@ -117,6 +117,29 @@ namespace StarGarden.Pets
             hatParentBase.localScale = scale;
         }
 
+        private void Emote()
+        {
+            GameObject emote;
+
+            if (Happiness < 0.33f)
+                emote = Pet.NegativeEmote;
+            else if (Happiness < 0.66f)
+                emote = Pet.NeutralEmote;
+            else
+                emote = Pet.PositiveEmote;
+
+            foreach (Transform t in hatParents)
+            {
+                print("spawning");
+                GameObject instance = Instantiate(emote, t);
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localRotation = Quaternion.identity;
+                instance.transform.localScale = Vector3.one;
+            }
+            
+            anim.SetTrigger("EmoteTrigger");
+        }
+
         private IEnumerator BehaviourCycle()
         {
             while (true)
@@ -154,21 +177,10 @@ namespace StarGarden.Pets
 
                 yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
 
-                if (Random.value > 0.7f)
-                {
-                    // Lower chance for neutral emote
-                    if (Random.value > 0.6f)
-                        anim.SetInteger("Emote", 1);
-                    // Emote negative or positive based on happiness
-                    else
-                        anim.SetInteger("Emote", Random.value < Happiness ? 2 : 0);
-                    anim.SetTrigger("EmoteTrigger");
-
-                    yield return new WaitForSeconds(Random.Range(2.5f, 3f));
-                    anim.SetTrigger("UnemoteTrigger");
-                    yield return new WaitForSeconds(1f);
-                }
-                else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
+                if (Random.value > 0.6f)
+                    Emote();
+                
+                yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
         }
 

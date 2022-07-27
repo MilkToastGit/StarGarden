@@ -12,7 +12,12 @@ namespace StarGarden.Pets
         public Sprite SignSprite;
         public GameObject Prefab;
         public Element Element;
-        public string PersonalityTraits;
+        public string NegativeTrait;
+        public GameObject NegativeEmote;
+        public string NeutralTrait;
+        public GameObject NeutralEmote;
+        public string PositiveTrait;
+        public GameObject PositiveEmote;
         [HideInInspector] public int PetIndex;
     }
 }

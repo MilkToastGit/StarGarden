@@ -11,7 +11,7 @@ namespace StarGarden.UI
     public class PetMenuUI : MonoBehaviour, UIPanel
     {
         public static PetMenuUI Main;
-        [SerializeField] private TextMeshProUGUI petName, personalityText;
+        [SerializeField] private TextMeshProUGUI petName, negativeTrait, neutralTrait, positiveTrait;
         [SerializeField] private Image petImage, hatImage, signImage;
         [SerializeField] private HappinessBar happinessBar;
         [SerializeField] private Sprite defaultHatSprite;
@@ -86,7 +86,9 @@ namespace StarGarden.UI
 
             petName.text = pet.Pet.Name;
             signImage.sprite = pet.Pet.SignSprite;
-            personalityText.text = pet.Pet.PersonalityTraits;
+            negativeTrait.text = pet.Pet.NegativeTrait;
+            neutralTrait.text = pet.Pet.NeutralTrait;
+            positiveTrait.text = pet.Pet.PositiveTrait;
             happinessBar.SetHappiness(pet.Happiness);
         }
 
