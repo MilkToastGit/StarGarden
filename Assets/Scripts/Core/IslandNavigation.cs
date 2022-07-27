@@ -36,7 +36,6 @@ namespace StarGarden.Core
             Color cloudFillTarget = cloudFill.color;
             cloudFillTarget.a = 1f;
 
-            bool islandDisabled = false;
             float zoomTime = 3f;
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
@@ -48,7 +47,7 @@ namespace StarGarden.Core
                 //cloudFill.transform.localScale = cloudFillStartSize * targetScale;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
 
-                if (!islandDisabled && t > 0.5f)
+                if (!zoomedOut && t > 0.5f)
                 {
                     IslandManager.Main.DisableActiveIsland();
                     islandSelect.SetActive(true);
@@ -73,7 +72,6 @@ namespace StarGarden.Core
             Color cloudFillTarget = cloudFill.color;
             cloudFillTarget.a = 1f;
 
-            bool islandEnabled = false;
             float zoomTime = 3f;
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
@@ -84,7 +82,7 @@ namespace StarGarden.Core
                 cloudsIn.transform.localScale = Mathf.Lerp(cloudStartScale, 1f, t) * Vector2.one;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
                     
-                if (!islandEnabled && t > 0.5f)
+                if (zoomedOut && t > 0.5f)
                 {
                     IslandManager.Main.SetActiveIsland(island);
                     islandSelect.SetActive(false);
