@@ -59,7 +59,20 @@ namespace StarGarden.Core.SaveData
 
         public static void SaveAll() => WriteSaveData();
 
-        public static AllSaveData ReadAll() => allData = (AllSaveData)ReadDataFromFile(dataPath);
+        public static AllSaveData ReadAll()
+        {
+            allData = (AllSaveData)ReadDataFromFile(dataPath);
+            if (allData == null)
+                allData = new AllSaveData();
+
+            return allData;
+        }
+
+        public static void ResetSaveData()
+        {
+            allData = new AllSaveData();
+            WriteDataToFile(allData, dataPath);
+        }
 
         private static void WriteSaveData()
         {

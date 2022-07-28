@@ -46,10 +46,17 @@ namespace StarGarden.Core.SaveData
 
         private void LoadSave()
         {
-            SaveDataManager.ReadAll();
-            //SetupPets(data == null ? null : data.PetSaveData);
-            //SetupItems(data == null ? null : data.ItemSaveData);
-            //SetupResources(data == null ? null : data.ResourceSaveData);
+            AllSaveData data = SaveDataManager.ReadAll();
+            if (data.FirstLaunch == default || 
+                data.UserBirthdate == default || 
+                data.PetSaveData == null || 
+                data.PetSaveData.Length < 2)
+            {
+                SaveDataManager.ResetSaveData();
+                SaveDataManager.SaveData.FirstLaunch = System.DateTime.Now;
+                UI.UIManager.Main.ShowIntro();
+                // TutorialManager.Main.ActivateTutorial();
+            }
         }
 
         private void SetupPets(PetSaveData[] data)

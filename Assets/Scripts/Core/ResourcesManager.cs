@@ -29,9 +29,9 @@ namespace StarGarden.Core
 
         public void LateInitialise() 
         {
-            AllSaveData data = SaveDataManager.SaveData;
+            ResourceSaveData data = SaveDataManager.SaveData.ResourceSaveData;
             if (data != null)
-                UpdateResources(data.ResourceSaveData);
+                UpdateResources(data);
         }
 
         public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);

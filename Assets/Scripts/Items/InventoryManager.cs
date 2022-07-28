@@ -26,11 +26,11 @@ namespace StarGarden.Items
 
         public void LateInitialise() 
         {
-            AllSaveData data = SaveDataManager.SaveData;
+            ItemSaveData data = SaveDataManager.SaveData.ItemSaveData;
             if (data == null)
                 UpdateAllItems();
             else
-                UpdateAllItems(data.ItemSaveData);
+                UpdateAllItems(data);
         }
 
         public void AddItem(Item item)

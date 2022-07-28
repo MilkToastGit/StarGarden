@@ -25,11 +25,11 @@ namespace StarGarden.Pets
 
         public void LateInitialise() 
         {
-            AllSaveData data = SaveDataManager.SaveData;
+            PetSaveData[] data = SaveDataManager.SaveData.PetSaveData;
             if (data == null)
                 UpdateAllPets();
             else
-                UpdateAllPets(data.PetSaveData);
+                UpdateAllPets(data);
         }
 
         public void UpdateAllPets()
@@ -41,7 +41,7 @@ namespace StarGarden.Pets
                 AllPets[i] = new PetInstance();
                 AllPets[i].Pet = serialisedAllPets[i];
                 AllPets[i].Pet.PetIndex = i;
-                AllPets[i].Obtained = true; // ** PLACEHOLDER **
+                //AllPets[i].Obtained = true; // ** PLACEHOLDER **
             }
         }
 
@@ -87,11 +87,12 @@ namespace StarGarden.Pets
             throw new System.Exception($"Error: Pet of sign {sign} does not exist.");
         }
 
-        public static void UnlockPet(Starsign sign)
+        public static void UnlockPet(Starsign sign) => UnlockPet(Main.GetPetFromStarsign(sign));
+        public static void UnlockPet(PetInstance pet)
         {
-            PetInstance pet = Main.GetPetFromStarsign(sign);
             pet.Obtained = true;
             SpawnPet(pet, 0.5f);
+            UI.UIManager.Main.ShowPetUnlockMenu(pet.Pet);
         }
 
         public static void SpawnPet(PetInstance pet, float happiness)

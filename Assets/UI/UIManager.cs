@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +11,14 @@ namespace StarGarden.UI
         public delegate void SelectionCompleted(int selectedIndex);
 
         private int activePanel = -1;
+        private bool menuShowing = false;
         private UIPanel[] panels;
-        [SerializeField] private Transform selectionMenuBase;
+        [SerializeField] private GameObject selectionMenuBase;
         [SerializeField] private GameObject selectionItemPreview;
         private Transform selectionMenuItems;
+
+        [SerializeField] private PetUnlocker petUnlocker;
+        [SerializeField] private GameObject introBase;
 
         public void Initialise()
         {
@@ -26,7 +28,7 @@ namespace StarGarden.UI
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
-            selectionMenuItems = selectionMenuBase.GetChild(0);
+            selectionMenuItems = selectionMenuBase.transform.GetChild(0);
 
             panels = new UIPanel[PanelObjects.Length];
             for (int i = 0; i < PanelObjects.Length; i++)
@@ -44,7 +46,7 @@ namespace StarGarden.UI
         public void ShowSelectionMenu(Sprite[] lst, SelectionCompleted onCompleted)
         {
             selectionMenuItems.Order66();
-            selectionMenuBase.gameObject.SetActive(true);
+            selectionMenuBase.SetActive(true);
 
             for (int i = 0; i < lst.Length; i++)
             {
@@ -74,9 +76,29 @@ namespace StarGarden.UI
             }
 
             if (atLeastOneSpawned)
-                selectionMenuBase.gameObject.SetActive(true);
+            {
+                selectionMenuBase.SetActive(true);
+                menuShowing = true;
+            }
             else
                 onCompleted(-1);
+        }
+
+        public void ShowPetUnlockMenu(Pets.Pet pet)
+        {
+            petUnlocker.Show(pet);
+            menuShowing = true;
+        }
+
+        public void HidePetUnlockMenu()
+        {
+            petUnlocker.Hide();
+            menuShowing = false;
+        }
+
+        public void ShowIntro()
+        {
+            introBase.SetActive(true);
         }
 
         public void ShowPanel(int panel)
@@ -98,7 +120,8 @@ namespace StarGarden.UI
 
         private void HideSelectionMenu()
         {
-            selectionMenuBase.gameObject.SetActive(false);
+            selectionMenuBase.SetActive(false);
+            menuShowing = false;
         }
     }
 }

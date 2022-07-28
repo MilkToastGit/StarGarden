@@ -19,6 +19,7 @@ namespace StarGarden.UI
 
         private void Awake()
         {
+            selectedDate = DateTime.Today;
             UpdateText(DateTime.Today);
         }
 
@@ -36,14 +37,6 @@ namespace StarGarden.UI
                 style);
 #endif
         }
-
-        //Set date string dynamically and show dialog (current date string will be overwritten)
-        public void Show(string defaultDate)
-        {
-            this.defaultDate = defaultDate;
-            Show();
-        }
-
 
         //Returns value when 'OK' pressed.
         private void ReceiveResult(string result)
