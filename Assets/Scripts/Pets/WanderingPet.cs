@@ -17,7 +17,7 @@ namespace StarGarden.Pets
         [HideInInspector] public Quaternion[] DefaultHatRotations;
         [HideInInspector] public Vector2[] DefaultHatScales;
 
-        [HideInInspector] public float Happiness;
+        [HideInInspector] public float Happiness { get; private set; }
         public HatInstances EquippedHat;
         private Transform[] hatParents;
         private int currentIsland;
@@ -25,8 +25,9 @@ namespace StarGarden.Pets
         private SpriteRenderer sprite;
 
         public bool Passthrough => false;
+        private bool initialised = false;
 
-        public void Initialise()
+        public void Initialise(float happiness)
         {
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
@@ -44,6 +45,9 @@ namespace StarGarden.Pets
                 DefaultHatRotations[i] = hatParents[i].localRotation;
                 DefaultHatScales[i] = hatParents[i].localScale;
             }
+
+            Happiness = happiness;
+            initialised = true;
         }
 
         private void Start()
@@ -67,10 +71,8 @@ namespace StarGarden.Pets
             }
         }
 
-        public void IncreaseHappiness(float amount)
-        {
-            Happiness = Mathf.Min(Happiness + amount, 1);
-        }
+        public void IncreaseHappiness(float amount) => Happiness = Mathf.Min(Happiness + amount, 1);
+        public void SetHappiness(float amount) => Happiness = Mathf.Clamp01(amount);
 
         private Vector2 RandomDirection()
         {
@@ -115,6 +117,28 @@ namespace StarGarden.Pets
             hatParentBase.localScale = scale;
         }
 
+        private void Emote()
+        {
+            GameObject emote;
+
+            if (Happiness < 0.33f)
+                emote = Pet.NegativeEmote;
+            else if (Happiness < 0.66f)
+                emote = Pet.NeutralEmote;
+            else
+                emote = Pet.PositiveEmote;
+
+            foreach (Transform t in hatParents)
+            {
+                GameObject instance = Instantiate(emote, t);
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localRotation = Quaternion.identity;
+                instance.transform.localScale = Vector3.one;
+            }
+            
+            anim.SetTrigger("EmoteTrigger");
+        }
+
         private IEnumerator BehaviourCycle()
         {
             while (true)
@@ -152,33 +176,43 @@ namespace StarGarden.Pets
 
                 yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
 
-                if (Random.value > 0.7f)
-                {
-                    // Lower chance for neutral emote
-                    if (Random.value > 0.6f)
-                        anim.SetInteger("Emote", 1);
-                    // Emote negative or positive based on happiness
-                    else
-                        anim.SetInteger("Emote", Random.value < Happiness ? 2 : 0);
-                    anim.SetTrigger("EmoteTrigger");
-
-                    yield return new WaitForSeconds(Random.Range(2.5f, 3f));
-                    anim.SetTrigger("UnemoteTrigger");
-                    yield return new WaitForSeconds(1f);
-                }
-                else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
+                if (Random.value > 0.6f)
+                    Emote();
+                
+                yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
+        }
 
+        private void StopBehaviourCycle()
+        {
+            StopAllCoroutines();
+            anim.SetBool("Walking", false);
+            anim.ResetTrigger("EmoteTrigger");
+            anim.ResetTrigger("UnemoteTrigger");
         }
 
         public void OnTap()
         {
-            UI.UIManager.Main.ShowPetMenu(Pet.PetIndex);
+            UI.UIManager.Main.ShowPanel("PetMenu", Pet.PetIndex);// ShowPetMenu(Pet.PetIndex);
         }
 
         public void OnStartTouch() { }
 
         public void OnEndTouch() { }
+
+        private void OnEnable()
+        {
+            if (initialised)
+            {
+                StopAllCoroutines();
+                StartCoroutine(BehaviourCycle());
+            }
+        }
+
+        private void OnDisable()
+        {
+            StopBehaviourCycle();
+        }
 
         public enum State
         {

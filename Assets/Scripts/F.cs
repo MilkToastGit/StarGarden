@@ -23,7 +23,7 @@ public static class F
     public static Vector2 ClampPoint(this Vector2 point, Rect bounds) => new Vector2(Mathf.Clamp(point.x, bounds.xMin, bounds.xMax), Mathf.Clamp(point.y, bounds.yMin, bounds.yMax));
     public static Vector3 Ground(this Vector3 vector) => new Vector3(vector.x, 0, vector.z);
     public static bool WithinBounds (Vector2 point, Rect bounds) => point.x >= bounds.xMin && point.x <= bounds.xMax && point.y >= bounds.yMin && point.y <= bounds.yMax;
-    public static float Map(this float v, float fromMin, float fromMax, float toMin = 0f, float toMax = 1f) => toMin + (v - fromMin) * (toMax - toMin) / (fromMax - fromMin);
+    public static float Map(this float v, float fromMin, float fromMax, float toMin = 0f, float toMax = 1f, bool clamp = true) { float f = toMin + (v - fromMin) * (toMax - toMin) / (fromMax - fromMin); if (clamp) f = Mathf.Clamp(f, toMin, toMax); return f; }
 
     public static Rect GetViewportRect(this Camera cam)
     {

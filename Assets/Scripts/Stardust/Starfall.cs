@@ -12,50 +12,27 @@ namespace StarGarden.Stardust
         [SerializeField] private Transform star;
 
         private Rarity rarity;
-        private Vector2 spawnPos = new Vector2(30, 50);
-        private CircleCollider2D circleCollider;
-        private float landT = 0, bounceT = 0;
-        private float bounceHeight;
 
-        private void Awake()
+        public void Initialise(bool instant, bool trailOnly)
         {
-            circleCollider = GetComponent<CircleCollider2D>();
-            circleCollider.enabled = false;
-
             rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, 0.1f, 0.6f) ?
                 Rarity.Common : Rarity.Rare;
             if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
 
-            bounceHeight = Random.Range(0.5f, 1.5f);
-            star.position = spawnPos;
-        }
-
-        private void Update()
-        {
-            if (landT < 1)
+            if(!instant)
+                GetComponent<Animator>().SetTrigger("Enter");
+            if (trailOnly)
             {
-                landT = Mathf.Clamp01(landT + Time.deltaTime / 2);
-                star.localPosition = Vector2.Lerp(spawnPos, Vector2.zero, landT);
+                GetComponent<CircleCollider2D>().enabled = false;
+                star.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(transform.parent.gameObject, 5f);
             }
-            else if (bounceHeight > 0)
-            {
-                bounceT = Mathf.Clamp01(bounceT + Time.deltaTime / (bounceHeight / 2 + 0.5f));
-                star.localPosition = Mathf.Sin(Mathf.Lerp(0, Mathf.PI, bounceT)) * Vector2.up * bounceHeight;
-                if (bounceT >= 1)
-                {
-                    bounceHeight = Mathf.Max(bounceHeight / 3 - 0.1f, 0);
-                    bounceT = 0;
-                }
-            }
-
-            if (landT == 1 && !circleCollider.enabled)
-                circleCollider.enabled = true;
         }
 
         public void OnTap()
         {
             ResourcesManager.Main.AddStardust(rarity, 1);
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
 
         public void OnStartTouch() { }

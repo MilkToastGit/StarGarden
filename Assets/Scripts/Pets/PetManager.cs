@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Pets
 {
@@ -8,7 +9,8 @@ namespace StarGarden.Pets
     {
         public static PetManager Main;
 
-        [HideInInspector] public PetInstance[] AllPets { get; private set; }
+        public PetInstance[] AllPets { get; private set; }
+        public PetInstance[] AllActivePets { get; private set; }
         [SerializeField] private Pet[] serialisedAllPets;
         public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) if (pet.Obtained) h += pet.WanderingPet.Happiness; return h / AllPets.Length; } }
 
@@ -22,7 +24,14 @@ namespace StarGarden.Pets
             else Destroy(gameObject);
         }
 
-        public void LateInitialise() { }
+        public void LateInitialise() 
+        {
+            PetSaveData[] data = SaveDataManager.SaveData.PetSaveData;
+            if (data == null)
+                UpdateAllPets();
+            else
+                UpdateAllPets(data);
+        }
 
         public void UpdateAllPets()
         {
@@ -33,11 +42,11 @@ namespace StarGarden.Pets
                 AllPets[i] = new PetInstance();
                 AllPets[i].Pet = serialisedAllPets[i];
                 AllPets[i].Pet.PetIndex = i;
-                AllPets[i].Obtained = true; // ** PLACEHOLDER **
+                //AllPets[i].Obtained = true; // ** PLACEHOLDER **
             }
         }
 
-        public void UpdateAllPets(Core.SaveData.PetSaveData[] data)
+        public void UpdateAllPets(PetSaveData[] data)
         {
             AllPets = new PetInstance[serialisedAllPets.Length];
 
@@ -47,24 +56,54 @@ namespace StarGarden.Pets
                 AllPets[i].Pet.PetIndex = i;
 
                 if (AllPets[i].Obtained)
-                {
-                    Transform island = Core.IslandManager.Main.Islands[AllPets[i].Island].IslandObject.transform;
-                    AllPets[i].WanderingPet = Instantiate(AllPets[i].Pet.Prefab, island).GetComponent<WanderingPet>();
-                    AllPets[i].WanderingPet.Initialise();
-                }
+                    SpawnPet(AllPets[i], CalculateNewHappiness(data[i].Happiness));
             }
+
+            UpdateActivePets();
         }
 
-        public WanderingPet[] GetActivePets()
+        private float CalculateNewHappiness(float initialHappiness)
         {
-            List<WanderingPet> pets = new List<WanderingPet>();
+            System.TimeSpan sinceLast = System.DateTime.Now - SaveDataManager.SaveData.LastSave;
+            float decrease = F.Map((float)sinceLast.TotalHours, 0f, 48f);
+            print($"Happiness Decrease: {initialHappiness} - {decrease} = {initialHappiness - decrease}");
+            return Mathf.Max(initialHappiness - decrease, 0);
+        }
+
+        public void UpdateActivePets()
+        {
+            List<PetInstance> pets = new List<PetInstance>();
             for (int i = 0; i < AllPets.Length; i++)
             {
-                if(AllPets[i].Island >= 0)
-                    pets.Add(AllPets[i].WanderingPet);
+                if(AllPets[i].Obtained)
+                    pets.Add(AllPets[i]);
             }
 
-            return pets.ToArray();
+            AllActivePets = pets.ToArray();
+        }
+
+        public PetInstance GetPetFromStarsign(Starsign sign)
+        {
+            foreach (PetInstance pet in AllPets)
+                if (pet.Pet.Starsign == sign)
+                    return pet;
+            throw new System.Exception($"Error: Pet of sign {sign} does not exist.");
+        }
+
+        public static void UnlockPet(Starsign sign) => UnlockPet(Main.GetPetFromStarsign(sign));
+        public static void UnlockPet(PetInstance pet)
+        {
+            pet.Obtained = true;
+            SpawnPet(pet, 0.5f);
+            Main.UpdateActivePets();
+            UI.UIManager.Main.ShowPanel("PetUnlocker", pet.Pet);
+        }
+
+        public static void SpawnPet(PetInstance pet, float happiness)
+        {
+            Transform island = Core.IslandManager.Main.GetIslandFromElement(pet.Pet.Element).IslandObject.transform;
+            pet.WanderingPet = Instantiate(pet.Pet.Prefab, island).GetComponent<WanderingPet>();
+            pet.WanderingPet.Initialise(happiness);
         }
     }
 }

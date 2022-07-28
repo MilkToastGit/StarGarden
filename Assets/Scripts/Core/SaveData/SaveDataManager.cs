@@ -12,6 +12,7 @@ namespace StarGarden.Core.SaveData
     {
         private static readonly string dataPath = "/gameData.dat";
 
+        public static AllSaveData SaveData => allData;
         private static AllSaveData allData = new AllSaveData();
 
         public static void SaveItemData()
@@ -22,7 +23,7 @@ namespace StarGarden.Core.SaveData
                 data.AddItems(items);
 
             allData.ItemSaveData = data;
-            WriteDataToFile(allData, dataPath);
+            WriteSaveData();
         }
 
         public static void SavePetData()
@@ -33,7 +34,7 @@ namespace StarGarden.Core.SaveData
                 data[i] = new PetSaveData(allPets[i]);
 
             allData.PetSaveData = data;
-            WriteDataToFile(allData, dataPath);
+            WriteSaveData();
         }
 
         public static void SaveResourceData()
@@ -44,19 +45,41 @@ namespace StarGarden.Core.SaveData
             ResourceSaveData data = new ResourceSaveData(common, rare, mythical);
 
             allData.ResourceSaveData = data;
-            WriteDataToFile(allData, dataPath);
+            WriteSaveData();
         }
 
-        public static void SaveAll()
+        public static void UpdateAndSaveAll()
         {
             SaveItemData();
             SavePetData();
             SaveResourceData();
 
+            WriteSaveData();
+        }
+
+        public static void SaveAll() => WriteSaveData();
+
+        public static AllSaveData ReadAll()
+        {
+            allData = (AllSaveData)ReadDataFromFile(dataPath);
+            if (allData == null)
+                allData = new AllSaveData();
+
+            return allData;
+        }
+
+        public static void ResetSaveData()
+        {
+            allData = new AllSaveData();
             WriteDataToFile(allData, dataPath);
         }
 
-        public static AllSaveData ReadAll() => (AllSaveData)ReadDataFromFile(dataPath);
+        private static void WriteSaveData()
+        {
+            allData.LastSave = System.DateTime.Now;
+            allData.LastSaveVersion = Application.version;
+            WriteDataToFile(allData, dataPath);
+        }
 
         private static void WriteDataToFile(object data, string subPath)
         {

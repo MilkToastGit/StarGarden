@@ -13,9 +13,15 @@ MonoBehaviour:
   m_Name: Gemini
   m_EditorClassIdentifier: 
   Name: Gemini
+  Starsign: 2
   Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
-  SignSprite: {fileID: 0}
+  SignSprite: {fileID: -890333404, guid: fe7d48c8c21e7184c84ffc025d79490b, type: 3}
   Prefab: {fileID: 7464248382517352699, guid: 3207b8f2c9903584690e02082e97e8c4, type: 3}
   Element: 0
-  PersonalityTraits: Neutral
+  NegativeTrait: 
+  NegativeEmote: {fileID: 100002, guid: 42d41d9bd57e4294c95f5be694519fc0, type: 3}
+  NeutralTrait: 
+  NeutralEmote: {fileID: 100000, guid: a58749d031dab254397762f259368626, type: 3}
+  PositiveTrait: 
+  PositiveEmote: {fileID: 100000, guid: 18204b98237ccb540808f2cd2d78c2c8, type: 3}
   PetIndex: 1

@@ -8,7 +8,7 @@ public class SaveLoadTester : MonoBehaviour
 {
     public void SaveAll()
     {
-        SaveDataManager.SaveAll();
+        SaveDataManager.UpdateAndSaveAll();
     }
 
     //public void LoadItems()

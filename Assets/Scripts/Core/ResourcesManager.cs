@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Core
 {
@@ -26,11 +27,16 @@ namespace StarGarden.Core
             else Destroy(gameObject);
         }
 
-        public void LateInitialise() { }
+        public void LateInitialise() 
+        {
+            ResourceSaveData data = SaveDataManager.SaveData.ResourceSaveData;
+            if (data != null)
+                UpdateResources(data);
+        }
 
         public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
 
-        public void UpdateResources(SaveData.ResourceSaveData data)
+        public void UpdateResources(ResourceSaveData data)
         {
             commonStardust = data.CommonStardust;
             rareStardust = data.RareStardust;

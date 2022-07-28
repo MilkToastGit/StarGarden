@@ -17,7 +17,7 @@ namespace StarGarden.Items
         private bool firstPlacement, hoveringInventory, invalidSpace, tapPerformedLastFrame;
         private SpriteRenderer sprite;
         private Vector2 centerOffset;
-
+        
         private Vector2Int lastPlacedPoint, lastHeldPoint;
 
         public void SetItem(DecorationInstances decoration, bool place, Vector2Int point = default)
@@ -41,6 +41,8 @@ namespace StarGarden.Items
                 state = State.AwaitingDrag;
                 firstPlacement = true;
             }
+
+            transform.SetParent(IslandManager.Main.ActiveIsland.IslandObject.transform);
         }
 
         private void Place(Vector2Int point)

@@ -8,21 +8,19 @@ using TMPro;
 
 namespace StarGarden.UI
 {
-    public class PetMenuUI : MonoBehaviour, UIPanel
+    public class PetMenuUI : UIPanel
     {
         public static PetMenuUI Main;
-        [SerializeField] private TextMeshProUGUI petName, personalityText;
+        [SerializeField] private TextMeshProUGUI petName, negativeTrait, neutralTrait, positiveTrait;
         [SerializeField] private Image petImage, hatImage, signImage;
         [SerializeField] private HappinessBar happinessBar;
         [SerializeField] private Sprite defaultHatSprite;
         [SerializeField] private Transform hatParent;
 
-        private GameObject UIBase;
-        private WanderingPet[] pets;
+        private PetInstance[] pets => PetManager.Main.AllActivePets;
         private int currentPet;
-        private bool showing;
 
-        private void Awake()
+        public override void Initialise()
         {
             if (!Main)
             {
@@ -31,10 +29,21 @@ namespace StarGarden.UI
             }
             else Destroy(gameObject);
 
-            UIBase = transform.GetChild(0).gameObject;
-            pets = PetManager.Main.GetActivePets();
+            base.Initialise();
         }
 
+        public override void LateInitialise()
+        {
+            base.LateInitialise();
+        }
+
+        public override void Show(object petIndex)
+        {
+            if (petIndex.GetType() == typeof(int))
+                SetPet((int)petIndex);
+            base.Show();
+        }
+        
         public void ShowHatSelectMenu()
         {
             ItemInstances[] items = InventoryManager.Main.GetAllItemsFromCategory(1);
@@ -50,7 +59,7 @@ namespace StarGarden.UI
             if (selectedIndex < 0) return;
 
             HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
-            hat.Equip(pets[currentPet]);
+            hat.Equip(pets[currentPet].WanderingPet);
             hatImage.sprite = hat.Item.Sprite;
         }
 
@@ -59,8 +68,9 @@ namespace StarGarden.UI
             if (petIndex == currentPet) return;
 
             currentPet = F.Wrap(petIndex, 0, pets.Length);
-            WanderingPet pet = pets[currentPet];
+            WanderingPet pet = pets[currentPet].WanderingPet;
 
+            print(pets[0]);
             petImage.sprite = pet.Pet.Sprite;
 
             if (pet.EquippedHat != null)
@@ -86,39 +96,27 @@ namespace StarGarden.UI
 
             petName.text = pet.Pet.Name;
             signImage.sprite = pet.Pet.SignSprite;
-            personalityText.text = pet.Pet.PersonalityTraits;
+            negativeTrait.text = pet.Pet.NegativeTrait;
+            neutralTrait.text = pet.Pet.NeutralTrait;
+            positiveTrait.text = pet.Pet.PositiveTrait;
             happinessBar.SetHappiness(pet.Happiness);
         }
 
         public void FeedCookie(bool isCommon)
         {
             float amount = isCommon ? 0.1f : 0.175f;
-            pets[currentPet].IncreaseHappiness(amount);
-            happinessBar.SetHappiness(pets[currentPet].Happiness);
+            pets[currentPet].WanderingPet.IncreaseHappiness(amount);
+            happinessBar.SetHappiness(pets[currentPet].WanderingPet.Happiness);
         }
 
         // Placeholder
         public void ResetHappiness()
         {
-            pets[currentPet].Happiness = 0f;
-            happinessBar.SetHappiness(pets[currentPet].Happiness);
+            pets[currentPet].WanderingPet.SetHappiness(0f);
+            happinessBar.SetHappiness(pets[currentPet].WanderingPet.Happiness);
         }
 
         public void NextPet() => SetPet(currentPet + 1);
         public void PreviousPet() => SetPet(currentPet - 1);
-
-        public void Show()
-        {
-            SetPet(currentPet);
-
-            showing = true;
-            UIBase.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            showing = false;
-            UIBase.SetActive(false);
-        }
     }
 }

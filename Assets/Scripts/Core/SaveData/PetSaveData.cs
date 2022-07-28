@@ -7,12 +7,14 @@ namespace StarGarden.Core.SaveData
     {
         public int Pet;
         public bool Obtained;
+        public float Happiness;
         public int Island;
 
         public PetSaveData(PetInstance instance)
         {
             Pet = instance.Pet.PetIndex;
             Obtained = instance.Obtained;
+            Happiness = instance.WanderingPet.Happiness;
             Island = instance.Island;
         }
     }

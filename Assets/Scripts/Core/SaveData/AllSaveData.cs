@@ -1,3 +1,5 @@
+using System;
+
 namespace StarGarden.Core.SaveData
 {
     [System.Serializable]
@@ -6,6 +8,10 @@ namespace StarGarden.Core.SaveData
         public PetSaveData[] PetSaveData;
         public ItemSaveData ItemSaveData;
         public ResourceSaveData ResourceSaveData;
+        public DateTime FirstLaunch;
+        public DateTime UserBirthdate;
+        public DateTime LastSave;
+        public string LastSaveVersion;
 
         public AllSaveData() { }
 
