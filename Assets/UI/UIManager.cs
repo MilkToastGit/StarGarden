@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,19 +7,16 @@ namespace StarGarden.UI
     public class UIManager : MonoBehaviour, Manager
     {
         public static UIManager Main;
-        public bool PanelShowing => activePanel >= 0;
+        public bool PanelShowing => activePanel != "";
         public GameObject[] PanelObjects;
         public delegate void SelectionCompleted(int selectedIndex);
 
-        private int activePanel = -1;
-        private bool menuShowing = false;
-        private UIPanel[] panels;
+        private Dictionary<string, UIPanel> UIPanels = new Dictionary<string, UIPanel>();
+        private string activePanel = "";
+
         [SerializeField] private GameObject selectionMenuBase;
         [SerializeField] private GameObject selectionItemPreview;
         private Transform selectionMenuItems;
-
-        [SerializeField] private PetUnlocker petUnlocker;
-        [SerializeField] private GameObject introBase;
 
         public void Initialise()
         {
@@ -30,17 +28,18 @@ namespace StarGarden.UI
             else Destroy(gameObject);
             selectionMenuItems = selectionMenuBase.transform.GetChild(0);
 
-            panels = new UIPanel[PanelObjects.Length];
-            for (int i = 0; i < PanelObjects.Length; i++)
-                panels[i] = PanelObjects[i].GetComponent<UIPanel>();
+            foreach (GameObject panelGO in PanelObjects)
+            {
+                UIPanel panel = panelGO.GetComponent<UIPanel>();
+                panel.Initialise();
+                UIPanels.Add(panelGO.name, panel);
+            }
         }
         
-        public void LateInitialise() { }
-
-        public void ShowPetMenu(int petIndex)
+        public void LateInitialise() 
         {
-            PetMenuUI.Main.SetPet(petIndex);
-            ShowPanel(2);
+            foreach(KeyValuePair<string, UIPanel> pair in UIPanels)
+                pair.Value.LateInitialise();
         }
 
         public void ShowSelectionMenu(Sprite[] lst, SelectionCompleted onCompleted)
@@ -78,50 +77,32 @@ namespace StarGarden.UI
             if (atLeastOneSpawned)
             {
                 selectionMenuBase.SetActive(true);
-                menuShowing = true;
             }
             else
                 onCompleted(-1);
         }
 
-        public void ShowPetUnlockMenu(Pets.Pet pet)
-        {
-            petUnlocker.Show(pet);
-            menuShowing = true;
-        }
+        public void ShowPanel(string name) => ShowPanel(name, null);
 
-        public void HidePetUnlockMenu()
+        public void ShowPanel(string name, object args)
         {
-            petUnlocker.Hide();
-            menuShowing = false;
-        }
+            if (PanelShowing)
+                UIPanels[activePanel].Hide();
 
-        public void ShowIntro()
-        {
-            introBase.SetActive(true);
-        }
-
-        public void ShowPanel(int panel)
-        {
-            if (activePanel >= 0)
-                panels[activePanel].Hide();
-
-            activePanel = panel;
-            panels[activePanel].Show();
+            activePanel = name;
+            UIPanels[activePanel].Show(args);
         }
 
         public void HideCurrentPanel()
         {
-            if (activePanel >= 0)
-                panels[activePanel].Hide();
-            activePanel = -1;
-            print(activePanel);
+            if (PanelShowing)
+                UIPanels[activePanel].Hide();
+            activePanel = "";
         }
 
         private void HideSelectionMenu()
         {
             selectionMenuBase.SetActive(false);
-            menuShowing = false;
         }
     }
 }

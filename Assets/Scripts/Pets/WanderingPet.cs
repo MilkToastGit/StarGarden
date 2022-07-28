@@ -130,7 +130,6 @@ namespace StarGarden.Pets
 
             foreach (Transform t in hatParents)
             {
-                print("spawning");
                 GameObject instance = Instantiate(emote, t);
                 instance.transform.localPosition = Vector3.zero;
                 instance.transform.localRotation = Quaternion.identity;
@@ -194,7 +193,7 @@ namespace StarGarden.Pets
 
         public void OnTap()
         {
-            UI.UIManager.Main.ShowPetMenu(Pet.PetIndex);
+            UI.UIManager.Main.ShowPanel("PetMenu", Pet.PetIndex);// ShowPetMenu(Pet.PetIndex);
         }
 
         public void OnStartTouch() { }

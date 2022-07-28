@@ -54,7 +54,7 @@ namespace StarGarden.Core.SaveData
             {
                 SaveDataManager.ResetSaveData();
                 SaveDataManager.SaveData.FirstLaunch = System.DateTime.Now;
-                UI.UIManager.Main.ShowIntro();
+                UI.UIManager.Main.ShowPanel("Intro");
                 // TutorialManager.Main.ActivateTutorial();
             }
         }

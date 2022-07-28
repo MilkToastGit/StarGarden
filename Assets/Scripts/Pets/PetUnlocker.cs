@@ -7,24 +7,21 @@ using StarGarden.Pets;
 
 namespace StarGarden.UI
 {
-    public class PetUnlocker : MonoBehaviour
+    public class PetUnlocker : UIPanel
     {
         [SerializeField] private Image petImage;
         [SerializeField] private TextMeshProUGUI petName;
-        private GameObject baseObject;
 
-        private void Awake()
+        public override void Show(object args)
         {
-            baseObject = transform.GetChild(0).gameObject;
-        }
-
-        public void Show(Pet pet)
-        {
-            baseObject.SetActive(true);
+            if (args.GetType() != typeof(Pet))
+                throw new System.Exception("Error: Type mismatch for args in method Show of script PetUnlocker. Expected: Pet");
+            
+            Pet pet = (Pet)args;
             petImage.sprite = pet.Sprite;
             petName.text = pet.Name;
-        }
 
-        public void Hide() => baseObject.SetActive(false);
+            base.Show();
+        }
     }
 }

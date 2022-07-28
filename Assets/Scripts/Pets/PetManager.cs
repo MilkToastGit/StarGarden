@@ -9,7 +9,8 @@ namespace StarGarden.Pets
     {
         public static PetManager Main;
 
-        [HideInInspector] public PetInstance[] AllPets { get; private set; }
+        public PetInstance[] AllPets { get; private set; }
+        public PetInstance[] AllActivePets { get; private set; }
         [SerializeField] private Pet[] serialisedAllPets;
         public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) if (pet.Obtained) h += pet.WanderingPet.Happiness; return h / AllPets.Length; } }
 
@@ -57,6 +58,8 @@ namespace StarGarden.Pets
                 if (AllPets[i].Obtained)
                     SpawnPet(AllPets[i], CalculateNewHappiness(data[i].Happiness));
             }
+
+            UpdateActivePets();
         }
 
         private float CalculateNewHappiness(float initialHappiness)
@@ -67,16 +70,16 @@ namespace StarGarden.Pets
             return Mathf.Max(initialHappiness - decrease, 0);
         }
 
-        public WanderingPet[] GetActivePets()
+        public void UpdateActivePets()
         {
-            List<WanderingPet> pets = new List<WanderingPet>();
+            List<PetInstance> pets = new List<PetInstance>();
             for (int i = 0; i < AllPets.Length; i++)
             {
-                if(AllPets[i].Island >= 0)
-                    pets.Add(AllPets[i].WanderingPet);
+                if(AllPets[i].Obtained)
+                    pets.Add(AllPets[i]);
             }
 
-            return pets.ToArray();
+            AllActivePets = pets.ToArray();
         }
 
         public PetInstance GetPetFromStarsign(Starsign sign)
@@ -92,7 +95,8 @@ namespace StarGarden.Pets
         {
             pet.Obtained = true;
             SpawnPet(pet, 0.5f);
-            UI.UIManager.Main.ShowPetUnlockMenu(pet.Pet);
+            Main.UpdateActivePets();
+            UI.UIManager.Main.ShowPanel("PetUnlocker", pet.Pet);
         }
 
         public static void SpawnPet(PetInstance pet, float happiness)
