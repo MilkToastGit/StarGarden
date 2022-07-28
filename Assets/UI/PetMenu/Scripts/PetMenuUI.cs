@@ -11,14 +11,14 @@ namespace StarGarden.UI
     public class PetMenuUI : UIPanel
     {
         public static PetMenuUI Main;
-        [SerializeField] private TextMeshProUGUI petName, negativeTrait, neutralTrait, positiveTrait;
+        [SerializeField] private TextMeshProUGUI petName, negativeTrait, neutralTrait, positiveTrait, horroscope;
         [SerializeField] private Image petImage, hatImage, signImage;
         [SerializeField] private HappinessBar happinessBar;
         [SerializeField] private Sprite defaultHatSprite;
         [SerializeField] private Transform hatParent;
 
         private PetInstance[] pets => PetManager.Main.AllActivePets;
-        private int currentPet;
+        private int currentPet = -1;
 
         public override void Initialise()
         {
@@ -96,9 +96,13 @@ namespace StarGarden.UI
 
             petName.text = pet.Pet.Name;
             signImage.sprite = pet.Pet.SignSprite;
+
             negativeTrait.text = pet.Pet.NegativeTrait;
             neutralTrait.text = pet.Pet.NeutralTrait;
             positiveTrait.text = pet.Pet.PositiveTrait;
+
+            horroscope.text = HorroscopeGenerator.GetHorroscope(pet.Pet.Starsign);
+
             happinessBar.SetHappiness(pet.Happiness);
         }
 

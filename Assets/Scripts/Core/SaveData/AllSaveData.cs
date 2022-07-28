@@ -8,6 +8,7 @@ namespace StarGarden.Core.SaveData
         public PetSaveData[] PetSaveData;
         public ItemSaveData ItemSaveData;
         public ResourceSaveData ResourceSaveData;
+        public int[] PickedHorroscopes;
         public DateTime FirstLaunch;
         public DateTime UserBirthdate;
         public DateTime LastSave;

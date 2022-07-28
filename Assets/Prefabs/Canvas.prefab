@@ -10308,6 +10308,7 @@ MonoBehaviour:
   negativeTrait: {fileID: 1948878854988576301}
   neutralTrait: {fileID: 1948878856197441961}
   positiveTrait: {fileID: 1948878856175321850}
+  horroscope: {fileID: 1948878854620112205}
   petImage: {fileID: 1948878854639782002}
   hatImage: {fileID: 1948878855271539073}
   signImage: {fileID: 1948878855481684117}
