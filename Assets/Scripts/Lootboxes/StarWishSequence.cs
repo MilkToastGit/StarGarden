@@ -9,7 +9,7 @@ namespace StarGarden.LootBoxes
 {
     public class StarWishSequence : MonoBehaviour
     {
-        public GameObject puzzleHolder, itemHolder;
+        public GameObject uiHolder, puzzleHolder, itemHolder;
         public ConstellationPuzzle puzzle;
         public int commonCost, rareCost, mythicalCost;
 
@@ -50,12 +50,14 @@ namespace StarGarden.LootBoxes
                 ResourcesManager.Main.RemoveStardust(boxRarity, cost);
 
             puzzleHolder.SetActive(true);
+            uiHolder.SetActive(true);
             puzzle.SetPuzzle(() => OnPuzzleCompleted(boxRarity));
         }
 
         private void OnPuzzleCompleted(Rarity rarity)
         {
             puzzleHolder.SetActive(false);
+            uiHolder.SetActive(false);
             itemHolder.SetActive(true);
             ItemInstances item = RollItem((int)rarity);
             itemPreview.sprite = item.Item.Sprite;

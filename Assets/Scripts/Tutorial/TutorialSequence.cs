@@ -19,6 +19,8 @@ namespace StarGarden.UI
 
         private void Awake()
         {
+            if (!TutorialActive) return;
+
             ActivatePanel.OnShow += Show;
 
             baseObject = transform.GetChild(0).gameObject;
