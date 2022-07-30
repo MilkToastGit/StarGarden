@@ -301,16 +301,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   serialisedHorroscopes:
-  - hey
-  - wawssup
-  - gaming
-  - dfuck
-  - get your bags n run boyy
-  - stop following meee
-  - grsn
-  - y
-  - creedle
-  - ughh
+  - Your strong intuition might cause you to pick up high emotions in those around
+    you today, so be sure to be kind to yourself as you navigate the feelings of
+    others as well as yourself. Don't forget your sense of humour today, you will
+    need it!
+  - Someone is thinking negatively of you today - don't let those vibrations drag
+    you down. It is likely jealousy of your recent successes, so know that any pessimistic
+    feelings are not as a result of failure, but of accomplishment.
+  - Someone in your family is thinking of starting a new endeavour, and as your sense
+    of family is so strong it could also be a good time to think about beginning
+    something new yourself. If you've ever wanted to learn a new language or a new
+    skill, today is the perfect day to start.
+  - You will need to be less subtle in your love life today - your interest is not
+    picking up on your vibrations. You should be open and honest with them as today's
+    astral configuration means they will be at their most attentive and encouraging.
+  - Heightened empathy will lead to a greater understanding of those around you today.
+    It is likely you will pick up on other's needs and desires before they even realize
+    it themselves. Be sure to use this strength wisely today as some may not be ready
+    to hear what you know.
+  - It's important you let others into your emotional world today. Your mind is craving
+    connection and being open with others will lead to stronger relationships being
+    formed today.
+  - Your connection with the astral plane is especially strong today - artist endeavours
+    will be particularly fruitful.
+  - Your mind is sharp today - perhaps it's a good time to learn a new skill. Today's
+    astral configuration will bring with it a burst of energy, so use it well!
+  - There is an especially productive atmosphere today! Your elevated sense of motivation
+    and inspiration will work in harmony to provide you with great strides forward
+    in some aspect of your life today such as work, a hobby or even in your love
+    life!
+  - Things are feeling a little out of whack today. If you have a particular "favourite
+    spot" somewhere (like a coffee shop or park), or a "home away from home", it's
+    in your best interests to take some time to chill out and get out of your normal
+    environment for a reset.
   - frnds
   - somb
   - wow you're sos mar and sexy
@@ -1979,8 +2002,13 @@ MonoBehaviour:
   - {fileID: 1103998759}
   - {fileID: 1103998761}
   - {fileID: 1103998760}
-  selectionMenuBase: {fileID: 0}
+  selectionMenuBase: {fileID: 2116270118}
   selectionItemPreview: {fileID: 8465521534075848558, guid: a139bff0839e68b4db1c7a395a3e33c5, type: 3}
+--- !u!1 &2116270118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1948878856034378137, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+  m_PrefabInstance: {fileID: 1103998758}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2137508656
 GameObject:
   m_ObjectHideFlags: 0
