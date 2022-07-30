@@ -11,6 +11,11 @@ public class SaveLoadTester : MonoBehaviour
         SaveDataManager.UpdateAndSaveAll();
     }
 
+    public void ResetAll()
+    {
+        SaveDataManager.ResetSaveData();
+    }
+
     //public void LoadItems()
     //{
     //    SaveDataManager.ReadAll();

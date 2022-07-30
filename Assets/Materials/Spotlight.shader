@@ -114,8 +114,8 @@ Shader "UI/Default"
                 clip (color.a - 0.001);
                 #endif
 
-                float2 centeredUVs = IN.vertex - float2(_SpotX, _SpotY);
-                float radialDistance = length(centeredUVs);
+                float2 relative = IN.vertex - float2(_SpotX, _SpotY);
+                float radialDistance = length(relative);
                 color.a *= radialDistance > _SpotRad;
 
                 return color;
