@@ -20,7 +20,7 @@ namespace StarGarden.Items
         
         private Vector2Int lastPlacedPoint, lastHeldPoint;
 
-        public void SetItem(DecorationInstances decoration, bool place, Vector2Int point = default)
+        public void SetItem(DecorationInstances decoration, bool place, Vector3Int point = default)
         {
             decorInst = decoration;
             centerOffset = new Vector2(
@@ -31,18 +31,18 @@ namespace StarGarden.Items
             sprite = Instantiate(decoration.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();
             if (place)
             {
-                lastPlacedPoint = point;
+                lastPlacedPoint = (Vector2Int)point;
                 placingDecoration = false;
                 state = State.Idle;
                 firstPlacement = false;
+                transform.SetParent(IslandManager.Main.Islands[point.z].IslandObject.transform);
             }
             else
             {
                 state = State.AwaitingDrag;
                 firstPlacement = true;
+                transform.SetParent(IslandManager.Main.ActiveIsland.IslandObject.transform);
             }
-
-            transform.SetParent(IslandManager.Main.ActiveIsland.IslandObject.transform);
         }
 
         private void Place(Vector2Int point)

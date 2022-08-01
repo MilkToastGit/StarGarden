@@ -48,10 +48,11 @@ namespace StarGarden.Items
         public ItemInstances[] GetAllItemsFromCategory(int category) => AllItems[category];
         public ItemInstances GetItemInstance(Item item) => AllItems[item.ItemCategory][item.ItemIndex];
 
-        public void SpawnItem(DecorationInstances item, bool place, Vector2Int point = default)
+        public void SpawnItem(DecorationInstances item, bool place, Vector3Int point = default)
         {
+            Transform island = Core.IslandManager.Main.Islands[point.z].IslandObject.transform;
             if (place)
-                Instantiate(decorationPrefab, Core.WorldGrid.GridToWorld(point), Quaternion.identity)
+                Instantiate(decorationPrefab, Core.WorldGrid.GridToWorld((Vector2Int)point), Quaternion.identity)
                     .GetComponent<PlaceableDecoration>().SetItem(item, true, point); 
             else
                 Instantiate(decorationPrefab, (Vector2)Camera.main.transform.position, Quaternion.identity)
@@ -74,8 +75,11 @@ namespace StarGarden.Items
                 AllItems[0][i].Item.ItemIndex = i;
 
                 DecorationInstances instance = AllItems[0][i] as DecorationInstances;
-                foreach (Vector2Int point in instance.placedInstances)
+                foreach (Vector3Int point in instance.placedInstances)
+                {
+                    print($"({i}) inst: {instance.Item.Name}, point: {point}");
                     SpawnItem(instance, true, point);
+                }
             }
 
             for (int i = 0; i < data.Hats.Length; i++)

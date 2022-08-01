@@ -10,10 +10,7 @@ namespace StarGarden.Stardust
     {
         public GameObject starFall;
 
-        public void Initialise()
-        {
-            Invoke();
-        }
+        public void Initialise() { }
 
         public void LateInitialise()
         {
@@ -29,9 +26,11 @@ namespace StarGarden.Stardust
 
             for (int i = 0; i < maxSpawnAmount * timeMult; i++)
                 SpawnStarfall(true);
+
+            Invoke();
         }
 
-        private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(2f, 4f));//Random.Range(15f, 60f));
+        private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(15f, 60f));
 
         private void SpawnStarfall(bool instant = false)
         {
@@ -45,6 +44,8 @@ namespace StarGarden.Stardust
                 Starfall trail = Instantiate(starFall, islandPos + random, Quaternion.identity, island.IslandNavigationObject.transform).GetComponentInChildren<Starfall>();
                 trail.Initialise(false, true);
             }
+            else if (IslandManager.Main.ActiveIsland != island)
+                instant = true;
 
             float randX = Random.Range(island.Bounds.xMin, island.Bounds.xMax);
             float randY = Random.Range(island.Bounds.yMin, island.Bounds.yMax);
