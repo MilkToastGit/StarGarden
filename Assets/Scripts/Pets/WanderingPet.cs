@@ -32,6 +32,8 @@ namespace StarGarden.Pets
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
 
+            currentIsland = IslandManager.Main.GetIslandFromElement(Pet.Element).Index;
+
             hatParents = new Transform[hatParentBase.childCount];
             for (int i = 0; i < hatParentBase.childCount; i++)
                 hatParents[i] = hatParentBase.GetChild(i).transform;
@@ -48,11 +50,6 @@ namespace StarGarden.Pets
 
             Happiness = happiness;
             initialised = true;
-        }
-
-        private void Start()
-        {
-            StartCoroutine(BehaviourCycle());
         }
 
         public void SetHat(HatInstances hat)
@@ -99,7 +96,7 @@ namespace StarGarden.Pets
                 Debug.DrawRay(WorldGrid.GridToWorld(WorldGrid.WorldToGrid(nextPoint)), Vector2.up / 5, Color.white, 7);
 
                 foreach (DecorationInstances instance in allItems)
-                    if (instance.IsPositionTaken(WorldGrid.WorldToGrid(nextPoint)))
+                    if (instance.IsPositionTaken(WorldGrid.WorldToGrid(nextPoint), currentIsland))
                         return lastPoint;
 
                 lastPoint = nextPoint;
@@ -202,9 +199,10 @@ namespace StarGarden.Pets
 
         private void OnEnable()
         {
+            print(anim.isInitialized);
             if (initialised)
             {
-                StopAllCoroutines();
+                StopBehaviourCycle();
                 StartCoroutine(BehaviourCycle());
             }
         }

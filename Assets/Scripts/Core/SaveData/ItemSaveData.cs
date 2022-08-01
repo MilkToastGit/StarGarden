@@ -26,9 +26,9 @@ namespace StarGarden.Core.SaveData
                     data[i].Decoration = item.Item.ItemIndex;
                     data[i].TotalCount = item.totalCount;
 
-                    List<SerializableVector2Int> placedInstances = new List<SerializableVector2Int>();
-                    foreach (Vector2Int placed in item.placedInstances)
-                        placedInstances.Add(new SerializableVector2Int(placed));
+                    List<SerializableVector3Int> placedInstances = new List<SerializableVector3Int>();
+                    foreach (Vector3Int placed in item.placedInstances)
+                        placedInstances.Add(new SerializableVector3Int(placed));
                     data[i].PlacedInstances = placedInstances;
                     Debug.Log(data[i].TotalCount);
                 }
@@ -59,7 +59,7 @@ namespace StarGarden.Core.SaveData
     {
         [SerializeReference] public int Decoration;
         public int TotalCount;
-        public List<SerializableVector2Int> PlacedInstances;
+        public List<SerializableVector3Int> PlacedInstances;
     }
 
     [System.Serializable]
@@ -71,16 +71,17 @@ namespace StarGarden.Core.SaveData
     }
 
     [System.Serializable]
-    public class SerializableVector2Int
+    public class SerializableVector3Int
     {
-        public int x, y;
+        public int x, y, z;
 
-        public SerializableVector2Int(Vector2Int v)
+        public SerializableVector3Int(Vector3Int v)
         {
             x = v.x;
             y = v.y;
+            z = v.z;
         }
 
-        public static implicit operator Vector2Int(SerializableVector2Int v) => new Vector2Int(v.x, v.y);
+        public static implicit operator Vector3Int(SerializableVector3Int v) => new Vector3Int(v.x, v.y, v.z);
     }
 }

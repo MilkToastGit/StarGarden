@@ -6,21 +6,19 @@ namespace StarGarden.Core
 {
     public class IslandNavigation : MonoBehaviour
     {
-        public float islandOverviewCameraSize;
+        public float zoomedOutSize, zoomedInSize;
         public ParticleSystem cloudsIn, cloudsOut;
         public SpriteRenderer cloudFill;
         public GameObject islandSelect;
 
-        private bool zoomedOut = false;
+        private bool zoomedOut = true;
         private Camera cam;
         private CameraControl camControl;
-        private float defaultCameraSize;
 
         private void Awake()
         {
             cam = Camera.main;
             camControl = cam.GetComponent<CameraControl>();
-            defaultCameraSize = cam.orthographicSize;
         }
 
         public void ZoomOut() { if (!zoomedOut) StartCoroutine(IZoomOut()); }
@@ -29,7 +27,7 @@ namespace StarGarden.Core
             camControl.enabled = false;
             cloudsOut.Play();
 
-            float targetScale = islandOverviewCameraSize / defaultCameraSize;
+            float targetScale = zoomedOutSize / zoomedInSize;
             //Vector3 cloudFillStartSize = cloudFill.transform.localScale;
             Color cloudFillStart = cloudFill.color;
             cloudFillStart.a = 0f;
@@ -42,7 +40,7 @@ namespace StarGarden.Core
                 float t = elapsed / zoomTime;
                 t = t * t;// * (3f - 2f * t);
 
-                cam.orthographicSize = Mathf.Lerp(defaultCameraSize, islandOverviewCameraSize, t);
+                cam.orthographicSize = Mathf.Lerp(zoomedInSize, zoomedOutSize, t);
                 cloudsOut.transform.localScale = Mathf.Lerp(1f, targetScale, t) * Vector2.one;
                 //cloudFill.transform.localScale = cloudFillStartSize * targetScale;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
@@ -52,6 +50,7 @@ namespace StarGarden.Core
                     IslandManager.Main.DisableActiveIsland();
                     islandSelect.SetActive(true);
                     zoomedOut = true;
+                    transform.position = new Vector3(0, 0, -10);
                 }
 
                 yield return null;
@@ -66,7 +65,7 @@ namespace StarGarden.Core
 
             Vector3 targetPos = IslandManager.Main.Islands[island].Bounds.center;
             targetPos.z = -10;
-            float cloudStartScale = islandOverviewCameraSize / defaultCameraSize;
+            float cloudStartScale = zoomedOutSize / zoomedInSize;
             Color cloudFillStart = cloudFill.color;
             cloudFillStart.a = 0f;
             Color cloudFillTarget = cloudFill.color;
@@ -78,7 +77,7 @@ namespace StarGarden.Core
                 float t = elapsed / zoomTime;
                 t = t * t * (3f - 2f * t);
 
-                cam.orthographicSize = Mathf.Lerp(islandOverviewCameraSize, defaultCameraSize, t);
+                cam.orthographicSize = Mathf.Lerp(zoomedOutSize, zoomedInSize, t);
                 cloudsIn.transform.localScale = Mathf.Lerp(cloudStartScale, 1f, t) * Vector2.one;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
                     

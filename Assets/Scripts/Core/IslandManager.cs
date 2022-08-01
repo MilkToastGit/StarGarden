@@ -12,7 +12,7 @@ namespace StarGarden.Core
 
         [SerializeField] private LayerMask IslandMask;
         [SerializeField] private Island[] islands;
-        private int activeIsland;
+        private int activeIsland = -1;
 
         public void Initialise()
         {
@@ -22,6 +22,9 @@ namespace StarGarden.Core
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+
+            for (int i = 0; i < islands.Length; i++)
+                islands[i].Index = i;
         }
 
         public void LateInitialise() { }
@@ -98,5 +101,6 @@ namespace StarGarden.Core
         public GameObject IslandNavigationObject;
         public Rect Bounds;
         public Element Element;
+        public int Index;
     }
 }

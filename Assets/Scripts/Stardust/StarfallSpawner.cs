@@ -35,7 +35,7 @@ namespace StarGarden.Stardust
 
         private void SpawnStarfall(bool instant = false)
         {
-            Island island = IslandManager.Main.Islands[0];//.Random();
+            Island island = IslandManager.Main.Islands.Random();
 
             if (IslandManager.Main.ActiveIsland == null)
             {

@@ -18,7 +18,7 @@ namespace StarGarden.Core
 
         private void Awake()
         {
-            camWidth = GetComponent<Camera>().GetViewportRect().width;
+            camWidth = GetComponent<IslandNavigation>().zoomedInSize;
         }
 
         private void SetPosition(float xPos)

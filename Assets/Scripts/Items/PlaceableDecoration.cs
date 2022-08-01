@@ -49,11 +49,11 @@ namespace StarGarden.Items
         {
             if (firstPlacement)
             {
-                decorInst.Place(point);
+                decorInst.Place(point, IslandManager.Main.ActiveIsland.Index);
                 firstPlacement = false;
             }
             else
-                decorInst.Move(lastPlacedPoint, point);
+                decorInst.Move(lastPlacedPoint, point, IslandManager.Main.ActiveIsland.Index);
 
             lastPlacedPoint = point;
             placingDecoration = false;
@@ -64,7 +64,7 @@ namespace StarGarden.Items
         private void ReturnToInventory()
         {
             if (!firstPlacement)
-                decorInst.Unplace(lastPlacedPoint);
+                decorInst.Unplace(lastPlacedPoint, IslandManager.Main.ActiveIsland.Index);
             placingDecoration = false;
             Destroy(gameObject);
         }
@@ -132,7 +132,7 @@ namespace StarGarden.Items
                 return true;
 
             foreach (DecorationInstances decor in InventoryManager.Main.GetAllItemsFromCategory(0))
-                if (decor.DoDecorOverlap(min, max, lastPlacedPoint, !firstPlacement))
+                if (decor.DoDecorOverlap(min, max, lastPlacedPoint, IslandManager.Main.ActiveIsland.Index, !firstPlacement))
                     return true;
 
             return false;
