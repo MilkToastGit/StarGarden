@@ -97,8 +97,8 @@ namespace StarGarden.LootBoxes
 
         private void CheckCorrect()
         {
-            atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360 - angleThreshold / 2);
-            if (atCorrectAngle && xDelta < 0.001f)
+            atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360f - angleThreshold / 2);
+            if (atCorrectAngle && Mathf.Abs(xDelta) < 0.001f)
             {
                 xDelta = 0f;
                 transform.rotation = Quaternion.identity;

@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Aubrey's Super Special Test Scene.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Rhys' Seven Hundredth Test Scene.unity
     guid: 17eb59a9365e47149be8c7080bd779b1
   m_configObjects:
