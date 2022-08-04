@@ -10,6 +10,7 @@ namespace StarGarden.Items
         public static bool placingDecoration = false;
 
         public bool Passthrough => false;
+        public int Layer => (int)InteractableLayer.Decoration;
 
         private DecorationInstances decorInst;
         private Decoration decor => decorInst.Item as Decoration;

@@ -14,7 +14,8 @@ namespace StarGarden.Core.SaveData
         {
             Pet = instance.Pet.PetIndex;
             Obtained = instance.Obtained;
-            Happiness = instance.WanderingPet.Happiness;
+            if (Obtained)
+                Happiness = instance.WanderingPet.Happiness;
             Island = instance.Island;
         }
     }

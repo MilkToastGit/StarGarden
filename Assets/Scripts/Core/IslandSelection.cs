@@ -7,6 +7,8 @@ namespace StarGarden.Core
     public class IslandSelection : MonoBehaviour, Interactable
     {
         public IslandNavigation navigation;
+        public int Layer => (int)InteractableLayer.Default;
+
         public int island;
 
         public bool Passthrough => false;

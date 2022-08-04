@@ -28,15 +28,44 @@ namespace StarGarden.Core
         private void OnStartTouch()
         {
             if (UI.UIManager.Main.PanelShowing) return;
-            foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
+            //foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
+            //{
+            //    if (collider.TryGetComponent(out Interactable t))
+            //    {
+            //        held.Add(t);
+            //        t.OnStartTouch();
+            //        if (!t.Passthrough)
+            //            return;
+            //    }
+            //}
+
+            Collider2D[] hits = Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition);
+            List<Interactable> interactables = new List<Interactable>();
+
+            foreach (Collider2D hit in hits)
             {
-                if (collider.TryGetComponent(out Interactable t))
+                if (hit.TryGetComponent(out Interactable t))
                 {
-                    held.Add(t);
-                    t.OnStartTouch();
-                    if (!t.Passthrough)
-                        return;
+                    print (hit.name);
+                    for (int i = 0; i < interactables.Count; i++)
+                    {
+                        if (t.Layer >= interactables[i].Layer)
+                        {
+                            interactables.Insert(i, t);
+                            break;
+                        }
+                    }
+                    interactables.Add(t);
                 }
+            }
+
+            foreach (Interactable t in interactables)
+            {
+                print(t.Layer);
+                held.Add(t);
+                t.OnStartTouch();
+                //if (!t.Passthrough)
+                //    return;
             }
 
             OnPassthrough?.Invoke();

@@ -25,6 +25,8 @@ namespace StarGarden.Pets
         private SpriteRenderer sprite;
 
         public bool Passthrough => false;
+        public int Layer => (int)InteractableLayer.Pet;
+
         private bool initialised = false;
 
         public void Initialise(float happiness)
@@ -191,6 +193,7 @@ namespace StarGarden.Pets
         public void OnTap()
         {
             UI.UIManager.Main.ShowPanel("PetMenu", Pet.PetIndex);// ShowPetMenu(Pet.PetIndex);
+            print(Pet.PetIndex);
         }
 
         public void OnStartTouch() { }

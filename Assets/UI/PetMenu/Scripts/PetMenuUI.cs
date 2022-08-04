@@ -78,6 +78,7 @@ namespace StarGarden.UI
 
             currentPet = F.Wrap(petIndex, 0, pets.Length);
             WanderingPet pet = pets[currentPet].WanderingPet;
+            print(pet);
 
             print(pets[0]);
             petImage.sprite = pet.Pet.Sprite;

@@ -31,7 +31,10 @@ namespace StarGarden.Core.SaveData
             PetInstance[] allPets = PetManager.Main.AllPets;
             PetSaveData[] data = new PetSaveData[allPets.Length];
             for (int i = 0; i < allPets.Length; i++)
+            {
+                Debug.Log(allPets[i].WanderingPet);
                 data[i] = new PetSaveData(allPets[i]);
+            }
 
             allData.PetSaveData = data;
             WriteSaveData();

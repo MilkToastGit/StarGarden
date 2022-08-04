@@ -104,6 +104,7 @@ namespace StarGarden.Pets
             Transform island = Core.IslandManager.Main.GetIslandFromElement(pet.Pet.Element).IslandObject.transform;
             pet.WanderingPet = Instantiate(pet.Pet.Prefab, island).GetComponent<WanderingPet>();
             pet.WanderingPet.Initialise(happiness);
+            print("w" + pet.WanderingPet);
         }
     }
 }

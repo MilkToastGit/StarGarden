@@ -13,7 +13,7 @@ namespace StarGarden.Pets
         {
             Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
             //PetManager.UnlockPet(userStarsign);
-            PetManager.UnlockPet(Starsign.Leo); // **PLACEHOLDER**
+            PetManager.UnlockPet(PetManager.Main.AllPets.Random().Pet.Starsign); // **PLACEHOLDER**
             PetUnlockCloseButton.onClick.AddListener(UnlockCurrentPet);
         }
 
@@ -25,7 +25,7 @@ namespace StarGarden.Pets
                 currentStarsign = Zodiac.Zodiacs[F.Wrap((int)currentStarsign - 1, 0, Zodiac.Zodiacs.Length)].Starsign;
 
             //PetManager.UnlockPet(currentStarsign);
-            PetManager.UnlockPet(Starsign.Gemini); // **PLACEHOLDER**
+            PetManager.UnlockPet(PetManager.Main.AllPets.Random().Pet.Starsign); // **PLACEHOLDER**
 
             PetUnlockCloseButton.onClick.RemoveListener(UnlockCurrentPet);
         }

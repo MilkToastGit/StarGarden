@@ -8,6 +8,7 @@ namespace StarGarden.Stardust
     public class Starfall : MonoBehaviour, Interactable
     {
         public bool Passthrough => false;
+        public int Layer => (int)InteractableLayer.Starfall;
 
         [SerializeField] private Transform star;
 
