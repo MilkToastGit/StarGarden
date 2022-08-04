@@ -26,6 +26,7 @@ namespace StarGarden.LootBoxes
         private bool atCorrectAngle = false;
         private bool puzzleComplete = false;
         private float lastXDelta = 0f;
+        private int framesSinceLastXDelta = 0;
         private float xDelta = 0f;
         private Vector2 lastTouchPos;
         private Transform starGlowParent;
@@ -53,6 +54,7 @@ namespace StarGarden.LootBoxes
 
             introTime = 0f;
             lastXDelta = 0f;
+            framesSinceLastXDelta = 0;
             xDelta = 0f;
             lastTouchPos = Vector2.zero;
             puzzleComplete = false;
@@ -87,9 +89,13 @@ namespace StarGarden.LootBoxes
             else
             {
                 if (Mathf.Abs(xDelta) > 0f)
+                {
                     lastXDelta = xDelta;
+                    framesSinceLastXDelta = 0;
+                }
                 xDelta = InputManager.Main.TouchPosition.x - lastTouchPos.x;
                 lastTouchPos = InputManager.Main.TouchPosition;
+                framesSinceLastXDelta++;
             }
 
             transform.Rotate(Vector3.up, -xDelta * rotateSensitivity, Space.World);
@@ -98,7 +104,7 @@ namespace StarGarden.LootBoxes
         private void CheckCorrect()
         {
             atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360f - angleThreshold / 2);
-            if (atCorrectAngle && Mathf.Abs(xDelta) < 0.001f)
+            if (atCorrectAngle && Mathf.Abs(xDelta) < 0.1f)
             {
                 xDelta = 0f;
                 transform.rotation = Quaternion.identity;
@@ -165,7 +171,8 @@ namespace StarGarden.LootBoxes
 
         private void OnTouchUp(Vector2 position)
         {
-            xDelta = lastXDelta;
+            if (framesSinceLastXDelta < 10)
+                xDelta = lastXDelta;
             dragging = false;
         }
 

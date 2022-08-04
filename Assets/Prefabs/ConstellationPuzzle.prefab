@@ -47,7 +47,7 @@ MonoBehaviour:
   previewConstellation: 11
   rotateSensitivity: 0.112
   inertia: 0.931
-  angleThreshold: 35
+  angleThreshold: 25
   checkDuration: 1
   introDuration: 1.5
   spinIntro:
