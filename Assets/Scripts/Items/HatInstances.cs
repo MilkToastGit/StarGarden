@@ -25,7 +25,6 @@ namespace StarGarden.Items
         {
             if (pet.EquippedHat != null)
                 pet.EquippedHat.Unequip(pet);
-            pet.EquippedHat = this;
             equippedInstances.Add(pet);
             pet.SetHat(this);
         }
@@ -33,6 +32,7 @@ namespace StarGarden.Items
         public void Unequip(WanderingPet pet)
         {
             equippedInstances.Remove(pet);
+            pet.SetHat(null);
         }
     }
 }

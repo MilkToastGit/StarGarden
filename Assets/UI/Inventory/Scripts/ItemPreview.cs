@@ -18,7 +18,7 @@ namespace StarGarden.UI
 
         private void Setup()
         {
-            itemCount = GetComponentInChildren<TextMeshProUGUI>();
+            itemCount = GetComponentInChildren<TextMeshProUGUI>(true);
         }
 
         public void SetItem(ItemInstances item)
@@ -26,6 +26,7 @@ namespace StarGarden.UI
             Setup();
 
             this.item = item;
+            itemCount.transform.parent.gameObject.SetActive(true);
             itemCount.text = item.InventoryCount.ToString();
             itemImage.sprite = item.Item.Sprite;
             //SpriteRenderer prefabSprite = Instantiate(item.Item.Prefab, transform.GetChild(0)).GetComponentInChildren<SpriteRenderer>();

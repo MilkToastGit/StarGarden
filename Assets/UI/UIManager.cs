@@ -61,25 +61,19 @@ namespace StarGarden.UI
         {
             selectionMenuItems.Order66();
 
-            bool atLeastOneSpawned = false;
-            for (int i = 0; i < lst.Length; i++)
+            for (int i = -1; i < lst.Length; i++)
             {
-                if (lst[i].InventoryCount <= 0) continue;
+                if (i >= 0 && lst[i].InventoryCount <= 0) continue;
 
-                atLeastOneSpawned = true;
                 int index = i;
                 GameObject preview = Instantiate(selectionItemPreview, selectionMenuItems);
-                preview.GetComponent<ItemPreview>().SetItem(lst[i]);
+                if (i >= 0)
+                    preview.GetComponent<ItemPreview>().SetItem(lst[i]);
                 preview.GetComponent<Button>().onClick.AddListener(() => onCompleted(index));
                 preview.GetComponent<Button>().onClick.AddListener(() => HideSelectionMenu());
             }
 
-            if (atLeastOneSpawned)
-            {
-                selectionMenuBase.SetActive(true);
-            }
-            else
-                onCompleted(-1);
+            selectionMenuBase.SetActive(true);
         }
 
         public void ShowPanel(string name) => ShowPanel(name, null);

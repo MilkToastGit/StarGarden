@@ -56,11 +56,20 @@ namespace StarGarden.UI
 
         private void OnHatSelected(int selectedIndex)
         {
-            if (selectedIndex < 0) return;
+            if (selectedIndex < 0)
+            {
+                HatInstances hat = pets[currentPet].WanderingPet.EquippedHat;
+                if (hat == null) return;
 
-            HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
-            hat.Equip(pets[currentPet].WanderingPet);
-            hatImage.sprite = hat.Item.Sprite;
+                hat.Unequip(pets[currentPet].WanderingPet);
+                hatImage.sprite = defaultHatSprite;
+            }
+            else
+            {
+                HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
+                hat.Equip(pets[currentPet].WanderingPet);
+                hatImage.sprite = hat.Item.Sprite;
+            }
         }
 
         public void SetPet(int petIndex)
