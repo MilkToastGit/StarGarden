@@ -56,6 +56,20 @@ namespace StarGarden.Core
             return -1;
         }
 
+        public bool WithinIsland(Vector2 point, int island)
+        {
+            foreach (Island i in islands)
+                i.IslandObject.SetActive(i.Index == island);
+
+            int hit = WithinIsland(point);
+
+            foreach (Island i in islands)
+                i.IslandObject.SetActive(i.Index == activeIsland);
+
+            return hit == island;
+
+        }
+
         public int WithinIsland(Vector2 point)
         {
             Collider2D col = Physics2D.OverlapPoint(point, IslandMask);

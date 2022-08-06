@@ -36,7 +36,7 @@ namespace StarGarden.Stardust
         {
             Island island = IslandManager.Main.Islands.Random();
 
-            if (IslandManager.Main.ActiveIsland == null)
+            if (!instant && IslandManager.Main.ActiveIsland == null)
             {
                 instant = true;
                 Vector2 islandPos = island.IslandNavigationObject.transform.position;
@@ -52,7 +52,7 @@ namespace StarGarden.Stardust
             Vector2 point = new Vector2(randX, randY);
 
             Vector2 centreBound = (island.Bounds.center - point).normalized;
-            for (int i = 0; IslandManager.Main.WithinIsland(point) < 0 && i < 20; i++)
+            for (int i = 0; !IslandManager.Main.WithinIsland(point, island.Index) && i < 20; i++)
                 point += centreBound * 0.5f;
 
             Starfall s = Instantiate(starFall, point, Quaternion.identity, island.IslandObject.transform).GetComponentInChildren<Starfall>();
