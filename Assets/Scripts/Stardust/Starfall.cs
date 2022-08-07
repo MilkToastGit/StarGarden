@@ -9,14 +9,16 @@ namespace StarGarden.Stardust
     {
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Starfall;
+        public static Vector2 RareRateRange = new Vector2(0.1f, 0.6f);
 
         [SerializeField] private Transform star;
+        [SerializeField] private GameObject commonEffect, rareEffect;
 
         private Rarity rarity;
 
         public void Initialise(bool instant, bool trailOnly)
         {
-            rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, 0.1f, 0.6f) ?
+            rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, RareRateRange.x, RareRateRange.y) ?
                 Rarity.Common : Rarity.Rare;
             if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
 
@@ -33,7 +35,12 @@ namespace StarGarden.Stardust
         public void OnTap()
         {
             ResourcesManager.Main.AddStardust(rarity, 1);
-            Destroy(transform.parent.gameObject);
+
+            star.gameObject.SetActive(false);
+            if (rarity == Rarity.Common) commonEffect.SetActive(true);
+            else rareEffect.SetActive(true);
+
+            Destroy(transform.parent.gameObject, 2f);
         }
 
         public void OnStartTouch() { }

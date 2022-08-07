@@ -118,7 +118,11 @@ namespace StarGarden.UI
 
         public void FeedCookie(bool isCommon)
         {
-            float amount = isCommon ? 0.1f : 0.175f;
+            if (!Core.ResourcesManager.Main.TryPurchase(isCommon ? Rarity.Common : Rarity.Rare, 1) ||
+                pets[currentPet].WanderingPet.Happiness == 1)
+                return;
+
+            float amount = isCommon ? 0.2f : 0.4f;
             pets[currentPet].WanderingPet.IncreaseHappiness(amount);
             happinessBar.SetHappiness(pets[currentPet].WanderingPet.Happiness);
         }

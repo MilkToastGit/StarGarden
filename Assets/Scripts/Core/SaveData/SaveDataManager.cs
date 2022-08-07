@@ -81,6 +81,7 @@ namespace StarGarden.Core.SaveData
         {
             allData.LastSave = System.DateTime.Now;
             allData.LastSaveVersion = Application.version;
+            allData.AutoCollectExpiry = Stardust.AutoCollection.Expiry;
             WriteDataToFile(allData, dataPath);
         }
 

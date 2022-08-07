@@ -20,34 +20,25 @@ namespace StarGarden.LootBoxes
         {
             Rarity boxRarity = Rarity.Common;
             int cost = 0;
-            int held = 0;
 
             switch (rarity)
             {
                 case 0:
                     boxRarity = Rarity.Common;
                     cost = commonCost;
-                    held = ResourcesManager.Main.CommonStardust;
                     break;
                 case 1:
                     boxRarity = Rarity.Rare;
                     cost = rareCost;
-                    held = ResourcesManager.Main.RareStardust;
                     break;
                 case 2:
                     boxRarity = Rarity.Mythical;
                     cost = mythicalCost;
-                    held = ResourcesManager.Main.MythicalStardust;
                     break;
             }
 
-            if (cost > held)
-            {
-                print("NOT ENOUGH STARDUST");
+            if (!ResourcesManager.Main.TryPurchase(boxRarity, cost))
                 return;
-            }
-            else
-                ResourcesManager.Main.RemoveStardust(boxRarity, cost);
 
             puzzleHolder.SetActive(true);
             uiHolder.SetActive(true);

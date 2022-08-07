@@ -9,6 +9,8 @@ namespace StarGarden.Stardust
     public class StarfallSpawner : MonoBehaviour, Manager
     {
         public GameObject starFall;
+        public static Vector2 StarfallPerSecondRange => Vector2.one / SecondPerStarfallRange;
+        public static Vector2 SecondPerStarfallRange = new Vector2(15, 60);
 
         public void Initialise() { }
 
@@ -30,7 +32,7 @@ namespace StarGarden.Stardust
             Invoke();
         }
 
-        private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(15f, 60f));
+        private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(SecondPerStarfallRange.x, SecondPerStarfallRange.y));
 
         private void SpawnStarfall(bool instant = false)
         {

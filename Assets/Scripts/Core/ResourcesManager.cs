@@ -54,5 +54,27 @@ namespace StarGarden.Core
 
             OnStardustChanged?.Invoke();
         }
+
+        public bool TryPurchase(Rarity rarity, int price)
+        {
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    if (commonStardust < price)
+                        return false;
+                    break;
+                case Rarity.Rare:
+                    if (rareStardust < price)
+                        return false;
+                    break;
+                case Rarity.Mythical:
+                    if (mythicalStardust < price)
+                        return false;
+                    break;
+            }
+
+            RemoveStardust(rarity, price);
+            return true;
+        }
     }
 }

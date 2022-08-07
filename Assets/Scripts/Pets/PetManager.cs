@@ -12,7 +12,18 @@ namespace StarGarden.Pets
         public PetInstance[] AllPets { get; private set; }
         public PetInstance[] AllActivePets { get; private set; }
         [SerializeField] private Pet[] serialisedAllPets;
-        public float CollectiveHappiness { get { float h = 0f; foreach (PetInstance pet in AllPets) if (pet.Obtained) h += pet.WanderingPet.Happiness; return h / AllPets.Length; } }
+        public float CollectiveHappiness { get {
+                int active = 0;
+                float h = 0f; 
+                foreach (PetInstance pet in AllPets)
+                    if (pet.Obtained)
+                    {
+                        h += pet.WanderingPet.Happiness;
+                        active++;
+                    }
+                return h / active; 
+            } 
+        }
 
         public void Initialise()
         {
