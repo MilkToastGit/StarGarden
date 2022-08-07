@@ -7,7 +7,11 @@ namespace StarGarden.Stardust
 {
     public class AutoCollection : MonoBehaviour, Manager
     {
+        [SerializeField] private int commonCost, rareCost, mythicalCost;
+        [SerializeField] private int commonMinutes, rareMinutes, mythicalMinutes;
+
         public static DateTime Expiry => expiry;
+        public static bool Active => expiry - DateTime.Now > TimeSpan.Zero;
 
         private static DateTime expiry;
         [SerializeField] private AnimationCurve spawnRandomisationCurve;
@@ -55,9 +59,7 @@ namespace StarGarden.Stardust
                 return expiry - lastSave;
         }
 
-        public void AddTime(int minutes) { print("called"); AddTime(new TimeSpan(0, minutes, 0)); }
-
-        public void AddTime(TimeSpan amount)
+        private void AddTime(TimeSpan amount)
         {
             if (DateTime.Now > expiry)
                 expiry = DateTime.Now;
@@ -66,6 +68,36 @@ namespace StarGarden.Stardust
             print(expiry);
 
             expiry += amount;
+        }
+
+        public void Purchase(int rarity)
+        {
+            int cost = 0;
+            int minutes = 0;
+
+            switch (rarity)
+            {
+                case 0:
+                    cost = commonCost;
+                    minutes = commonMinutes;
+                    break;
+                case 1:
+                    cost = rareCost;
+                    minutes = rareMinutes;
+                    break;
+                case 2:
+                    cost = mythicalCost;
+                    minutes = mythicalMinutes;
+                    break;
+            }
+
+            if (!ResourcesManager.Main.TryPurchase(Rarity.Mythical, cost))
+            {
+                print("NOT ENOUGH STARDUST");
+                return;
+            }
+
+            AddTime(new TimeSpan(0, minutes, 0));
         }
 
         private float GetSavedHappiness(PetSaveData[] data)

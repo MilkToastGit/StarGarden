@@ -16,7 +16,8 @@ namespace StarGarden.Stardust
 
         public void LateInitialise()
         {
-            if (SaveDataManager.SaveData == null) return;
+            if (SaveDataManager.SaveData == null || AutoCollection.Active)
+                return;
 
             System.TimeSpan sinceLastSave = System.DateTime.Now - SaveDataManager.SaveData.LastSave;
             float totalHours = (float)sinceLastSave.TotalHours;

@@ -9,18 +9,20 @@ namespace StarGarden.Stardust
     {
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Starfall;
-        public static Vector2 RareRateRange = new Vector2(0.1f, 0.6f);
+        public static Vector2 RareRateRange = new Vector2(0.1f, 0.45f);
 
         [SerializeField] private Transform star;
         [SerializeField] private GameObject commonEffect, rareEffect;
+        [SerializeField] private SpriteRenderer shadow;
 
         private Rarity rarity;
+        private bool collected = false;
 
         public void Initialise(bool instant, bool trailOnly)
         {
             rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, RareRateRange.x, RareRateRange.y) ?
                 Rarity.Common : Rarity.Rare;
-            if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
+            if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0.6f, 1f);
 
             if(!instant)
                 GetComponent<Animator>().SetTrigger("Enter");
@@ -34,9 +36,24 @@ namespace StarGarden.Stardust
 
         public void OnTap()
         {
+            Collect();
+        }
+
+        public void OnLand()
+        {
+            if (AutoCollection.Active)
+                Collect();
+        }
+
+        private void Collect()
+        {
+            if (collected) return;
+
+            collected = true;
             ResourcesManager.Main.AddStardust(rarity, 1);
 
             star.gameObject.SetActive(false);
+            shadow.enabled = false;
             if (rarity == Rarity.Common) commonEffect.SetActive(true);
             else rareEffect.SetActive(true);
 

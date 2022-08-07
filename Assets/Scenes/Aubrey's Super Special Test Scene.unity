@@ -5812,6 +5812,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420035}
+  - component: {fileID: 519420036}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5932,6 +5933,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db252ca7653749641aecdac700285b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &519420036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 226ee38ba2dab364d8f1fc3cd82b5dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &542228682
@@ -7316,6 +7329,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1751187265}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Purchase
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: StarGarden.Stardust.AutoCollection, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 429583926, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1775861625, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -7350,7 +7395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1775861627, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddTime
+      value: Purchase
       objectReference: {fileID: 0}
     - target: {fileID: 1775861627, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -7366,7 +7411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1775861627, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1775861627, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -7394,7 +7439,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1895278743, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: AddTime
+      value: Purchase
       objectReference: {fileID: 0}
     - target: {fileID: 1895278743, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -7402,7 +7447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1895278743, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1895278743, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -7419,6 +7464,18 @@ PrefabInstance:
     - target: {fileID: 1948878854272241147, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_text
       value: Reset
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948878854383870003, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948878854383870003, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948878854383870003, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1948878854773138820, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_IsActive
@@ -7718,6 +7775,8 @@ PrefabInstance:
       objectReference: {fileID: 940554839}
     m_RemovedComponents:
     - {fileID: 4411324915116090150, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+    - {fileID: 5906466854991701125, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+    - {fileID: 4873231616738213641, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
 --- !u!1 &1103998759 stripped
 GameObject:
@@ -18182,6 +18241,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 603e756d7c36d5a47a600890dc8853c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  commonCost: 1
+  rareCost: 2
+  mythicalCost: 3
+  commonMinutes: 10
+  rareMinutes: 25
+  mythicalMinutes: 50
   spawnRandomisationCurve:
     serializedVersion: 2
     m_Curve:
