@@ -14,20 +14,20 @@ namespace StarGarden.Pets
 
         public static string GetHorroscope(Starsign sign) => Horroscopes[pickedHorroscopes[(int)sign]];
 
-        private DateTime lastSaveDate;
-
         public void Initialise() 
         {
-            Horroscopes = serialisedHorroscopes;
-            lastSaveDate = new DateTime(
-                SaveDataManager.SaveData.LastSave.Year,
-                SaveDataManager.SaveData.LastSave.Month,
-                SaveDataManager.SaveData.LastSave.Day);
+            
         }
 
         public void LateInitialise()
         {
-            if (lastSaveDate != DateTime.Today)
+            Horroscopes = serialisedHorroscopes;
+            DateTime lastDate = new DateTime(
+                SaveDataManager.LastSessionSaveDate.Year,
+                SaveDataManager.LastSessionSaveDate.Month,
+                SaveDataManager.LastSessionSaveDate.Day); 
+            
+            if (lastDate != DateTime.Today)
                 PickHorroscopes();
             else
                 pickedHorroscopes = SaveDataManager.SaveData.PickedHorroscopes;

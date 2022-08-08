@@ -15,6 +15,9 @@ namespace StarGarden.Core.SaveData
         public static AllSaveData SaveData => allData;
         private static AllSaveData allData = new AllSaveData();
 
+        public static System.DateTime LastSessionSaveDate => lastSessionSaveDate;
+        private static System.DateTime lastSessionSaveDate;
+
         public static void SaveItemData()
         {
             ItemInstances[][] allItems = InventoryManager.Main.AllItems;
@@ -74,6 +77,8 @@ namespace StarGarden.Core.SaveData
             allData = (AllSaveData)ReadDataFromFile(dataPath);
             if (allData == null)
                 allData = new AllSaveData();
+            else
+                lastSessionSaveDate = allData.LastSave;
 
             return allData;
         }

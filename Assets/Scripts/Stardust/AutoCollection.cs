@@ -15,17 +15,14 @@ namespace StarGarden.Stardust
 
         private static DateTime expiry;
         [SerializeField] private AnimationCurve spawnRandomisationCurve;
-        private DateTime lastSave;
 
-        public void Initialise() 
-        {
-            AllSaveData data = SaveDataManager.SaveData;
-            expiry = data.AutoCollectExpiry;
-            lastSave = data.LastSave;
-        }
+        public void Initialise() { }
 
         public void LateInitialise()
         {
+            AllSaveData data = SaveDataManager.SaveData;
+            expiry = data.AutoCollectExpiry; 
+            
             AddIdleStardust();
         }
 
@@ -33,7 +30,7 @@ namespace StarGarden.Stardust
         {
             AllSaveData data = SaveDataManager.SaveData;
             
-            float idleCollectDuration = (float)IdleAutoCollectDuration(lastSave).TotalSeconds;
+            float idleCollectDuration = (float)IdleAutoCollectDuration(SaveDataManager.LastSessionSaveDate).TotalSeconds;
             //print($"calculated: {idleCollectDuration}");
             if (idleCollectDuration <= 0) return;
 
