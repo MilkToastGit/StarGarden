@@ -105,7 +105,7 @@ namespace StarGarden.LootBoxes
         {
             atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360f - angleThreshold / 2);
 
-            print($"correct ({atCorrectAngle}), xDelta ({Mathf.Abs(xDelta)})");
+            //print($"correct ({atCorrectAngle}), xDelta ({Mathf.Abs(xDelta)})");
             
             if (atCorrectAngle && Mathf.Abs(xDelta) < 1f)
             {
@@ -113,7 +113,7 @@ namespace StarGarden.LootBoxes
                 transform.rotation = Quaternion.identity;
                 puzzleComplete = true;
                 onPuzzleCompleted?.Invoke();
-                print("You Di d i  t.");
+                //print("You Di d i  t.");
             }
         }
 

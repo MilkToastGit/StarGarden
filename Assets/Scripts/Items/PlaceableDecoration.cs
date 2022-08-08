@@ -61,7 +61,7 @@ namespace StarGarden.Items
             state = State.Idle;
             UI.InventorySack.SetState(false, false);
             sprite.sortingLayerName = "Default";
-            print(decorInst.InventoryCount);
+            //print(decorInst.InventoryCount);
         }
 
         private void ReturnToInventory()

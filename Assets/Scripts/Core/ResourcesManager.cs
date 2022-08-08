@@ -34,14 +34,14 @@ namespace StarGarden.Core
                 UpdateResources(data);
         }
 
-        public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
-
         public void UpdateResources(ResourceSaveData data)
         {
             commonStardust = data.CommonStardust;
             rareStardust = data.RareStardust;
             mythicalStardust = data.MythicalStardust;
         }
+
+        public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
 
         public void AddStardust(Rarity rarity, int amount)
         {
@@ -52,6 +52,7 @@ namespace StarGarden.Core
                 case Rarity.Mythical: mythicalStardust += amount; break;
             }
 
+            SaveDataManager.SaveResourceData();
             OnStardustChanged?.Invoke();
         }
 

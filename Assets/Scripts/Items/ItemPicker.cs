@@ -11,7 +11,7 @@ namespace StarGarden.Items
             ItemInstances[] pool = InventoryManager.Main.GetAllItemsFromCategory(Random.value > 0.75f ? 1 : 0);
 
             Rarity itemRarity = PickItemRarity(wishRarity);
-            Debug.Log(itemRarity + " " + pool[0].Item.ItemCategory);
+            //Debug.Log(itemRarity + " " + pool[0].Item.ItemCategory);
 
             //Vector2Int range = -Vector2Int.one;
             //for (int i = 0; i < pool.Length; i++)

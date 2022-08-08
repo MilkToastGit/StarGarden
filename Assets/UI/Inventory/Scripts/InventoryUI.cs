@@ -44,6 +44,7 @@ namespace StarGarden.UI
 
         private void OnDecorationClicked(DecorationInstances item)
         {
+            if (IslandManager.Main.ActiveIsland == null) return;
             InventoryManager.Main.SpawnItem(item, false);
 
             UIManager.Main.HideCurrentPanel();

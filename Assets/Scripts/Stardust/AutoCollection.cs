@@ -15,14 +15,17 @@ namespace StarGarden.Stardust
 
         private static DateTime expiry;
         [SerializeField] private AnimationCurve spawnRandomisationCurve;
+        private DateTime lastSave;
 
-        public void Initialise() { }
-
-        public void LateInitialise()
+        public void Initialise() 
         {
             AllSaveData data = SaveDataManager.SaveData;
             expiry = data.AutoCollectExpiry;
+            lastSave = data.LastSave;
+        }
 
+        public void LateInitialise()
+        {
             AddIdleStardust();
         }
 
@@ -30,14 +33,14 @@ namespace StarGarden.Stardust
         {
             AllSaveData data = SaveDataManager.SaveData;
             
-            float idleCollectDuration = (float)IdleAutoCollectDuration(data.LastSave).TotalSeconds;
-            print($"calculated: {idleCollectDuration}");
-            if (idleCollectDuration < 0) return;
+            float idleCollectDuration = (float)IdleAutoCollectDuration(lastSave).TotalSeconds;
+            //print($"calculated: {idleCollectDuration}");
+            if (idleCollectDuration <= 0) return;
 
             float spawnRate = spawnRandomisationCurve.Evaluate(UnityEngine.Random.value)
                 .Map(0f, 1f, StarfallSpawner.SecondPerStarfallRange.x, StarfallSpawner.SecondPerStarfallRange.y);
             int collectedAmount = Mathf.FloorToInt(idleCollectDuration / spawnRate);
-            print($"minPerSecond: {StarfallSpawner.SecondPerStarfallRange}, rate: {spawnRate}, collected: {collectedAmount}");
+            //print($"minPerSecond: {StarfallSpawner.SecondPerStarfallRange}, rate: {spawnRate}, collected: {collectedAmount}");
 
             float lastHappiness = GetSavedHappiness(data.PetSaveData);
             float currentHappiness = Pets.PetManager.Main.CollectiveHappiness;
@@ -51,8 +54,8 @@ namespace StarGarden.Stardust
 
         public TimeSpan IdleAutoCollectDuration(DateTime lastSave)
         {
-            print($"now: {DateTime.Now}, expiry: {expiry}, lastSave: {lastSave}");
-            print(DateTime.Now < expiry);
+            //print($"now: {DateTime.Now}, expiry: {expiry}, lastSave: {lastSave}");
+            //print(DateTime.Now < expiry);
             if (DateTime.Now < expiry)
                 return DateTime.Now - lastSave;
             else
@@ -64,10 +67,12 @@ namespace StarGarden.Stardust
             if (DateTime.Now > expiry)
                 expiry = DateTime.Now;
 
-            print(DateTime.Now > expiry);
-            print(expiry);
+            //print(DateTime.Now > expiry);
+            //print(expiry);
 
             expiry += amount;
+            SaveDataManager.SaveData.AutoCollectExpiry = expiry;
+            SaveDataManager.SaveAll();
         }
 
         public void Purchase(int rarity)

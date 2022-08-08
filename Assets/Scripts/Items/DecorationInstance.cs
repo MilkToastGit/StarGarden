@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Items
 {
@@ -17,19 +18,21 @@ namespace StarGarden.Items
             Item = item;
             totalCount = data.TotalCount;
             placedInstances = new List<Vector3Int>();
-            foreach (Core.SaveData.SerializableVector3Int v in data.PlacedInstances)
+            foreach (SerializableVector3Int v in data.PlacedInstances)
                 placedInstances.Add(v);
         }
 
         public void Place(Vector2Int position, int island)
         {
             placedInstances.Add(new Vector3Int(position.x, position.y, island));
-            Debug.Log(placedInstances.Count);
+            SaveDataManager.SaveItemData();
+            //Debug.Log(placedInstances.Count);
         }
 
         public void Unplace(Vector2Int position, int island)
         {
             placedInstances.Remove(new Vector3Int(position.x, position.y, island));
+            SaveDataManager.SaveItemData();
         }
 
         public void Move(Vector2Int initialPosition, Vector2Int newPosition, int island)
@@ -37,6 +40,7 @@ namespace StarGarden.Items
             Vector3Int initPos = new Vector3Int(initialPosition.x, initialPosition.y, island);
             Vector3Int newPos = new Vector3Int(newPosition.x, newPosition.y, island);
             placedInstances[placedInstances.FindIndex(v => v == initPos)] = newPos;
+            SaveDataManager.SaveItemData();
         }
 
         public void GetGridRange(Vector2Int pivot, out Vector2Int min, out Vector2Int max)
@@ -86,7 +90,7 @@ namespace StarGarden.Items
                 if (hasBeenPlaced && (Vector2Int)origin == lastPlacedPoint) continue;
 
                 GetGridRange((Vector2Int)origin, out Vector2Int min, out Vector2Int max);
-                Debug.Log($"{decorMin}, {decorMax} | {min}, {max}");
+                //Debug.Log($"{decorMin}, {decorMax} | {min}, {max}");
 
                 foreach (Vector2Int corner in corners)
                     if (corner.Between(min, max))

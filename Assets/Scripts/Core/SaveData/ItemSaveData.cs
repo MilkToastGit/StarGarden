@@ -30,7 +30,7 @@ namespace StarGarden.Core.SaveData
                     foreach (Vector3Int placed in item.placedInstances)
                         placedInstances.Add(new SerializableVector3Int(placed));
                     data[i].PlacedInstances = placedInstances;
-                    Debug.Log(data[i].TotalCount);
+                    //Debug.Log(data[i].TotalCount);
                 }
                 Decorations = data;
             }

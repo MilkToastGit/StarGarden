@@ -44,7 +44,7 @@ namespace StarGarden.UI
             selectedDate = DateTime.Parse(result);
             defaultDate = result;
             UpdateText(selectedDate);
-            print(Zodiac.GetStarsignFromDate(selectedDate));
+            //print(Zodiac.GetStarsignFromDate(selectedDate));
         }
 
         private void UpdateText(DateTime d)

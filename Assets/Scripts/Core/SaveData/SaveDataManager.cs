@@ -22,8 +22,13 @@ namespace StarGarden.Core.SaveData
             foreach(ItemInstances[] items in allItems)
                 data.AddItems(items);
 
-            allData.ItemSaveData = data;
+            foreach (DecorationInstances decor in allItems[0])
+                foreach (Vector3Int v in decor.placedInstances)
+                    Debug.Log(v);
+
+                allData.ItemSaveData = data;
             WriteSaveData();
+            Debug.Log("ItemDataSaved");
         }
 
         public static void SavePetData()
@@ -32,12 +37,12 @@ namespace StarGarden.Core.SaveData
             PetSaveData[] data = new PetSaveData[allPets.Length];
             for (int i = 0; i < allPets.Length; i++)
             {
-                Debug.Log(allPets[i].WanderingPet);
                 data[i] = new PetSaveData(allPets[i]);
             }
 
             allData.PetSaveData = data;
             WriteSaveData();
+            Debug.Log("PetDataSaved");
         }
 
         public static void SaveResourceData()
@@ -49,6 +54,7 @@ namespace StarGarden.Core.SaveData
 
             allData.ResourceSaveData = data;
             WriteSaveData();
+            Debug.Log("ResourceDataSaved");
         }
 
         public static void UpdateAndSaveAll()
@@ -58,6 +64,7 @@ namespace StarGarden.Core.SaveData
             SaveResourceData();
 
             WriteSaveData();
+            Debug.Log("AllDataSaved");
         }
 
         public static void SaveAll() => WriteSaveData();
@@ -81,7 +88,7 @@ namespace StarGarden.Core.SaveData
         {
             allData.LastSave = System.DateTime.Now;
             allData.LastSaveVersion = Application.version;
-            allData.AutoCollectExpiry = Stardust.AutoCollection.Expiry;
+            Debug.Log(allData.AutoCollectExpiry);
             WriteDataToFile(allData, dataPath);
         }
 

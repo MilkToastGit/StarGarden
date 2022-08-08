@@ -17,7 +17,8 @@ namespace StarGarden.UI
         [SerializeField] private Sprite defaultHatSprite;
         [SerializeField] private Transform hatParent;
 
-        private PetInstance[] pets => PetManager.Main.AllActivePets;
+        private PetInstance[] pets => PetManager.Main.AllPets;
+        private PetInstance[] activePets => PetManager.Main.AllActivePets;
         private int currentPet = -1;
 
         public override void Initialise()
@@ -78,9 +79,9 @@ namespace StarGarden.UI
 
             currentPet = F.Wrap(petIndex, 0, pets.Length);
             WanderingPet pet = pets[currentPet].WanderingPet;
-            print(pet);
+            //print(pet);
 
-            print(pets[0]);
+            //print(pets[0]);
             petImage.sprite = pet.Pet.Sprite;
 
             if (pet.EquippedHat != null)
@@ -111,6 +112,8 @@ namespace StarGarden.UI
             neutralTrait.text = pet.Pet.NeutralTrait;
             positiveTrait.text = pet.Pet.PositiveTrait;
 
+            print(horroscope.text);
+
             horroscope.text = HorroscopeGenerator.GetHorroscope(pet.Pet.Starsign);
 
             happinessBar.SetHappiness(pet.Happiness);
@@ -118,8 +121,8 @@ namespace StarGarden.UI
 
         public void FeedCookie(bool isCommon)
         {
-            if (!Core.ResourcesManager.Main.TryPurchase(isCommon ? Rarity.Common : Rarity.Rare, 1) ||
-                pets[currentPet].WanderingPet.Happiness == 1)
+            if (pets[currentPet].WanderingPet.Happiness > 0.95f ||
+                !Core.ResourcesManager.Main.TryPurchase(isCommon ? Rarity.Common : Rarity.Rare, 1))
                 return;
 
             float amount = isCommon ? 0.2f : 0.4f;
@@ -134,7 +137,15 @@ namespace StarGarden.UI
             happinessBar.SetHappiness(pets[currentPet].WanderingPet.Happiness);
         }
 
-        public void NextPet() => SetPet(currentPet + 1);
-        public void PreviousPet() => SetPet(currentPet - 1);
+        public void NextPet() => SetPet(activePets[F.Wrap(GetCurrentActivePetIndex() + 1, 0, activePets.Length)].Pet.PetIndex);
+        public void PreviousPet() => SetPet(activePets[F.Wrap(GetCurrentActivePetIndex() - 1, 0, activePets.Length)].Pet.PetIndex);
+
+        private int GetCurrentActivePetIndex()
+        {
+            for (int i = 0; i < activePets.Length; i++)
+                if (activePets[i].Pet.PetIndex == currentPet)
+                    return i;
+            return -1;
+        }
     }
 }

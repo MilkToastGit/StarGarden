@@ -77,7 +77,7 @@ namespace StarGarden.LootBoxes
 
             ItemInstances item = ItemPicker.PickItem(r);
             InventoryManager.Main.AddItem(item.Item);
-            print($"You Got a {item.Item.Rarity} {item.Item.Name}!");
+            //print($"You Got a {item.Item.Rarity} {item.Item.Name}!");
             
             return item;
         }

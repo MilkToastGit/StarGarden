@@ -70,8 +70,13 @@ namespace StarGarden.Pets
             }
         }
 
-        public void IncreaseHappiness(float amount) => Happiness = Mathf.Min(Happiness + amount, 1);
-        public void SetHappiness(float amount) => Happiness = Mathf.Clamp01(amount);
+        public void IncreaseHappiness(float amount) => SetHappiness(Happiness + amount);
+
+        public void SetHappiness(float amount)
+        {
+            Happiness = Mathf.Clamp01(amount);
+            Core.SaveData.SaveDataManager.SavePetData();
+        }
 
         private Vector2 RandomDirection()
         {
@@ -193,7 +198,7 @@ namespace StarGarden.Pets
         public void OnTap()
         {
             UI.UIManager.Main.ShowPanel("PetMenu", Pet.PetIndex);// ShowPetMenu(Pet.PetIndex);
-            print(Pet.PetIndex);
+            //print(Pet.PetIndex);
         }
 
         public void OnStartTouch() { }
@@ -202,7 +207,7 @@ namespace StarGarden.Pets
 
         private void OnEnable()
         {
-            print(anim.isInitialized);
+            //print(anim.isInitialized);
             if (initialised)
             {
                 StopBehaviourCycle();

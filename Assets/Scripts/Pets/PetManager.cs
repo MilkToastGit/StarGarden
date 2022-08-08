@@ -71,13 +71,14 @@ namespace StarGarden.Pets
             }
 
             UpdateActivePets();
+            SaveDataManager.SavePetData();
         }
 
         private float CalculateNewHappiness(float initialHappiness)
         {
             System.TimeSpan sinceLast = System.DateTime.Now - SaveDataManager.SaveData.LastSave;
             float decrease = F.Map((float)sinceLast.TotalHours, 0f, 48f);
-            print($"Happiness Decrease: {initialHappiness} - {decrease} = {initialHappiness - decrease}");
+            //print($"Happiness Decrease: {initialHappiness} - {decrease} = {initialHappiness - decrease}");
             return Mathf.Max(initialHappiness - decrease, 0);
         }
 
@@ -107,6 +108,7 @@ namespace StarGarden.Pets
             pet.Obtained = true;
             SpawnPet(pet, 0.5f);
             Main.UpdateActivePets();
+            SaveDataManager.SavePetData();
             UI.UIManager.Main.ShowPanel("PetUnlocker", pet.Pet);
         }
 
@@ -115,7 +117,7 @@ namespace StarGarden.Pets
             Transform island = Core.IslandManager.Main.GetIslandFromElement(pet.Pet.Element).IslandObject.transform;
             pet.WanderingPet = Instantiate(pet.Pet.Prefab, island).GetComponent<WanderingPet>();
             pet.WanderingPet.Initialise(happiness);
-            print("w" + pet.WanderingPet);
+            //print("w" + pet.WanderingPet);
         }
     }
 }

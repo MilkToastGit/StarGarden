@@ -36,12 +36,16 @@ namespace StarGarden.Items
         public void AddItem(Item item)
         {
             AllItems[item.ItemCategory][item.ItemIndex].IncreaseCount();
+            SaveDataManager.SaveItemData();
         }
 
         public void RemoveItem(Item item)
         {
             if (AllItems[item.ItemCategory][item.ItemIndex].InventoryCount > 0)
+            {
                 AllItems[item.ItemCategory][item.ItemIndex].DecreaseCount();
+                SaveDataManager.SaveItemData();
+            }
             else throw new System.Exception($"Could not remove item {item.Name}. Item count is zero");
         }
 
@@ -50,9 +54,6 @@ namespace StarGarden.Items
 
         public void SpawnItem(DecorationInstances item, bool place, Vector3Int point = default)
         {
-            if (Core.IslandManager.Main.ActiveIsland == null) return;
-
-            Transform island = Core.IslandManager.Main.Islands[point.z].IslandObject.transform;
             if (place)
                 Instantiate(decorationPrefab, Core.WorldGrid.GridToWorld((Vector2Int)point), Quaternion.identity)
                     .GetComponent<PlaceableDecoration>().SetItem(item, true, point); 
@@ -64,7 +65,7 @@ namespace StarGarden.Items
 
         public void UpdateAllItems(ItemSaveData data)
         {
-            print("I made it dad");
+            //print("I made it dad");
             AllItems = new ItemInstances[2][];
             AllItems[0] = new ItemInstances[data.Decorations.Length];
             AllItems[1] = new ItemInstances[data.Hats.Length];
@@ -79,7 +80,7 @@ namespace StarGarden.Items
                 DecorationInstances instance = AllItems[0][i] as DecorationInstances;
                 foreach (Vector3Int point in instance.placedInstances)
                 {
-                    print($"({i}) inst: {instance.Item.Name}, point: {point}");
+                    //print($"({i}) inst: {instance.Item.Name}, point: {point}");
                     SpawnItem(instance, true, point);
                 }
             }
@@ -95,7 +96,7 @@ namespace StarGarden.Items
                 foreach (int pet in hatData.EquippedInstances)
                     instance.Equip(Pets.PetManager.Main.AllPets[pet].WanderingPet);
 
-                print(AllItems[1][i].Item.Name);
+                //print(AllItems[1][i].Item.Name);
             }
         }
 
@@ -121,7 +122,7 @@ namespace StarGarden.Items
                     }
                 }
             }
-            print("Generated");
+            //print("Generated");
         }
 
         private void OnValidate()

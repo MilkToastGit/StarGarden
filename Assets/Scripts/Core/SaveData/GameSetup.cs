@@ -16,8 +16,8 @@ namespace StarGarden.Core.SaveData
         private void Awake()
         {
             GetManagers();
-            InitialiseAll();
             LoadSave();
+            InitialiseAll();
             LateInitialiseAll();
         }
 

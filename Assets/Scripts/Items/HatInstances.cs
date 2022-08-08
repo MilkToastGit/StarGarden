@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarGarden.Pets;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Items
 {
@@ -12,7 +13,7 @@ namespace StarGarden.Items
 
         public HatInstances() { }
 
-        public HatInstances(Core.SaveData.HatSaveData data, Hat item)
+        public HatInstances(HatSaveData data, Hat item)
         {
             Item = item;
             totalCount = data.TotalCount;
@@ -26,12 +27,14 @@ namespace StarGarden.Items
             if (pet.EquippedHat != null)
                 pet.EquippedHat.Unequip(pet);
             equippedInstances.Add(pet);
+            SaveDataManager.SaveItemData();
             pet.SetHat(this);
         }
 
         public void Unequip(WanderingPet pet)
         {
             equippedInstances.Remove(pet);
+            SaveDataManager.SaveItemData();
             pet.SetHat(null);
         }
     }
