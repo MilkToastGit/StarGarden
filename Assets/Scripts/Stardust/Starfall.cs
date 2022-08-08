@@ -45,7 +45,7 @@ namespace StarGarden.Stardust
                 Collect();
         }
 
-        private void Collect()
+        public void Collect()
         {
             if (collected) return;
 

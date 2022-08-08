@@ -16,6 +16,8 @@ namespace StarGarden.Stardust
 
         public void LateInitialise()
         {
+            Invoke();
+
             if (SaveDataManager.LastSessionSaveDate == default || AutoCollection.Active)
                 return;
 
@@ -29,8 +31,6 @@ namespace StarGarden.Stardust
 
             for (int i = 0; i < maxSpawnAmount * timeMult; i++)
                 SpawnStarfall(true);
-
-            Invoke();
         }
 
         private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(SecondPerStarfallRange.x, SecondPerStarfallRange.y));

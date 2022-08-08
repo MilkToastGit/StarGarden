@@ -62,7 +62,11 @@ namespace StarGarden.Stardust
         private void AddTime(TimeSpan amount)
         {
             if (DateTime.Now > expiry)
+            {
+                foreach (Starfall star in FindObjectsOfType<Starfall>())
+                    star.Collect();
                 expiry = DateTime.Now;
+            }
 
             //print(DateTime.Now > expiry);
             //print(expiry);
