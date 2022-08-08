@@ -16,6 +16,7 @@ namespace StarGarden.UI
 
         [SerializeField] private GameObject selectionMenuBase;
         [SerializeField] private GameObject selectionItemPreview;
+        [SerializeField] private Animator inventorySack;
         private Transform selectionMenuItems;
 
         public void Initialise()

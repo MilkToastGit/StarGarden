@@ -50,6 +50,8 @@ namespace StarGarden.Items
 
         public void SpawnItem(DecorationInstances item, bool place, Vector3Int point = default)
         {
+            if (Core.IslandManager.Main.ActiveIsland == null) return;
+
             Transform island = Core.IslandManager.Main.Islands[point.z].IslandObject.transform;
             if (place)
                 Instantiate(decorationPrefab, Core.WorldGrid.GridToWorld((Vector2Int)point), Quaternion.identity)

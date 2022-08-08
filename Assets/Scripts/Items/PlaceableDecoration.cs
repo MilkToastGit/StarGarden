@@ -59,6 +59,8 @@ namespace StarGarden.Items
             lastPlacedPoint = point;
             placingDecoration = false;
             state = State.Idle;
+            UI.InventorySack.SetState(false, false);
+            sprite.sortingLayerName = "Default";
             print(decorInst.InventoryCount);
         }
 
@@ -67,6 +69,7 @@ namespace StarGarden.Items
             if (!firstPlacement)
                 decorInst.Unplace(lastPlacedPoint, IslandManager.Main.ActiveIsland.Index);
             placingDecoration = false;
+            UI.InventorySack.SetState(false, false);
             Destroy(gameObject);
         }
 
@@ -79,14 +82,18 @@ namespace StarGarden.Items
                 transform.position = WorldGrid.GridToWorld(lastPlacedPoint) + centerOffset;
                 sprite.color = Color.white;
                 state = State.Idle;
+                sprite.sortingLayerName = "Default";
             }
             placingDecoration = false;
+            UI.InventorySack.SetState(false, false);
         }
 
         private void StartDragging()
         {
             state = State.Dragging;
             placingDecoration = true;
+            UI.InventorySack.SetState(true, false);
+            sprite.sortingLayerName = "Effects";
         }
 
         private void Update()
@@ -101,11 +108,14 @@ namespace StarGarden.Items
 
             if (state != State.Dragging) return;
 
-            Vector2 touchPos = InputManager.Main.TouchPosition / Screen.height;
-            hoveringInventory = touchPos.x < 0.15f && touchPos.y > 0.85f;
+            Vector2 touchPos = InputManager.Main.TouchPosition / new Vector2 (Screen.width, Screen.height);
+            hoveringInventory = touchPos.x > 0.75f && touchPos.y > 0.85f;
 
             if (hoveringInventory)
+            {
                 transform.position = InputManager.Main.WorldTouchPosition;
+                UI.InventorySack.SetState(true, true);
+            }
             else
             {
                 Vector2Int gridPos = WorldGrid.WorldToGrid(InputManager.Main.WorldTouchPosition);
@@ -120,6 +130,7 @@ namespace StarGarden.Items
                     invalidSpace = CheckInvalidSpace(gridPos);
 
                 sprite.color = invalidSpace ? Color.red : Color.white;
+                UI.InventorySack.SetState(true, false);
             }
         }
 
