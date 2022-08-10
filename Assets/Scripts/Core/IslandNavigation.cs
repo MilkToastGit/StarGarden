@@ -14,11 +14,13 @@ namespace StarGarden.Core
         private bool zoomedOut = true;
         private Camera cam;
         private CameraControl camControl;
+        private PreviewIsland[] previewIslands;
 
         private void Awake()
         {
             cam = Camera.main;
             camControl = cam.GetComponent<CameraControl>();
+            previewIslands = islandSelect.GetComponentsInChildren<PreviewIsland>();
         }
 
         public void ZoomOut() { if (!zoomedOut) StartCoroutine(IZoomOut()); }

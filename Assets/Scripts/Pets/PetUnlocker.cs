@@ -2,26 +2,72 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using StarGarden.Pets;
+using StarGarden.Core.SaveData;
 
-namespace StarGarden.UI
+namespace StarGarden.Pets
 {
-    public class PetUnlocker : UIPanel
+    public class PetUnlocker : MonoBehaviour, Manager
     {
-        [SerializeField] private Image petImage;
-        [SerializeField] private TextMeshProUGUI petName;
+        [SerializeField] private Button PetUnlockCloseButton;
 
-        public override void Show(object args)
+        private Queue<Starsign> petsToUnlock = new Queue<Starsign>();
+
+        public void Initialise() { }
+        public void LateInitialise()
         {
-            if (args.GetType() != typeof(Pet))
-                throw new System.Exception("Error: Type mismatch for args in method Show of script PetUnlocker. Expected: Pet");
-            
-            Pet pet = (Pet)args;
-            petImage.sprite = pet.Sprite;
-            petName.text = pet.Name;
-
-            base.Show();
+            StartCoroutine(WaitForBirthdayInput());
         }
+
+        private IEnumerator WaitForBirthdayInput()
+        {
+            yield return new WaitUntil(() => SaveDataManager.SaveData.UserBirthdate != default);
+            GetPetsToUnlock();
+            if (petsToUnlock.Count > 0)
+                UnlockNextPet();
+        }
+
+        private void GetPetsToUnlock()
+        {
+            Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
+            Starsign currentStarsign = Zodiac.GetStarsignFromDate(System.DateTime.Today);
+            if (currentStarsign == userStarsign)
+                currentStarsign = Zodiac.Zodiacs[F.Wrap((int)currentStarsign - 1, 0, Zodiac.Zodiacs.Length)].Starsign;
+
+            if (!PetManager.Main.GetPetFromStarsign(userStarsign).Obtained)
+                petsToUnlock.Enqueue(userStarsign);
+            if (!PetManager.Main.GetPetFromStarsign(currentStarsign).Obtained)
+                petsToUnlock.Enqueue(currentStarsign);
+        }
+
+        private void UnlockNextPet()
+        {
+            PetManager.UnlockPet(petsToUnlock.Dequeue());
+            if (petsToUnlock.Count > 0)
+                PetUnlockCloseButton.onClick.AddListener(UnlockNextPet);
+            else
+                PetUnlockCloseButton.onClick.RemoveListener(UnlockNextPet);
+        }
+
+        //public void UnlockBirthPet()
+        //{
+        //    Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
+        //    //PetManager.UnlockPet(userStarsign);
+        //    PetManager.UnlockPet(PetManager.Main.AllPets.Random().Pet.Starsign); // **PLACEHOLDER**
+        //    PetUnlockCloseButton.onClick.AddListener(UnlockCurrentPet);
+        //}
+
+        //public void UnlockCurrentPet()
+        //{
+        //    Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
+        //    Starsign currentStarsign = Zodiac.GetStarsignFromDate(System.DateTime.Today);
+        //    if (currentStarsign == userStarsign)
+        //        currentStarsign = Zodiac.Zodiacs[F.Wrap((int)currentStarsign - 1, 0, Zodiac.Zodiacs.Length)].Starsign;
+
+        //    //PetManager.UnlockPet(currentStarsign);
+        //    PetManager.UnlockPet(PetManager.Main.AllPets.Random().Pet.Starsign); // **PLACEHOLDER**
+
+        //    PetUnlockCloseButton.onClick.RemoveListener(UnlockCurrentPet);
+        //}
     }
 }

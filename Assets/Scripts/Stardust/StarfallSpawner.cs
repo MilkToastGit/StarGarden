@@ -21,7 +21,7 @@ namespace StarGarden.Stardust
             if (SaveDataManager.LastSessionSaveDate == default || AutoCollection.Active)
                 return;
 
-            System.TimeSpan sinceLastSave = System.DateTime.Now - SaveDataManager.SaveData.LastSave;
+            System.TimeSpan sinceLastSave = System.DateTime.Now - SaveDataManager.LastSessionSaveDate;
             float totalHours = (float)sinceLastSave.TotalHours;
             float timeMult = F.Map(totalHours, 0f, 12f);
             float maxSpawnAmount = Random.Range(20f, 35f);

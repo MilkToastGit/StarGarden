@@ -12,6 +12,8 @@ namespace StarGarden.Core
 
         [SerializeField] private LayerMask IslandMask;
         [SerializeField] private Island[] islands;
+
+        private PreviewIsland[] previewIslands;
         private int activeIsland = -1;
 
         public void Initialise()
@@ -23,8 +25,12 @@ namespace StarGarden.Core
             }
             else Destroy(gameObject);
 
+            previewIslands = new PreviewIsland[islands.Length];
             for (int i = 0; i < islands.Length; i++)
+            {
                 islands[i].Index = i;
+                previewIslands[i] = islands[i].IslandNavigationObject.GetComponent<PreviewIsland>();
+            }
         }
 
         public void LateInitialise() { }
@@ -97,6 +103,12 @@ namespace StarGarden.Core
 
             islands[activeIsland].IslandObject.SetActive(false);
             activeIsland = -1;
+        }
+
+        public void UpdatePreviewIslandStarglow()
+        {
+            foreach (PreviewIsland i in previewIslands)
+                i.UpdateStarGlow();
         }
 
         public Island GetIslandFromElement(Element element)

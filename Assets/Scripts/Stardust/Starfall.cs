@@ -10,6 +10,7 @@ namespace StarGarden.Stardust
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Starfall;
         public static Vector2 RareRateRange = new Vector2(0.1f, 0.45f);
+        public bool Collected => collected;
 
         [SerializeField] private Transform star;
         [SerializeField] private GameObject commonEffect, rareEffect;
@@ -32,6 +33,8 @@ namespace StarGarden.Stardust
                 star.GetComponent<SpriteRenderer>().enabled = false;
                 Destroy(transform.parent.gameObject, 5f);
             }
+
+            IslandManager.Main.UpdatePreviewIslandStarglow();
         }
 
         public void OnTap()
@@ -58,6 +61,7 @@ namespace StarGarden.Stardust
             else rareEffect.SetActive(true);
 
             Destroy(transform.parent.gameObject, 2f);
+            IslandManager.Main.UpdatePreviewIslandStarglow();
         }
 
         public void OnStartTouch() { }
