@@ -35,6 +35,7 @@ namespace StarGarden.Items
 
         public void AddItem(Item item)
         {
+            print(AllItems[item.ItemCategory][item.ItemIndex].Item.Name);
             AllItems[item.ItemCategory][item.ItemIndex].IncreaseCount();
             SaveDataManager.SaveItemData();
         }

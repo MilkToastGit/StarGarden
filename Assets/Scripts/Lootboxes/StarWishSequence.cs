@@ -16,43 +16,43 @@ namespace StarGarden.LootBoxes
         public Image itemPreview;
         public Image itemBackground;
 
+        [SerializeField] private GameObject rerollButton;
+        private Rarity wishRarity;
+        private Item rolledItem;
+
         public void MakeWish(int rarity)
         {
-            Rarity boxRarity = Rarity.Common;
+            wishRarity = (Rarity)rarity;
+            rolledItem = null;
             int cost = 0;
 
             switch (rarity)
             {
-                case 0:
-                    boxRarity = Rarity.Common;
-                    cost = commonCost;
+                case 0: cost = commonCost;
                     break;
-                case 1:
-                    boxRarity = Rarity.Rare;
-                    cost = rareCost;
+                case 1: cost = rareCost;
                     break;
-                case 2:
-                    boxRarity = Rarity.Mythical;
-                    cost = mythicalCost;
+                case 2: cost = mythicalCost;
                     break;
             }
 
-            if (!ResourcesManager.Main.TryPurchase(boxRarity, cost))
+            if (!ResourcesManager.Main.TryPurchase(wishRarity, cost))
                 return;
 
+            rerollButton.SetActive(true);
             puzzleHolder.SetActive(true);
             uiHolder.SetActive(true);
-            puzzle.SetPuzzle(() => OnPuzzleCompleted(boxRarity));
+            puzzle.SetPuzzle(() => RollItem());
         }
 
-        private void OnPuzzleCompleted(Rarity rarity)
+        public void RollItem()
         {
             puzzleHolder.SetActive(false);
             uiHolder.SetActive(false);
             itemHolder.SetActive(true);
-            ItemInstances item = RollItem((int)rarity);
-            itemPreview.sprite = item.Item.Sprite;
-            switch (rarity)
+            rolledItem = ItemPicker.PickItem(wishRarity, rolledItem).Item;
+            itemPreview.sprite = rolledItem.Sprite;
+            switch (rolledItem.Rarity)
             {
                 case Rarity.Common:
                     itemBackground.color = new Color(0.96f, 1f, 0.38f);
@@ -66,20 +66,6 @@ namespace StarGarden.LootBoxes
             }
         }
 
-        private ItemInstances RollItem(int rarity)
-        {
-            Rarity r;
-            if (rarity == 0)
-                r = Rarity.Common;
-            else if (rarity == 1)
-                r = Rarity.Rare;
-            else r = Rarity.Mythical;
-
-            ItemInstances item = ItemPicker.PickItem(r);
-            InventoryManager.Main.AddItem(item.Item);
-            //print($"You Got a {item.Item.Rarity} {item.Item.Name}!");
-            
-            return item;
-        }
+        public void CollectItem() => InventoryManager.Main.AddItem(rolledItem);
     }
 }
