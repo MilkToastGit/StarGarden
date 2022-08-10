@@ -8,7 +8,7 @@ namespace StarGarden.Items
     {
         public static ItemInstances PickItem(Rarity wishRarity)
         {
-            ItemInstances[] pool = InventoryManager.Main.GetAllItemsFromCategory(Random.value > 0.75f ? 1 : 0);
+            ItemInstances[] pool = InventoryManager.Main.GetAllItemsFromCategory(Random.value > 0.65f ? 1 : 0);
 
             Rarity itemRarity = PickItemRarity(wishRarity);
             //Debug.Log(itemRarity + " " + pool[0].Item.ItemCategory);

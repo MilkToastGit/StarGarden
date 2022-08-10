@@ -2,12 +2,13 @@ using System;
 
 namespace StarGarden.Core.SaveData
 {
-    [System.Serializable]
+    [Serializable]
     public class AllSaveData
     {
         public PetSaveData[] PetSaveData;
         public ItemSaveData ItemSaveData;
         public ResourceSaveData ResourceSaveData;
+        public Items.DailyOffer[] DailyOfferItems;
         public int[] PickedHorroscopes;
         public DateTime FirstLaunch;
         public DateTime UserBirthdate;

@@ -14,10 +14,7 @@ namespace StarGarden.Pets
 
         public static string GetHorroscope(Starsign sign) => Horroscopes[pickedHorroscopes[(int)sign]];
 
-        public void Initialise() 
-        {
-            
-        }
+        public void Initialise() { }
 
         public void LateInitialise()
         {
