@@ -44,6 +44,9 @@ TagManager:
   - name: Islands
     uniqueID: 442561847
     locked: 0
+  - name: Details
+    uniqueID: 1485833371
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
