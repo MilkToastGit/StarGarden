@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Analytics;
 using StarGarden.Items;
 using StarGarden.Pets;
+using StarGarden.Core.SaveData;
 
-namespace StarGarden.Core.SaveData
+namespace StarGarden.Core
 {
     public class GameSetup : MonoBehaviour
     {
@@ -15,6 +17,7 @@ namespace StarGarden.Core.SaveData
 
         private void Awake()
         {
+            AnalyticsEvent.GameStart();
             GetManagers();
             InitialiseAll();
             LoadSave();
