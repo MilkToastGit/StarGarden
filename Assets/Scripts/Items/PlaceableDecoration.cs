@@ -12,6 +12,7 @@ namespace StarGarden.Items
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Decoration;
 
+        [SerializeField] private GameObject smokePuff;
         private DecorationInstances decorInst;
         private Decoration decor => decorInst.Item as Decoration;
         private State state = State.Idle;
@@ -61,6 +62,7 @@ namespace StarGarden.Items
             state = State.Idle;
             UI.InventorySack.SetState(false, false);
             sprite.sortingLayerName = "Default";
+            CreateSmokePuff();
             //print(decorInst.InventoryCount);
         }
 
@@ -149,6 +151,15 @@ namespace StarGarden.Items
 
             return false;
         }
+
+        private void CreateSmokePuff()
+        {
+            smokePuff.SetActive(false);
+            smokePuff.transform.position = sprite.transform.position;
+            smokePuff.SetActive(true);
+            Invoke("DisableSmokePuff", 1f);
+        }
+        private void DisableSmokePuff() => smokePuff.SetActive(false);
 
         public void OnStartTouch()
         {
