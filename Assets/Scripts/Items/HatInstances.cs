@@ -22,12 +22,13 @@ namespace StarGarden.Items
             //    equippedInstances.Add(PetManager.Main.AllPets[index].WanderingPet);
         }
 
-        public void Equip(WanderingPet pet)
+        public void Equip(WanderingPet pet, bool save = true)
         {
             if (pet.EquippedHat != null)
                 pet.EquippedHat.Unequip(pet);
             equippedInstances.Add(pet);
-            SaveDataManager.SaveItemData();
+            if(save)
+                SaveDataManager.SaveItemData();
             pet.SetHat(this);
         }
 
