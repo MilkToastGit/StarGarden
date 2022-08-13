@@ -40,6 +40,9 @@ namespace StarGarden.Core
             interactables.Sort(new InteractableComparer());
 
             foreach (Interactable t in interactables)
+                print(t.Layer);
+
+            foreach (Interactable t in interactables)
             {
                 held.Add(t);
                 t.OnStartTouch();
@@ -93,7 +96,7 @@ namespace StarGarden.Core
     {
         int IComparer<Interactable>.Compare(Interactable x, Interactable y)
         {
-            return Comparer.Default.Compare(x.Layer, y.Layer);
+            return Comparer.Default.Compare(y.Layer, x.Layer);
         }
     }
 }

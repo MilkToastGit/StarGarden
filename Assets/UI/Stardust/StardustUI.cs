@@ -24,6 +24,7 @@ namespace StarGarden.UI
 
         private void OnEnable()
         {
+            UpdateUI();
             ResourcesManager.Main.OnStardustChanged += UpdateUI;
         }
 
