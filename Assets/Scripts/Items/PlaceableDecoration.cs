@@ -73,10 +73,10 @@ namespace StarGarden.Items
             Destroy(gameObject);
         }
 
-        private void CancelDrag()
+        private void Mistap()
         {
             if (firstPlacement)
-                ReturnToInventory();
+                StartDragging();
             else
             {
                 transform.position = WorldGrid.GridToWorld(lastPlacedPoint) + centerOffset;
@@ -102,7 +102,7 @@ namespace StarGarden.Items
                 Debug.DrawRay(WorldGrid.GridToWorld(point), Vector2.up * 0.25f, Color.green);
 
             if (tapPerformedLastFrame && state == State.AwaitingDrag)
-                StartDragging();
+                Mistap();
             else
                 tapPerformedLastFrame = false;
 
