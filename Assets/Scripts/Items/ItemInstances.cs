@@ -8,7 +8,7 @@ namespace StarGarden.Items
     {
         public Item Item;
         public abstract int InventoryCount { get; }
-        protected int totalCount;
+        public int totalCount { get; protected set; }
 
         public void IncreaseCount() => totalCount++;
 

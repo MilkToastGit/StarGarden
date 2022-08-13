@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Core
 {
-    public class ResourcesManager : MonoBehaviour
+    public class ResourcesManager : MonoBehaviour, Manager
     {
         public int CommonStardust => commonStardust;
         public int RareStardust => rareStardust;
@@ -16,7 +17,7 @@ namespace StarGarden.Core
         public delegate void StardustChangedEvent();
         public event StardustChangedEvent OnStardustChanged;
 
-        private void Awake()
+        public void Initialise()
         {
             if (!Main)
             {
@@ -24,6 +25,20 @@ namespace StarGarden.Core
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+        }
+
+        public void LateInitialise() 
+        {
+            ResourceSaveData data = SaveDataManager.SaveData.ResourceSaveData;
+            if (data != null)
+                UpdateResources(data);
+        }
+
+        public void UpdateResources(ResourceSaveData data)
+        {
+            commonStardust = data.CommonStardust;
+            rareStardust = data.RareStardust;
+            mythicalStardust = data.MythicalStardust;
         }
 
         public void RemoveStardust(Rarity rarity, int amount) => AddStardust(rarity, -amount);
@@ -37,7 +52,30 @@ namespace StarGarden.Core
                 case Rarity.Mythical: mythicalStardust += amount; break;
             }
 
+            SaveDataManager.SaveResourceData();
             OnStardustChanged?.Invoke();
+        }
+
+        public bool TryPurchase(Rarity rarity, int price)
+        {
+            switch (rarity)
+            {
+                case Rarity.Common:
+                    if (commonStardust < price)
+                        return false;
+                    break;
+                case Rarity.Rare:
+                    if (rareStardust < price)
+                        return false;
+                    break;
+                case Rarity.Mythical:
+                    if (mythicalStardust < price)
+                        return false;
+                    break;
+            }
+
+            RemoveStardust(rarity, price);
+            return true;
         }
     }
 }

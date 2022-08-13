@@ -7,7 +7,7 @@ using StarGarden.Items;
 
 namespace StarGarden.UI
 {
-    public class InventoryUI : MonoBehaviour, UIPanel
+    public class InventoryUI : UIPanel
     {
         public Item[] itemsToAdd;
 
@@ -15,37 +15,24 @@ namespace StarGarden.UI
         [SerializeField] private Transform[] tabs;
 
         private int activeTab = 0;
-        private GameObject UIBase;
-        private bool showing = false;
-
-        private void Awake()
-        {
-            UIBase = transform.GetChild(0).gameObject;
-        }
 
         // **PLACEHOLDER**
-        //private void Start()
-        //{
-        //    foreach (Item item in itemsToAdd)
-        //    {
-        //        for (int i = 0; i < Random.Range(0, 6); i++)
-        //            InventoryManager.Main.AddItem(item);
-        //    }
-        //    //Show();
-        //}
-
-        public void Show()
+        private void Start()
         {
-            showing = true;
-            for (int i = 0; i < 2; i++)
-                SpawnItemPreviews(i);
-            UIBase.SetActive(true);
+            foreach (Item item in itemsToAdd)
+            {
+                for (int i = 0; i < Random.Range(1, 6); i++)
+                    InventoryManager.Main.AddItem(item);
+            }
+            //Show();
         }
 
-        public void Hide()
+        public override void Show(object args = null)
         {
-            showing = false;
-            UIBase.SetActive(false);
+            for (int i = 0; i < 2; i++)
+                SpawnItemPreviews(i);
+
+            base.Show();
         }
 
         public void SwitchTab(int tab)
@@ -57,8 +44,8 @@ namespace StarGarden.UI
 
         private void OnDecorationClicked(DecorationInstances item)
         {
-            Instantiate(placeableDecor, (Vector2)Camera.main.transform.position, Quaternion.identity)
-                .GetComponent<PlaceableDecoration>().SetItem(item, true);
+            if (IslandManager.Main.ActiveIsland == null) return;
+            InventoryManager.Main.SpawnItem(item, false);
 
             UIManager.Main.HideCurrentPanel();
         }

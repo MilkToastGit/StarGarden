@@ -1,29 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.Items
 {
     public class DecorationInstances : ItemInstances
     {
         public override int InventoryCount => totalCount - placedInstances.Count;
-        private List<Vector2Int> placedInstances = new List<Vector2Int>();
+        public List<Vector3Int> placedInstances { get; private set; } = new List<Vector3Int>();
         private Decoration decor => Item as Decoration;
 
-        public void Place(Vector2Int position)
+        public DecorationInstances() { }
+        
+        public DecorationInstances(Core.SaveData.DecorationSaveData data, Decoration item)
         {
-            placedInstances.Add(position);
-            Debug.Log(placedInstances.Count);
+            Item = item;
+            totalCount = data.TotalCount;
+            placedInstances = new List<Vector3Int>();
+            foreach (SerializableVector3Int v in data.PlacedInstances)
+                placedInstances.Add(v);
         }
 
-        public void Unplace(Vector2Int position)
+        public void Place(Vector2Int position, int island)
         {
-            placedInstances.Remove(position);
+            placedInstances.Add(new Vector3Int(position.x, position.y, island));
+            SaveDataManager.SaveItemData();
+            //Debug.Log(placedInstances.Count);
         }
 
-        public void Move(Vector2Int initialPosition, Vector2Int newPosition)
+        public void Unplace(Vector2Int position, int island)
         {
-            placedInstances[placedInstances.FindIndex(v => v == initialPosition)] = newPosition;
+            placedInstances.Remove(new Vector3Int(position.x, position.y, island));
+            SaveDataManager.SaveItemData();
+        }
+
+        public void Move(Vector2Int initialPosition, Vector2Int newPosition, int island)
+        {
+            Vector3Int initPos = new Vector3Int(initialPosition.x, initialPosition.y, island);
+            Vector3Int newPos = new Vector3Int(newPosition.x, newPosition.y, island);
+            placedInstances[placedInstances.FindIndex(v => v == initPos)] = newPos;
+            SaveDataManager.SaveItemData();
         }
 
         public void GetGridRange(Vector2Int pivot, out Vector2Int min, out Vector2Int max)
@@ -50,28 +67,30 @@ namespace StarGarden.Items
             return points;
         }
 
-        public bool IsPositionTaken(Vector2Int position)
+        public bool IsPositionTaken(Vector2Int position, int island)
         {
-            foreach (Vector2Int origin in placedInstances)
+            foreach (Vector3Int origin in placedInstances)
             {
-                GetGridRange(origin, out Vector2Int min, out Vector2Int max);
+                if (origin.z != island) continue;
+                GetGridRange((Vector2Int)origin, out Vector2Int min, out Vector2Int max);
                 if (position.Between(min, max))
                     return true;
             }
             return false;
         }
 
-        public bool DoDecorOverlap(Vector2Int decorMin, Vector2Int decorMax, Vector2Int lastPlacedPoint, bool hasBeenPlaced)
+        public bool DoDecorOverlap(Vector2Int decorMin, Vector2Int decorMax, Vector2Int lastPlacedPoint, int island, bool hasBeenPlaced)
         {
             Vector2Int[] corners = new Vector2Int[] {
                 decorMin, new Vector2Int(decorMin.x, decorMax.y), decorMax, new Vector2Int(decorMax.x, decorMin.y) };
 
-            foreach (Vector2Int origin in placedInstances)
+            foreach (Vector3Int origin in placedInstances)
             {
-                if (hasBeenPlaced && origin == lastPlacedPoint) continue;
+                if (origin.z != island) continue;
+                if (hasBeenPlaced && (Vector2Int)origin == lastPlacedPoint) continue;
 
-                GetGridRange(origin, out Vector2Int min, out Vector2Int max);
-                Debug.Log($"{decorMin}, {decorMax} | {min}, {max}");
+                GetGridRange((Vector2Int)origin, out Vector2Int min, out Vector2Int max);
+                //Debug.Log($"{decorMin}, {decorMax} | {min}, {max}");
 
                 foreach (Vector2Int corner in corners)
                     if (corner.Between(min, max))

@@ -4,14 +4,19 @@ using UnityEngine;
 
 namespace StarGarden.Core
 {
-    public class IslandManager : MonoBehaviour
+    public class IslandManager : MonoBehaviour, Manager
     {
         public static IslandManager Main { get; private set; }
-        public LayerMask IslandMask;
+        public Island ActiveIsland => activeIsland < 0 ? null : islands[activeIsland];
+        public Island[] Islands => islands;
 
-        public int activeIsland;
+        [SerializeField] private LayerMask IslandMask;
+        [SerializeField] private Island[] islands;
 
-        private void Awake()
+        private PreviewIsland[] previewIslands;
+        private int activeIsland = -1;
+
+        public void Initialise()
         {
             if (!Main)
             {
@@ -19,10 +24,17 @@ namespace StarGarden.Core
                 DontDestroyOnLoad(gameObject);
             }
             else Destroy(gameObject);
+
+            previewIslands = new PreviewIsland[islands.Length];
+            for (int i = 0; i < islands.Length; i++)
+            {
+                islands[i].Index = i;
+                previewIslands[i] = islands[i].IslandNavigationObject.GetComponent<PreviewIsland>();
+            }
         }
 
-        public Island[] Islands => islands;
-        [SerializeField] private Island[] islands;
+        public void LateInitialise() { }
+
 
         private void OnDrawGizmos()
         {
@@ -48,6 +60,20 @@ namespace StarGarden.Core
                     return i;
             }
             return -1;
+        }
+
+        public bool WithinIsland(Vector2 point, int island)
+        {
+            foreach (Island i in islands)
+                i.IslandObject.SetActive(i.Index == island);
+
+            int hit = WithinIsland(point);
+
+            foreach (Island i in islands)
+                i.IslandObject.SetActive(i.Index == activeIsland);
+
+            return hit == island;
+
         }
 
         public int WithinIsland(Vector2 point)
@@ -78,13 +104,29 @@ namespace StarGarden.Core
             islands[activeIsland].IslandObject.SetActive(false);
             activeIsland = -1;
         }
+
+        public void UpdatePreviewIslandStarglow()
+        {
+            foreach (PreviewIsland i in previewIslands)
+                i.UpdateStarGlow();
+        }
+
+        public Island GetIslandFromElement(Element element)
+        {
+            foreach (Island i in islands)
+                if (i.Element == element)
+                    return i;
+            throw new System.Exception($"Error: Island of element {element} does not exist.");
+        }
     }
 
     [System.Serializable]
     public class Island
     {
         public GameObject IslandObject;
+        public GameObject IslandNavigationObject;
         public Rect Bounds;
         public Element Element;
+        public int Index;
     }
 }

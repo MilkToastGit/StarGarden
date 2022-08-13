@@ -20,20 +20,11 @@ namespace StarGarden.LootBoxes
         public float radius;
         public int[] NextPoints;
         public Vector3 Position3D => new Vector3(Position.x, Position.y, zPosition);
-        //{
-        //    get
-        //    {
-        //        if (!zPosSet)
-        //        {
-        //            //zPosition = Random.Range(-2f, 2f);
-        //            zPosition = Mathf.PerlinNoise(Position.x / 100f, Position.y / 100f) / 100f;
-        //            zPosSet = true;
-        //        }
-        //        return new Vector3(Position.x, Position.y, zPosition);
-        //    }
-        //}
 
-        private float zPosition => Mathf.PerlinNoise(Position.x * 25f, Position.y * 25f) * 3 - 1.5f;
+        private static int seed = 0;
+        private float zPosition => Mathf.PerlinNoise(Position.x * 25f + seed, Position.y * 25f + seed) * 3 - 1.5f;
         private bool zPosSet = false;
+
+        public static void RandomiseSeed() => seed = Random.Range(-10000, 10000);
     }
 }

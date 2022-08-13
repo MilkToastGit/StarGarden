@@ -26,6 +26,7 @@ namespace StarGarden.LootBoxes
         private bool atCorrectAngle = false;
         private bool puzzleComplete = false;
         private float lastXDelta = 0f;
+        private int framesSinceLastXDelta = 0;
         private float xDelta = 0f;
         private Vector2 lastTouchPos;
         private Transform starGlowParent;
@@ -46,12 +47,14 @@ namespace StarGarden.LootBoxes
             transform.rotation = Quaternion.identity;
             transform.Order66();
             starGlowParent.Order66();
+            ConstellationPoint.RandomiseSeed();
             SpawnConstellation(Random.Range(0, Constellations.Length));
 
             introRotationTarget = Random.Range(90f, 170f) * (Random.value > 0.5f ? 1 : -1);
 
             introTime = 0f;
             lastXDelta = 0f;
+            framesSinceLastXDelta = 0;
             xDelta = 0f;
             lastTouchPos = Vector2.zero;
             puzzleComplete = false;
@@ -86,9 +89,13 @@ namespace StarGarden.LootBoxes
             else
             {
                 if (Mathf.Abs(xDelta) > 0f)
+                {
                     lastXDelta = xDelta;
+                    framesSinceLastXDelta = 0;
+                }
                 xDelta = InputManager.Main.TouchPosition.x - lastTouchPos.x;
                 lastTouchPos = InputManager.Main.TouchPosition;
+                framesSinceLastXDelta++;
             }
 
             transform.Rotate(Vector3.up, -xDelta * rotateSensitivity, Space.World);
@@ -96,14 +103,17 @@ namespace StarGarden.LootBoxes
 
         private void CheckCorrect()
         {
-            atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360 - angleThreshold / 2);
-            if (atCorrectAngle && xDelta < 0.001f)
+            atCorrectAngle = !transform.rotation.eulerAngles.y.Between(angleThreshold / 2, 360f - angleThreshold / 2);
+
+            //print($"correct ({atCorrectAngle}), xDelta ({Mathf.Abs(xDelta)})");
+            
+            if (atCorrectAngle && Mathf.Abs(xDelta) < 1f)
             {
                 xDelta = 0f;
                 transform.rotation = Quaternion.identity;
                 puzzleComplete = true;
                 onPuzzleCompleted?.Invoke();
-                print("You Di d i  t.");
+                //print("You Di d i  t.");
             }
         }
 
@@ -164,7 +174,8 @@ namespace StarGarden.LootBoxes
 
         private void OnTouchUp(Vector2 position)
         {
-            xDelta = lastXDelta;
+            if (framesSinceLastXDelta < 10)
+                xDelta = lastXDelta;
             dragging = false;
         }
 

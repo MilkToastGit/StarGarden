@@ -8,54 +8,60 @@ namespace StarGarden.Stardust
     public class Starfall : MonoBehaviour, Interactable
     {
         public bool Passthrough => false;
+        public int Layer => (int)InteractableLayer.Starfall;
+        public static Vector2 RareRateRange = new Vector2(0.1f, 0.45f);
+        public bool Collected => collected;
 
         [SerializeField] private Transform star;
+        [SerializeField] private GameObject commonEffect, rareEffect;
+        [SerializeField] private SpriteRenderer shadow;
 
         private Rarity rarity;
-        private Vector2 spawnPos = new Vector2(30, 50);
-        private CircleCollider2D circleCollider;
-        private float landT = 0, bounceT = 0;
-        private float bounceHeight;
+        private bool collected = false;
 
-        private void Awake()
+        public void Initialise(bool instant, bool trailOnly)
         {
-            circleCollider = GetComponent<CircleCollider2D>();
-            circleCollider.enabled = false;
-
-            rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, 0.1f, 0.6f) ?
+            rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, RareRateRange.x, RareRateRange.y) ?
                 Rarity.Common : Rarity.Rare;
-            if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = Color.cyan;
+            if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0.6f, 1f);
 
-            bounceHeight = Random.Range(0.5f, 1.5f);
-            star.position = spawnPos;
-        }
-
-        private void Update()
-        {
-            if (landT < 1)
+            if(!instant)
+                GetComponent<Animator>().SetTrigger("Enter");
+            if (trailOnly)
             {
-                landT = Mathf.Clamp01(landT + Time.deltaTime / 2);
-                star.localPosition = Vector2.Lerp(spawnPos, Vector2.zero, landT);
-            }
-            else if (bounceHeight > 0)
-            {
-                bounceT = Mathf.Clamp01(bounceT + Time.deltaTime / (bounceHeight / 2 + 0.5f));
-                star.localPosition = Mathf.Sin(Mathf.Lerp(0, Mathf.PI, bounceT)) * Vector2.up * bounceHeight;
-                if (bounceT >= 1)
-                {
-                    bounceHeight = Mathf.Max(bounceHeight / 3 - 0.1f, 0);
-                    bounceT = 0;
-                }
+                GetComponent<CircleCollider2D>().enabled = false;
+                star.GetComponent<SpriteRenderer>().enabled = false;
+                Destroy(transform.parent.gameObject, 5f);
             }
 
-            if (landT == 1 && !circleCollider.enabled)
-                circleCollider.enabled = true;
+            IslandManager.Main.UpdatePreviewIslandStarglow();
         }
 
         public void OnTap()
         {
+            Collect();
+        }
+
+        public void OnLand()
+        {
+            if (AutoCollection.Active)
+                Collect();
+        }
+
+        public void Collect()
+        {
+            if (collected) return;
+
+            collected = true;
             ResourcesManager.Main.AddStardust(rarity, 1);
-            Destroy(gameObject);
+
+            star.gameObject.SetActive(false);
+            shadow.enabled = false;
+            if (rarity == Rarity.Common) commonEffect.SetActive(true);
+            else rareEffect.SetActive(true);
+
+            Destroy(transform.parent.gameObject, 2f);
+            IslandManager.Main.UpdatePreviewIslandStarglow();
         }
 
         public void OnStartTouch() { }

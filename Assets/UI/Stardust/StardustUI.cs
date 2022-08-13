@@ -17,6 +17,11 @@ namespace StarGarden.UI
             mythical.text = ResourcesManager.Main.MythicalStardust.ToString();
         }
 
+        private void Start()
+        {
+            UpdateUI();
+        }
+
         private void OnEnable()
         {
             ResourcesManager.Main.OnStardustChanged += UpdateUI;

@@ -17,6 +17,6 @@ public class PlaceholderItemRoller : MonoBehaviour
 
         ItemInstances item = ItemPicker.PickItem(r);
         InventoryManager.Main.AddItem(item.Item);
-        print($"You Got a {item.Item.Rarity.ToString()} {item.Item.Name}!");
+        //print($"You Got a {item.Item.Rarity.ToString()} {item.Item.Name}!");
     }
 }

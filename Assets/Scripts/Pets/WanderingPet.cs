@@ -17,7 +17,7 @@ namespace StarGarden.Pets
         [HideInInspector] public Quaternion[] DefaultHatRotations;
         [HideInInspector] public Vector2[] DefaultHatScales;
 
-        [HideInInspector] public float Happiness;
+        [HideInInspector] public float Happiness { get; private set; }
         public HatInstances EquippedHat;
         private Transform[] hatParents;
         private int currentIsland;
@@ -25,11 +25,16 @@ namespace StarGarden.Pets
         private SpriteRenderer sprite;
 
         public bool Passthrough => false;
+        public int Layer => (int)InteractableLayer.Pet;
 
-        private void Start()
+        private bool initialised = false;
+
+        public void Initialise(float happiness)
         {
             anim = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
+
+            currentIsland = IslandManager.Main.GetIslandFromElement(Pet.Element).Index;
 
             hatParents = new Transform[hatParentBase.childCount];
             for (int i = 0; i < hatParentBase.childCount; i++)
@@ -45,7 +50,8 @@ namespace StarGarden.Pets
                 DefaultHatScales[i] = hatParents[i].localScale;
             }
 
-            StartCoroutine(BehaviourCycle());
+            Happiness = happiness;
+            initialised = true;
         }
 
         public void SetHat(HatInstances hat)
@@ -64,9 +70,12 @@ namespace StarGarden.Pets
             }
         }
 
-        public void IncreaseHappiness(float amount)
+        public void IncreaseHappiness(float amount) => SetHappiness(Happiness + amount);
+
+        public void SetHappiness(float amount)
         {
-            Happiness = Mathf.Min(Happiness + amount, 1);
+            Happiness = Mathf.Clamp01(amount);
+            Core.SaveData.SaveDataManager.SavePetData();
         }
 
         private Vector2 RandomDirection()
@@ -94,7 +103,7 @@ namespace StarGarden.Pets
                 Debug.DrawRay(WorldGrid.GridToWorld(WorldGrid.WorldToGrid(nextPoint)), Vector2.up / 5, Color.white, 7);
 
                 foreach (DecorationInstances instance in allItems)
-                    if (instance.IsPositionTaken(WorldGrid.WorldToGrid(nextPoint)))
+                    if (instance.IsPositionTaken(WorldGrid.WorldToGrid(nextPoint), currentIsland))
                         return lastPoint;
 
                 lastPoint = nextPoint;
@@ -110,6 +119,28 @@ namespace StarGarden.Pets
             Vector2 scale = hatParentBase.localScale;
             scale.x = Mathf.Abs(scale.x) * (flip ? -1 : 1);
             hatParentBase.localScale = scale;
+        }
+
+        private void Emote()
+        {
+            GameObject emote;
+
+            if (Happiness < 0.33f)
+                emote = Pet.NegativeEmote;
+            else if (Happiness < 0.66f)
+                emote = Pet.NeutralEmote;
+            else
+                emote = Pet.PositiveEmote;
+
+            foreach (Transform t in hatParents)
+            {
+                GameObject instance = Instantiate(emote, t);
+                instance.transform.localPosition = Vector3.zero;
+                instance.transform.localRotation = Quaternion.identity;
+                instance.transform.localScale = Vector3.one;
+            }
+            
+            anim.SetTrigger("EmoteTrigger");
         }
 
         private IEnumerator BehaviourCycle()
@@ -149,33 +180,45 @@ namespace StarGarden.Pets
 
                 yield return new WaitForSeconds(Random.Range(1.5f, 2.5f));
 
-                if (Random.value > 0.7f)
-                {
-                    // Lower chance for neutral emote
-                    if (Random.value > 0.6f)
-                        anim.SetInteger("Emote", 1);
-                    // Emote negative or positive based on happiness
-                    else
-                        anim.SetInteger("Emote", Random.value < Happiness ? 2 : 0);
-                    anim.SetTrigger("EmoteTrigger");
-
-                    yield return new WaitForSeconds(Random.Range(2.5f, 3f));
-                    anim.SetTrigger("UnemoteTrigger");
-                    yield return new WaitForSeconds(1f);
-                }
-                else yield return new WaitForSeconds(Random.Range(2.5f, 3f));
+                if (Random.value > 0.6f)
+                    Emote();
+                
+                yield return new WaitForSeconds(Random.Range(2.5f, 3f));
             }
+        }
 
+        private void StopBehaviourCycle()
+        {
+            StopAllCoroutines();
+            anim.SetBool("Walking", false);
+            anim.ResetTrigger("EmoteTrigger");
+            anim.ResetTrigger("UnemoteTrigger");
         }
 
         public void OnTap()
         {
-            UI.UIManager.Main.ShowPetMenu(Pet.PetIndex);
+            UI.UIManager.Main.ShowPanel("PetMenu", Pet.PetIndex);// ShowPetMenu(Pet.PetIndex);
+            //print(Pet.PetIndex);
         }
 
         public void OnStartTouch() { }
 
         public void OnEndTouch() { }
+
+        private void OnEnable()
+        {
+            //print(anim.isInitialized);
+            if (initialised)
+            {
+                StopBehaviourCycle();
+                StartCoroutine(BehaviourCycle());
+            }
+        }
+
+        private void OnDisable()
+        {
+            StopBehaviourCycle();
+        }
 
         public enum State
         {
