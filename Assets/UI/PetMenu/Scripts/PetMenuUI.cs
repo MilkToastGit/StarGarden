@@ -70,7 +70,34 @@ namespace StarGarden.UI
                 HatInstances hat = InventoryManager.Main.GetAllItemsFromCategory(1)[selectedIndex] as HatInstances;
                 hat.Equip(pets[currentPet].WanderingPet);
                 hatImage.sprite = hat.Item.Sprite;
+                petImage.transform.Order66();
+                foreach (Vector2 hatPos in GetCanvasHatPositions())
+                {
+                    GameObject hatObj = new GameObject("hat", typeof(Image));
+                    Image hatImg = hatObj.GetComponent<Image>();
+                    hatImg.sprite = hat.Item.Sprite;
+                    hatObj.transform.SetParent(petImage.transform);
+                    hatObj.transform.localPosition = hatPos;
+                    hatObj.transform.localScale = Vector3.one;
+                }
             }
+        }
+
+        private Vector2[] GetCanvasHatPositions()
+        {
+            Vector2[] hatPositions = pets[currentPet].WanderingPet.DefaultHatPositions;
+            Sprite sprite = pets[currentPet].Pet.Sprite;
+
+            Vector2[] scaledPositions = new Vector2[hatPositions.Length];
+            for (int i = 0; i < hatPositions.Length; i++)
+            {
+                scaledPositions[i] = hatPositions[i] * sprite.pixelsPerUnit / sprite.rect.size;
+                print(scaledPositions[i]);
+                scaledPositions[i].Scale(petImage.rectTransform.sizeDelta / 2);
+                print(scaledPositions[i]);
+            }
+
+            return scaledPositions;
         }
 
         public void SetPet(int petIndex)
