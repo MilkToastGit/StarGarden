@@ -18,13 +18,13 @@ namespace StarGarden
                 inactive.Enqueue(go);
         }
 
-        private void ShowEffect()
+        private void ShowEffect(Vector2 pos)
         {
             GameObject effect = inactive.Dequeue();
             effect.transform.position = InputManager.Main.WorldTouchPosition;
             effect.SetActive(true);
             active.Enqueue(effect);
-            Invoke("HideLast", 2f);
+            Invoke("HideLast", 1f);
         }
 
         private void HideLast()
@@ -36,12 +36,12 @@ namespace StarGarden
 
         private void OnEnable()
         {
-            InputManager.Main.OnTapCompleted += pos => ShowEffect();
+            InputManager.Main.OnTapCompleted += ShowEffect;
         }
 
         private void OnDisable()
         {
-            InputManager.Main.OnTapCompleted -= pos => ShowEffect();
+            InputManager.Main.OnTapCompleted -= ShowEffect;
         }
     }
 }

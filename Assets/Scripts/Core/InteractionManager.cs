@@ -26,7 +26,7 @@ namespace StarGarden.Core
 
         public void LateInitialise() { }
 
-        private void OnStartTouch()
+        private void OnStartTouch(Vector2 pos)
         {
             if (UI.UIManager.Main.PanelShowing) return;
 
@@ -50,14 +50,14 @@ namespace StarGarden.Core
             OnPassthrough?.Invoke();
         }
 
-        private void OnEndTouch()
+        private void OnEndTouch(Vector2 pos)
         {
             foreach (Interactable t in held)
                 t.OnEndTouch();
             held.Clear();
         }
 
-        private void OnTap()
+        private void OnTap(Vector2 pos)
         {
             if (UI.UIManager.Main.PanelShowing) return;
             foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
@@ -75,17 +75,17 @@ namespace StarGarden.Core
         private void OnEnable()
         {
             if (!InputManager.Main) return;
-            InputManager.Main.OnTouchDown += pos => OnStartTouch();
-            InputManager.Main.OnTouchUp += pos => OnEndTouch();
-            InputManager.Main.OnTapCompleted += pos => OnTap();
+            InputManager.Main.OnTouchDown += OnStartTouch;
+            InputManager.Main.OnTouchUp += OnEndTouch;
+            InputManager.Main.OnTapCompleted += OnTap;
         }
 
         private void OnDisable()
         {
             if (!InputManager.Main) return;
-            InputManager.Main.OnTouchDown -= pos => OnStartTouch();
-            InputManager.Main.OnTouchUp -= pos => OnEndTouch();
-            InputManager.Main.OnTapCompleted += pos => OnTap();
+            InputManager.Main.OnTouchDown -= OnStartTouch;
+            InputManager.Main.OnTouchUp -= OnEndTouch;
+            InputManager.Main.OnTapCompleted += OnTap;
         }
     }
 
