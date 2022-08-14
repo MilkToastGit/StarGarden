@@ -192,7 +192,6 @@ namespace StarGarden.Pets
             StopAllCoroutines();
             anim.SetBool("Walking", false);
             anim.ResetTrigger("EmoteTrigger");
-            anim.ResetTrigger("UnemoteTrigger");
         }
 
         public void OnTap()
