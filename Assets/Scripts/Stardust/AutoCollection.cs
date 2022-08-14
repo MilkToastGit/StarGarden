@@ -10,6 +10,9 @@ namespace StarGarden.Stardust
         [SerializeField] private int commonCost, rareCost, mythicalCost;
         [SerializeField] private int commonMinutes, rareMinutes, mythicalMinutes;
 
+        public delegate void AutoCollectionDeactivatedEvent();
+        public static event AutoCollectionDeactivatedEvent OnAutoCollectionActivated;
+
         public static DateTime Expiry => expiry;
         public static bool Active => expiry - DateTime.Now > TimeSpan.Zero;
 
@@ -63,8 +66,7 @@ namespace StarGarden.Stardust
         {
             if (DateTime.Now > expiry)
             {
-                foreach (Starfall star in FindObjectsOfType<Starfall>())
-                    star.Collect();
+                OnAutoCollectionActivated?.Invoke();
                 expiry = DateTime.Now;
             }
 

@@ -21,12 +21,20 @@ namespace StarGarden.Stardust
 
         public void Initialise(bool instant, bool trailOnly)
         {
+            AutoCollection.OnAutoCollectionActivated += Collect;
+
             rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, RareRateRange.x, RareRateRange.y) ?
                 Rarity.Common : Rarity.Rare;
             if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0.6f, 1f);
 
-            if(!instant)
+            if (instant && AutoCollection.Active)
+            {
+                Collect();
+                return;
+            }
+            else if (!instant)
                 GetComponent<Animator>().SetTrigger("Enter");
+
             if (trailOnly)
             {
                 GetComponent<CircleCollider2D>().enabled = false;
@@ -66,5 +74,10 @@ namespace StarGarden.Stardust
 
         public void OnStartTouch() { }
         public void OnEndTouch() { }
+
+        private void OnDestroy()
+        {
+            AutoCollection.OnAutoCollectionActivated -= Collect;
+        }
     }
 }

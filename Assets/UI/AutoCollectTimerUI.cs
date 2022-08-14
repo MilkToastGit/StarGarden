@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using StarGarden.Stardust;
 
@@ -6,31 +7,40 @@ namespace StarGarden.UI
 {
     public class AutoCollectTimerUI : MonoBehaviour
     {
-        private bool active;
-
-        private void Update()
+        private IEnumerator TimeUpdater()
         {
-            if (!active)
+            TimeSpan remaining = AutoCollection.Expiry - DateTime.Now;
+            while (remaining > TimeSpan.Zero)
             {
-                if (AutoCollection.Active) Show();
-                else return;
+                remaining = AutoCollection.Expiry - DateTime.Now;
+                print(remaining);
+
+                yield return new WaitForSecondsRealtime(1f);
             }
 
-            TimeSpan remaining = AutoCollection.Expiry - DateTime.Now;
-            if (remaining < TimeSpan.Zero)
-                Hide();
-
-            print(remaining + " " + active);
+            Deactivate();
         }
 
-        private void Show()
+        private void Activate()
         {
-            active = true;
+            StartCoroutine(TimeUpdater());
         }
 
-        private void Hide()
+        private void Deactivate()
         {
-            active = false;
+            
+        }
+
+        private void OnEnable()
+        {
+            AutoCollection.OnAutoCollectionActivated += Activate;
+            if (AutoCollection.Active)
+                Activate();
+        }
+
+        private void OnDisable()
+        {
+            AutoCollection.OnAutoCollectionActivated -= Activate;
         }
     }
 }
