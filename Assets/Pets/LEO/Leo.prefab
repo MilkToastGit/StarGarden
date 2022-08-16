@@ -59,7 +59,7 @@ Animator:
   m_GameObject: {fileID: 8888112827561333915}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 6f47f46c61e80654e817a7c6bb6927dd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09acd60cfbe37234aaccaf644a605d33, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -100,8 +100,10 @@ MonoBehaviour:
   Pet: {fileID: 11400000, guid: 9adaa61f6272afd4b8b876ff26688007, type: 2}
   flip: 1
   hatParentBase: {fileID: 8888112828897297920}
-  Happiness: 0
   speed: 1
+  DefaultHatPositions: []
+  DefaultHatRotations: []
+  DefaultHatScales: []
 --- !u!114 &8888112827561333910
 MonoBehaviour:
   m_ObjectHideFlags: 0

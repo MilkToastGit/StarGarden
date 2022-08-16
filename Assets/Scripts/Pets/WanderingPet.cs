@@ -126,11 +126,20 @@ namespace StarGarden.Pets
             GameObject emote;
 
             if (Happiness < 0.33f)
+            {
                 emote = Pet.NegativeEmote;
+                anim.SetInteger("Emote", 0);
+            }
             else if (Happiness < 0.66f)
+            {
                 emote = Pet.NeutralEmote;
+                anim.SetInteger("Emote", 1);
+            }
             else
+            {
                 emote = Pet.PositiveEmote;
+                anim.SetInteger("Emote", 2);
+            }
 
             foreach (Transform t in hatParents)
             {
