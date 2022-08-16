@@ -106,7 +106,7 @@ namespace StarGarden.Pets
         public static void UnlockPet(PetInstance pet)
         {
             pet.Obtained = true;
-            SpawnPet(pet, 0.5f);
+            SpawnPet(pet, 0.1f);
             Main.UpdateActivePets();
             SaveDataManager.SavePetData();
             UI.UIManager.Main.ShowPanel("PetUnlocker", pet.Pet);
