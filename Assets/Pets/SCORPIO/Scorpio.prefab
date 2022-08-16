@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pet: {fileID: 11400000, guid: 3f11b98fb2d54134093b4d430d6cb115, type: 2}
-  flip: 0
   hatParentBase: {fileID: 7464248381714319968}
   speed: 1
   DefaultHatPositions: []

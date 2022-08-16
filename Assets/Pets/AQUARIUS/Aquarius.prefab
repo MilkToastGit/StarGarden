@@ -214,8 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88783d81523c29443bd579b926a6c4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pet: {fileID: 11400000, guid: b1fe834f71631e2438e8869ff73dfa90, type: 2}
-  flip: 0
+  Pet: {fileID: 11400000, guid: 4eeb56add2f63b44e96b072d83139d40, type: 2}
   hatParentBase: {fileID: 7464248381714319968}
   speed: 1
   DefaultHatPositions: []
@@ -358,11 +357,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7464248383196888238}
-  m_LocalRotation: {x: -0, y: -0, z: -0.041392364, w: 0.999143}
-  m_LocalPosition: {x: -0.217, y: 0.877, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.16288443, w: 0.9866452}
+  m_LocalPosition: {x: 0.239, y: 1.006, z: 0}
+  m_LocalScale: {x: 0.63342625, y: 0.63342625, z: 0.63342625}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7464248381714319968}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -4.745}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -18.749}
