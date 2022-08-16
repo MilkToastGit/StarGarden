@@ -468,8 +468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664d1e6ef61a9604b895e2643ca6bc4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpotlightCentre: {x: 738.1, y: 1722.7}
-  SpotlightRadius: 150
+  SpotlightCentre: {x: 736.18, y: 1722.7}
+  SpotlightRadius: 388
 --- !u!114 &3202269743341259644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1544438023291766275
 RectTransform:
   m_ObjectHideFlags: 0
