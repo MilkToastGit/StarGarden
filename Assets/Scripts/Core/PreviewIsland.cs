@@ -21,20 +21,9 @@ namespace StarGarden.Core
 
         public void OnStartTouch() { }
 
-        public void UpdateStarGlow()
+        public void SetStarglowActive(bool active)
         {
-            if (Stardust.AutoCollection.Active) return;
-
-            foreach (Stardust.Starfall s in IslandManager.Main.Islands[island].IslandObject.GetComponentsInChildren<Stardust.Starfall>(true))
-            {
-                if (!s.Collected)
-                {
-                    starGlow.enabled = true;
-                    return;
-                }
-            }
-
-            starGlow.enabled = false;
+            starGlow.enabled = active;
         }
     }
 }

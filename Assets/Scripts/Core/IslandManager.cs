@@ -10,6 +10,7 @@ namespace StarGarden.Core
         public Island ActiveIsland => activeIsland < 0 ? null : islands[activeIsland];
         public Island[] Islands => islands;
 
+        [SerializeField] private Stardust.StarfallSpawner starfallSpawner;
         [SerializeField] private LayerMask IslandMask;
         [SerializeField] private Island[] islands;
 
@@ -31,6 +32,8 @@ namespace StarGarden.Core
                 islands[i].Index = i;
                 previewIslands[i] = islands[i].IslandNavigationObject.GetComponent<PreviewIsland>();
             }
+
+            starfallSpawner.OnActiveStarfallsChanged += UpdatePreviewIslandStarglow;
         }
 
         public void LateInitialise() { }
@@ -105,10 +108,15 @@ namespace StarGarden.Core
             activeIsland = -1;
         }
 
-        public void UpdatePreviewIslandStarglow()
+        public void UpdatePreviewIslandStarglow(List<Stardust.Starfall>[] active)
         {
-            foreach (PreviewIsland i in previewIslands)
-                i.UpdateStarGlow();
+            if (Stardust.AutoCollection.Active) return;
+
+            for (int i = 0; i < previewIslands.Length; i++)
+            {
+                print($"[{i}] {active[i].Count > 0}");
+                previewIslands[i].SetStarglowActive(active[i].Count > 0);
+            }
         }
 
         public Island GetIslandFromElement(Element element)

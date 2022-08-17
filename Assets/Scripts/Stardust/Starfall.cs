@@ -7,9 +7,13 @@ namespace StarGarden.Stardust
 {
     public class Starfall : MonoBehaviour, Interactable
     {
+        public static readonly Vector2 RareRateRange = new Vector2(0.1f, 0.45f);
+
+        public delegate void CollectedEvent(Starfall starfall);
+        public event CollectedEvent OnCollected;
+
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Starfall;
-        public static Vector2 RareRateRange = new Vector2(0.1f, 0.45f);
         public bool Collected => collected;
 
         [SerializeField] private Transform star;
@@ -18,6 +22,7 @@ namespace StarGarden.Stardust
 
         private Rarity rarity;
         private bool collected = false;
+        private int island;
 
         public void Initialise(bool instant, bool trailOnly)
         {
@@ -25,16 +30,15 @@ namespace StarGarden.Stardust
 
             rarity = Random.value > Pets.PetManager.Main.CollectiveHappiness.Map(0f, 1f, RareRateRange.x, RareRateRange.y) ?
                 Rarity.Common : Rarity.Rare;
+
             if (rarity == Rarity.Rare) GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 0.6f, 1f);
 
-            if (instant && AutoCollection.Active)
+            if (instant)
             {
-                Collect();
+                OnLand();
                 return;
             }
-            else if (!instant)
-                GetComponent<Animator>().SetTrigger("Enter");
-
+            
             if (trailOnly)
             {
                 GetComponent<CircleCollider2D>().enabled = false;
@@ -42,7 +46,7 @@ namespace StarGarden.Stardust
                 Destroy(transform.parent.gameObject, 5f);
             }
 
-            IslandManager.Main.UpdatePreviewIslandStarglow();
+            GetComponent<Animator>().SetTrigger("Enter");
         }
 
         public void OnTap()
@@ -68,8 +72,8 @@ namespace StarGarden.Stardust
             if (rarity == Rarity.Common) commonEffect.SetActive(true);
             else rareEffect.SetActive(true);
 
+            OnCollected?.Invoke(this);
             Destroy(transform.parent.gameObject, 2f);
-            IslandManager.Main.UpdatePreviewIslandStarglow();
         }
 
         public void OnStartTouch() { }

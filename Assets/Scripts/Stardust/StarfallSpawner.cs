@@ -10,12 +10,20 @@ namespace StarGarden.Stardust
     {
         public GameObject starFall;
         public static Vector2 StarfallPerSecondRange => Vector2.one / SecondPerStarfallRange;
-        public static Vector2 SecondPerStarfallRange = new Vector2(15, 60);
+        public static readonly Vector2 SecondPerStarfallRange = new Vector2(15, 60);
+
+        public delegate void ActiveStarfallsChangedEvent(List<Starfall>[] active);
+        public event ActiveStarfallsChangedEvent OnActiveStarfallsChanged;
+
+        private List<Starfall>[] activeStarfalls = new List<Starfall>[4];
 
         public void Initialise() { }
 
         public void LateInitialise()
         {
+            for (int i = 0; i < activeStarfalls.Length; i++)
+                activeStarfalls[i] = new List<Starfall>(); 
+            
             Invoke();
 
             if (SaveDataManager.LastSessionSaveDate == default || AutoCollection.Active)
@@ -58,14 +66,27 @@ namespace StarGarden.Stardust
             for (int i = 0; !IslandManager.Main.WithinIsland(point, island.Index) && i < 20; i++)
                 point += centreBound * 0.5f;
 
-            Starfall s = Instantiate(starFall, point, Quaternion.identity, island.IslandObject.transform).GetComponentInChildren<Starfall>();
+            Starfall s = Instantiate(starFall, point, Quaternion.identity, island.IslandObject.transform).GetComponentInChildren<Starfall>(true);
             s.Initialise(instant, false);
+            activeStarfalls[island.Index].Add(s);
+            s.OnCollected += OnStarfallCollected;
         }
 
         private void SpawnStarfallRepeating()
         {
             SpawnStarfall();
+            OnActiveStarfallsChanged?.Invoke(activeStarfalls);
             Invoke();
+        }
+
+        private void OnStarfallCollected(Starfall starfall)
+        {
+            foreach (List<Starfall> starfalls in activeStarfalls)
+            {
+                if (starfalls.Remove(starfall))
+                    break;
+            }
+            OnActiveStarfallsChanged?.Invoke(activeStarfalls);
         }
     }
 }
