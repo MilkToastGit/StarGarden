@@ -1,5 +1,3 @@
-// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
-
 Shader "UI/Spotlight"
 {
     Properties
@@ -50,7 +48,6 @@ Shader "UI/Spotlight"
 
         Pass
         {
-            Name "Default"
         CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

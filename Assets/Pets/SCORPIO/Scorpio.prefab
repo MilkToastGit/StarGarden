@@ -176,7 +176,7 @@ Animator:
   m_GameObject: {fileID: 7464248382517352699}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 1e8ee16bb476b2447b8e09c8048b5728, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09acd60cfbe37234aaccaf644a605d33, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -215,7 +215,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pet: {fileID: 11400000, guid: 3f11b98fb2d54134093b4d430d6cb115, type: 2}
-  flip: 0
   hatParentBase: {fileID: 7464248381714319968}
   speed: 1
   DefaultHatPositions: []

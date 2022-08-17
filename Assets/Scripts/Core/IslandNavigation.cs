@@ -11,7 +11,7 @@ namespace StarGarden.Core
         public SpriteRenderer cloudFill;
         public GameObject islandSelect;
 
-        private bool zoomedOut = true;
+        private bool busyZoomin = false;
         private Camera cam;
         private CameraControl camControl;
         private PreviewIsland[] previewIslands;
@@ -23,9 +23,10 @@ namespace StarGarden.Core
             previewIslands = islandSelect.GetComponentsInChildren<PreviewIsland>();
         }
 
-        public void ZoomOut() { if (!zoomedOut) StartCoroutine(IZoomOut()); }
+        public void ZoomOut() { if (!busyZoomin) StartCoroutine(IZoomOut()); }
         private IEnumerator IZoomOut()
         {
+            busyZoomin = true;
             camControl.enabled = false;
             cloudsOut.Play();
 
@@ -36,6 +37,7 @@ namespace StarGarden.Core
             Color cloudFillTarget = cloudFill.color;
             cloudFillTarget.a = 1f;
 
+            bool switchPerformed = false;
             float zoomTime = 3f;
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
@@ -47,21 +49,23 @@ namespace StarGarden.Core
                 //cloudFill.transform.localScale = cloudFillStartSize * targetScale;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
 
-                if (!zoomedOut && t > 0.5f)
+                if (!switchPerformed && t > 0.5f)
                 {
                     IslandManager.Main.DisableActiveIsland();
                     islandSelect.SetActive(true);
-                    zoomedOut = true;
+                    switchPerformed = true;
                     transform.position = new Vector3(0, 0, -10);
                 }
 
                 yield return null;
             }
+            busyZoomin = false;
         }
 
-        public void ZoomIntoIsland(int island) { if (zoomedOut) StartCoroutine(IZoomIntoIsland(island)); }
+        public void ZoomIntoIsland(int island) { if (!busyZoomin) StartCoroutine(IZoomIntoIsland(island)); }
         private IEnumerator IZoomIntoIsland(int island)
         {
+            busyZoomin = true;
             camControl.enabled = false;
             cloudsIn.Play();
 
@@ -73,6 +77,7 @@ namespace StarGarden.Core
             Color cloudFillTarget = cloudFill.color;
             cloudFillTarget.a = 1f;
 
+            bool switchPerformed = false;
             float zoomTime = 3f;
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
@@ -83,17 +88,18 @@ namespace StarGarden.Core
                 cloudsIn.transform.localScale = Mathf.Lerp(cloudStartScale, 1f, t) * Vector2.one;
                 cloudFill.color = Color.Lerp(cloudFillStart, cloudFillTarget, t < 0.5f ? t * 2 : 1 - (t - 0.5f) * 2);
                     
-                if (zoomedOut && t > 0.5f)
+                if (!switchPerformed && t > 0.5f)
                 {
                     IslandManager.Main.SetActiveIsland(island);
                     islandSelect.SetActive(false);
-                    zoomedOut = false;
+                    switchPerformed = true;
                 }
 
                 yield return null;
             }
 
             camControl.enabled = true;
+            busyZoomin = false;
         }
     }
 }

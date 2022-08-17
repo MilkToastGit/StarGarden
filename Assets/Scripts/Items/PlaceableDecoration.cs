@@ -12,6 +12,7 @@ namespace StarGarden.Items
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Decoration;
 
+        [SerializeField] private GameObject smokePuff;
         private DecorationInstances decorInst;
         private Decoration decor => decorInst.Item as Decoration;
         private State state = State.Idle;
@@ -61,6 +62,7 @@ namespace StarGarden.Items
             state = State.Idle;
             UI.InventorySack.SetState(false, false);
             sprite.sortingLayerName = "Default";
+            CreateSmokePuff();
             //print(decorInst.InventoryCount);
         }
 
@@ -73,10 +75,10 @@ namespace StarGarden.Items
             Destroy(gameObject);
         }
 
-        private void CancelDrag()
+        private void Mistap()
         {
             if (firstPlacement)
-                ReturnToInventory();
+                StartDragging();
             else
             {
                 transform.position = WorldGrid.GridToWorld(lastPlacedPoint) + centerOffset;
@@ -102,7 +104,7 @@ namespace StarGarden.Items
                 Debug.DrawRay(WorldGrid.GridToWorld(point), Vector2.up * 0.25f, Color.green);
 
             if (tapPerformedLastFrame && state == State.AwaitingDrag)
-                CancelDrag();
+                Mistap();
             else
                 tapPerformedLastFrame = false;
 
@@ -150,6 +152,15 @@ namespace StarGarden.Items
             return false;
         }
 
+        private void CreateSmokePuff()
+        {
+            smokePuff.SetActive(false);
+            smokePuff.transform.position = sprite.transform.position;
+            smokePuff.SetActive(true);
+            Invoke("DisableSmokePuff", 1f);
+        }
+        private void DisableSmokePuff() => smokePuff.SetActive(false);
+
         public void OnStartTouch()
         {
             if (state == State.AwaitingDrag)
@@ -158,10 +169,11 @@ namespace StarGarden.Items
                 state = State.Touched;
         }
 
-        public void OnEndTouch()
+        public void OnTouchUp(Vector2 pos)
         {
             if (state == State.Dragging)
             {
+                print($"state: {state}, hovering: {hoveringInventory}, invalid: {invalidSpace}");
                 if (hoveringInventory)
                     ReturnToInventory();
                 else if (invalidSpace)
@@ -173,24 +185,30 @@ namespace StarGarden.Items
                 state = State.Idle;
         }
 
-        private void OnHoldTouch()
+        private void OnHoldTouch(Vector2 pos)
         {
             if (state == State.Touched)
                 StartDragging();
         }
 
+        public void OnEndTouch() { }
+
         public void OnTap() { }
+
+        private void SetTapPerformed(Vector2 pos) => tapPerformedLastFrame = true;
 
         private void OnEnable()
         {
-            InputManager.Main.OnTouchHold += pos => OnHoldTouch();
-            InputManager.Main.OnTouchDown += pos => tapPerformedLastFrame = true;
+            InputManager.Main.OnTouchHold += OnHoldTouch;
+            InputManager.Main.OnTouchDown += SetTapPerformed;
+            InputManager.Main.OnTouchUp += OnTouchUp;
         }
 
         private void OnDisable()
         {
-            InputManager.Main.OnTouchDown -= pos => OnHoldTouch();
-            InputManager.Main.OnTouchDown -= pos => tapPerformedLastFrame = true;
+            InputManager.Main.OnTouchHold -= OnHoldTouch;
+            InputManager.Main.OnTouchDown -= SetTapPerformed;
+            InputManager.Main.OnTouchUp -= OnTouchUp;
         }
 
         public enum State

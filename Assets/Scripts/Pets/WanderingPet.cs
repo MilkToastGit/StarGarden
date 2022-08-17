@@ -9,7 +9,6 @@ namespace StarGarden.Pets
     public class WanderingPet : MonoBehaviour, Interactable
     {
         public Pet Pet;
-        public bool flip;
         [SerializeField] private Transform hatParentBase;
         [SerializeField] private float speed;
 
@@ -116,9 +115,10 @@ namespace StarGarden.Pets
         {
             sprite.flipX = flip;
 
-            Vector2 scale = hatParentBase.localScale;
+            Vector3 scale = hatParentBase.localScale;
             scale.x = Mathf.Abs(scale.x) * (flip ? -1 : 1);
             hatParentBase.localScale = scale;
+            print(scale);
         }
 
         private void Emote()
@@ -126,18 +126,26 @@ namespace StarGarden.Pets
             GameObject emote;
 
             if (Happiness < 0.33f)
+            {
                 emote = Pet.NegativeEmote;
+                anim.SetInteger("Emote", 0);
+            }
             else if (Happiness < 0.66f)
+            {
                 emote = Pet.NeutralEmote;
+                anim.SetInteger("Emote", 1);
+            }
             else
+            {
                 emote = Pet.PositiveEmote;
+                anim.SetInteger("Emote", 2);
+            }
 
             foreach (Transform t in hatParents)
             {
                 GameObject instance = Instantiate(emote, t);
                 instance.transform.localPosition = Vector3.zero;
                 instance.transform.localRotation = Quaternion.identity;
-                instance.transform.localScale = Vector3.one;
             }
             
             anim.SetTrigger("EmoteTrigger");
@@ -159,8 +167,7 @@ namespace StarGarden.Pets
                 }
 
                 anim.SetBool("Walking", true);
-                if (flip)
-                    FlipX(direction.x > 0);
+                FlipX(direction.x > 0);
 
                 float distanceTravelled = 0;
                 while (distanceTravelled < maxDistance)
@@ -192,7 +199,6 @@ namespace StarGarden.Pets
             StopAllCoroutines();
             anim.SetBool("Walking", false);
             anim.ResetTrigger("EmoteTrigger");
-            anim.ResetTrigger("UnemoteTrigger");
         }
 
         public void OnTap()

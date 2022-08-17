@@ -95,7 +95,7 @@ namespace StarGarden.Items
 
                 HatInstances instance = AllItems[1][i] as HatInstances;
                 foreach (int pet in hatData.EquippedInstances)
-                    instance.Equip(Pets.PetManager.Main.AllPets[pet].WanderingPet);
+                    instance.Equip(Pets.PetManager.Main.AllPets[pet].WanderingPet, false);
 
                 //print(AllItems[1][i].Item.Name);
             }

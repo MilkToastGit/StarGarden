@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace StarGarden.Core
@@ -25,60 +26,41 @@ namespace StarGarden.Core
 
         public void LateInitialise() { }
 
-        private void OnStartTouch()
+        private void OnStartTouch(Vector2 pos)
         {
             if (UI.UIManager.Main.PanelShowing) return;
-            //foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
-            //{
-            //    if (collider.TryGetComponent(out Interactable t))
-            //    {
-            //        held.Add(t);
-            //        t.OnStartTouch();
-            //        if (!t.Passthrough)
-            //            return;
-            //    }
-            //}
 
             Collider2D[] hits = Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition);
             List<Interactable> interactables = new List<Interactable>();
 
             foreach (Collider2D hit in hits)
-            {
                 if (hit.TryGetComponent(out Interactable t))
-                {
-                    print (hit.name);
-                    for (int i = 0; i < interactables.Count; i++)
-                    {
-                        if (t.Layer >= interactables[i].Layer)
-                        {
-                            interactables.Insert(i, t);
-                            break;
-                        }
-                    }
                     interactables.Add(t);
-                }
-            }
+
+            interactables.Sort(new InteractableComparer());
+
+            foreach (Interactable t in interactables)
+                print(t.Layer);
 
             foreach (Interactable t in interactables)
             {
-                print(t.Layer);
                 held.Add(t);
                 t.OnStartTouch();
-                //if (!t.Passthrough)
-                //    return;
+                if (!t.Passthrough)
+                    return;
             }
 
             OnPassthrough?.Invoke();
         }
 
-        private void OnEndTouch()
+        private void OnEndTouch(Vector2 pos)
         {
             foreach (Interactable t in held)
                 t.OnEndTouch();
             held.Clear();
         }
 
-        private void OnTap()
+        private void OnTap(Vector2 pos)
         {
             if (UI.UIManager.Main.PanelShowing) return;
             foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
@@ -96,17 +78,25 @@ namespace StarGarden.Core
         private void OnEnable()
         {
             if (!InputManager.Main) return;
-            InputManager.Main.OnTouchDown += pos => OnStartTouch();
-            InputManager.Main.OnTouchUp += pos => OnEndTouch();
-            InputManager.Main.OnTapCompleted += pos => OnTap();
+            InputManager.Main.OnTouchDown += OnStartTouch;
+            InputManager.Main.OnTouchUp += OnEndTouch;
+            InputManager.Main.OnTapCompleted += OnTap;
         }
 
         private void OnDisable()
         {
             if (!InputManager.Main) return;
-            InputManager.Main.OnTouchDown -= pos => OnStartTouch();
-            InputManager.Main.OnTouchUp -= pos => OnEndTouch();
-            InputManager.Main.OnTapCompleted += pos => OnTap();
+            InputManager.Main.OnTouchDown -= OnStartTouch;
+            InputManager.Main.OnTouchUp -= OnEndTouch;
+            InputManager.Main.OnTapCompleted += OnTap;
+        }
+    }
+
+    class InteractableComparer : IComparer<Interactable>
+    {
+        int IComparer<Interactable>.Compare(Interactable x, Interactable y)
+        {
+            return Comparer.Default.Compare(y.Layer, x.Layer);
         }
     }
 }

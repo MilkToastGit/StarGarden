@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Services.Core;
+using Unity.Services.Analytics;
 using StarGarden.Items;
 using StarGarden.Pets;
+using StarGarden.Core.SaveData;
 
-namespace StarGarden.Core.SaveData
+namespace StarGarden.Core
 {
     public class GameSetup : MonoBehaviour
     {
@@ -15,10 +18,25 @@ namespace StarGarden.Core.SaveData
 
         private void Awake()
         {
+            SetupAnalyticsServices();
             GetManagers();
             InitialiseAll();
             LoadSave();
             LateInitialiseAll();
+        }
+
+        private async void SetupAnalyticsServices()
+        {
+            try
+            {
+                await UnityServices.InitializeAsync();
+                List<string> consentIdentifiers = await AnalyticsService.Instance.CheckForRequiredConsents();
+                print("Initialised");
+            }
+            catch (ConsentCheckException e)
+            {
+                throw new System.Exception(e.Message);
+            }
         }
 
         private void GetManagers()
