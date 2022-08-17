@@ -6,7 +6,7 @@ namespace StarGarden.Tutorial
 {
     public class Tutorial : MonoBehaviour
     {
-        public bool Completed = false;
+        [HideInInspector] public bool Completed = false;
         public delegate void ActivatedEvent(Tutorial tutorial);
         public event ActivatedEvent OnActivated;
         public delegate void CompletedEvent(Tutorial tutorial);

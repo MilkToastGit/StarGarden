@@ -14,6 +14,9 @@ namespace StarGarden.Tutorial
         public void LateInitialise()
         {
             bool[] completed = SaveDataManager.SaveData.TutorialsCompleted;
+            if (completed == null)
+                completed = new bool[tutorials.Length];
+
             for (int i = 0; i < tutorials.Length; i++)
             {
                 tutorials[i].Completed = completed[i];
