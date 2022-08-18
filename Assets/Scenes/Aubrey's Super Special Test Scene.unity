@@ -14513,6 +14513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226ee38ba2dab364d8f1fc3cd82b5dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseObject: {fileID: 485234320}
 --- !u!198 &1373982220 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4672485104148662364, guid: ae9e1c35931376745a615da9a92459a9, type: 3}
@@ -14973,7 +14974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1584671033}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5, y: -32.5, z: 0}
+  m_LocalPosition: {x: 7.5, y: -30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:

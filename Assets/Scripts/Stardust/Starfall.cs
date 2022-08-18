@@ -11,6 +11,8 @@ namespace StarGarden.Stardust
 
         public delegate void CollectedEvent(Starfall starfall);
         public event CollectedEvent OnCollected;
+        public delegate void LandedEvent();
+        public event LandedEvent OnLanded;
 
         public bool Passthrough => false;
         public int Layer => (int)InteractableLayer.Starfall;
@@ -58,6 +60,7 @@ namespace StarGarden.Stardust
         {
             if (AutoCollection.Active)
                 Collect();
+            OnLanded?.Invoke();
         }
 
         public void Collect()

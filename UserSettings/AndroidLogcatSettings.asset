@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "09141JEC203049",
+    "m_SelectedDeviceId": "RF8M717FS6V",
     "m_SelectedPackage": {
-        "deviceId": "09141JEC203049",
+        "deviceId": "RF8M717FS6V",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 26516,
+        "processId": 15292,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -312,6 +312,18 @@
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 26516,
+            "exited": false
+        },
+        {
+            "deviceId": "09141JEC203049",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 20067,
+            "exited": false
+        },
+        {
+            "deviceId": "RF8M717FS6V",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 15292,
             "exited": false
         }
     ],

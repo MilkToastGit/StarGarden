@@ -21,10 +21,7 @@ namespace StarGarden.Tutorial
             if (!baseObject.activeSelf) return;
 
             if (currentSlide + 1 >= slides.Length)
-            {
-                Hide();
                 return;
-            }
 
             slides[currentSlide].SetActive(false);
             slides[++currentSlide].SetActive(true);
