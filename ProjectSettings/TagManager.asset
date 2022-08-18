@@ -41,6 +41,9 @@ TagManager:
   - name: Background
     uniqueID: 4610689
     locked: 0
+  - name: Back Details
+    uniqueID: 992170917
+    locked: 0
   - name: Islands
     uniqueID: 442561847
     locked: 0
