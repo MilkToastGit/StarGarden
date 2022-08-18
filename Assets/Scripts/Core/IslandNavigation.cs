@@ -10,6 +10,7 @@ namespace StarGarden.Core
         public ParticleSystem cloudsIn, cloudsOut;
         public SpriteRenderer cloudFill;
         public GameObject islandSelect;
+        public GameObject zoomButton;
 
         private bool busyZoomin = false;
         private Camera cam;
@@ -21,6 +22,7 @@ namespace StarGarden.Core
             cam = Camera.main;
             camControl = cam.GetComponent<CameraControl>();
             previewIslands = islandSelect.GetComponentsInChildren<PreviewIsland>();
+            zoomButton.SetActive(false);
         }
 
         public void ZoomOut() { if (!busyZoomin) StartCoroutine(IZoomOut()); }
@@ -29,6 +31,7 @@ namespace StarGarden.Core
             busyZoomin = true;
             camControl.enabled = false;
             cloudsOut.Play();
+            zoomButton.SetActive(false);
 
             float targetScale = zoomedOutSize / zoomedInSize;
             //Vector3 cloudFillStartSize = cloudFill.transform.localScale;
@@ -68,6 +71,7 @@ namespace StarGarden.Core
             busyZoomin = true;
             camControl.enabled = false;
             cloudsIn.Play();
+            zoomButton.SetActive(true);
 
             Vector3 targetPos = IslandManager.Main.Islands[island].Bounds.center;
             targetPos.z = -10;

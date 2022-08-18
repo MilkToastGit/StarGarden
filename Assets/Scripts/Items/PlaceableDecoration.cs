@@ -111,7 +111,7 @@ namespace StarGarden.Items
             if (state != State.Dragging) return;
 
             Vector2 touchPos = InputManager.Main.TouchPosition / new Vector2 (Screen.width, Screen.height);
-            hoveringInventory = touchPos.x > 0.75f && touchPos.y > 0.85f;
+            hoveringInventory = touchPos.x < 0.25f && touchPos.y > 0.85f;
 
             if (hoveringInventory)
             {
