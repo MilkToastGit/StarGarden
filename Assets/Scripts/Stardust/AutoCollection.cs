@@ -24,8 +24,11 @@ namespace StarGarden.Stardust
         public void LateInitialise()
         {
             AllSaveData data = SaveDataManager.SaveData;
-            expiry = data.AutoCollectExpiry; 
-            
+            expiry = data.AutoCollectExpiry;
+
+            if (DateTime.Now > expiry)
+                OnAutoCollectionActivated?.Invoke();
+
             AddIdleStardust();
         }
 
@@ -64,11 +67,9 @@ namespace StarGarden.Stardust
 
         private void AddTime(TimeSpan amount)
         {
-            if (DateTime.Now > expiry)
-            {
-                OnAutoCollectionActivated?.Invoke();
+            bool activated = DateTime.Now > expiry;
+            if (activated)
                 expiry = DateTime.Now;
-            }
 
             //print(DateTime.Now > expiry);
             //print(expiry);
@@ -76,6 +77,9 @@ namespace StarGarden.Stardust
             expiry += amount;
             SaveDataManager.SaveData.AutoCollectExpiry = expiry;
             SaveDataManager.SaveAll();
+
+            if (activated)
+                OnAutoCollectionActivated?.Invoke();
         }
 
         public void Purchase(int rarity)

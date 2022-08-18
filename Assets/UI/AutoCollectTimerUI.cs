@@ -7,13 +7,15 @@ namespace StarGarden.UI
 {
     public class AutoCollectTimerUI : MonoBehaviour
     {
+        public GameObject baseObject;
+
         private IEnumerator TimeUpdater()
         {
             TimeSpan remaining = AutoCollection.Expiry - DateTime.Now;
             while (remaining > TimeSpan.Zero)
             {
                 remaining = AutoCollection.Expiry - DateTime.Now;
-                print(remaining);
+                print("remaining: " + remaining);
 
                 yield return new WaitForSecondsRealtime(1f);
             }
@@ -24,11 +26,12 @@ namespace StarGarden.UI
         private void Activate()
         {
             StartCoroutine(TimeUpdater());
+            baseObject.SetActive(true);
         }
 
         private void Deactivate()
         {
-            
+            baseObject.SetActive(false);
         }
 
         private void OnEnable()
