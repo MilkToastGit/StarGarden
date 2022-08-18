@@ -10,6 +10,9 @@ namespace StarGarden.Core
         public Island ActiveIsland => activeIsland < 0 ? null : islands[activeIsland];
         public Island[] Islands => islands;
 
+        public delegate void ActiveIslandChangedEvent(int island);
+        public event ActiveIslandChangedEvent OnActiveIslandChanged;
+
         [SerializeField] private Stardust.StarfallSpawner starfallSpawner;
         [SerializeField] private LayerMask IslandMask;
         [SerializeField] private Island[] islands;
@@ -98,6 +101,7 @@ namespace StarGarden.Core
             islands[island].IslandObject.SetActive(true);
 
             activeIsland = island;
+            OnActiveIslandChanged?.Invoke(activeIsland);
         }
 
         public void DisableActiveIsland()
@@ -106,6 +110,7 @@ namespace StarGarden.Core
 
             islands[activeIsland].IslandObject.SetActive(false);
             activeIsland = -1;
+            OnActiveIslandChanged?.Invoke(activeIsland);
         }
 
         public void UpdatePreviewIslandStarglow(List<Stardust.Starfall>[] active)

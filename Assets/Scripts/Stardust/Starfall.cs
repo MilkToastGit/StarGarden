@@ -26,6 +26,7 @@ namespace StarGarden.Stardust
         private bool collected = false;
         private int island;
 
+        public void Initialise() => Initialise(false, false);
         public void Initialise(bool instant, bool trailOnly)
         {
             AutoCollection.OnAutoCollectionActivated += Collect;

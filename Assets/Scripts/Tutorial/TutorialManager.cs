@@ -11,30 +11,30 @@ namespace StarGarden.Tutorial
 
         public void Initialise() { }
 
-        public void LateInitialise()
-        {
-            bool[] completed = SaveDataManager.SaveData.TutorialsCompleted;
-            if (completed == null)
-                completed = new bool[tutorials.Length];
+        public void LateInitialise() { }
+        //{
+        //    bool[] completed = SaveDataManager.SaveData.TutorialsCompleted;
+        //    if (completed == null)
+        //        completed = new bool[tutorials.Length];
 
-            for (int i = 0; i < tutorials.Length; i++)
-            {
-                tutorials[i].Completed = completed[i];
-                if (!completed[i])
-                    tutorials[i].OnCompleted += UpdateTutorialSaveData;
-            }
-        }
+        //    for (int i = 0; i < tutorials.Length; i++)
+        //    {
+        //        tutorials[i].Completed = completed[i];
+        //        if (!completed[i])
+        //            tutorials[i].OnCompleted += UpdateTutorialSaveData;
+        //    }
+        //}
 
-        private void UpdateTutorialSaveData(Tutorial tutorial)
-        {
-            bool[] completed = new bool[tutorials.Length];
-            for (int i = 0; i < tutorials.Length; i++)
-                completed[i] = tutorials[i].Completed;
+        //private void UpdateTutorialSaveData(Tutorial tutorial)
+        //{
+        //    bool[] completed = new bool[tutorials.Length];
+        //    for (int i = 0; i < tutorials.Length; i++)
+        //        completed[i] = tutorials[i].Completed;
 
-            SaveDataManager.SaveData.TutorialsCompleted = completed;
-            SaveDataManager.SaveAll();
+        //    SaveDataManager.SaveData.TutorialsCompleted = completed;
+        //    SaveDataManager.SaveAll();
 
-            tutorial.OnCompleted -= UpdateTutorialSaveData;
-        }
+        //    tutorial.OnCompleted -= UpdateTutorialSaveData;
+        //}
     }
 }

@@ -77,9 +77,9 @@ Material:
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SpotRad: 277
-    - _SpotX: 377.8
-    - _SpotY: 1777.3
+    - _SpotRad: 380
+    - _SpotX: 540
+    - _SpotY: 1170
     - _SrcBlend: 1
     - _Stencil: 0
     - _StencilComp: 8

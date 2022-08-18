@@ -8,7 +8,7 @@ namespace StarGarden.Core.SaveData
         public PetSaveData[] PetSaveData;
         public ItemSaveData ItemSaveData;
         public ResourceSaveData ResourceSaveData;
-        public bool[] TutorialsCompleted;
+        public bool TutorialCompleted;
         public Items.DailyOffer[] DailyOfferItems;
         public int[] PickedHorroscopes;
         public DateTime FirstLaunch;
