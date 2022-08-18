@@ -18,10 +18,10 @@ MonoBehaviour:
   SignSprite: {fileID: -2075618128, guid: fe7d48c8c21e7184c84ffc025d79490b, type: 3}
   Prefab: {fileID: 7464248382517352699, guid: 2d7d03d34ccf2da4f8c1852c7a2094ca, type: 3}
   Element: 0
-  NegativeTrait: 
+  NegativeTrait: Optimistic
   NegativeEmote: {fileID: 100002, guid: 42d41d9bd57e4294c95f5be694519fc0, type: 3}
-  NeutralTrait: 
+  NeutralTrait: Impulsive
   NeutralEmote: {fileID: 100000, guid: a58749d031dab254397762f259368626, type: 3}
-  PositiveTrait: 
+  PositiveTrait: Generous
   PositiveEmote: {fileID: 100000, guid: 18204b98237ccb540808f2cd2d78c2c8, type: 3}
   PetIndex: 1
