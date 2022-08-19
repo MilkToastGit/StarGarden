@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using StarGarden.Core;
 using StarGarden.Items;
+using FMODUnity;
 
 namespace StarGarden.LootBoxes
 {
@@ -20,6 +21,12 @@ namespace StarGarden.LootBoxes
         [SerializeField] private GameObject rerollButton;
         private Rarity wishRarity;
         private Item rolledItem;
+        private FMOD.Studio.Bus music;
+
+        private void Awake()
+        {
+            music = RuntimeManager.GetBus("bus:/Music");
+        }
 
         public void MakeWish(int rarity)
         {
@@ -33,6 +40,7 @@ namespace StarGarden.LootBoxes
             puzzleHolder.SetActive(true);
             uiHolder.SetActive(true);
             puzzle.SetPuzzle(() => RollItem());
+            music.setVolume(Core.SaveData.SaveDataManager.SaveData.MusicVolume * 0.1f);
         }
 
         public void RollItem()
@@ -43,6 +51,7 @@ namespace StarGarden.LootBoxes
             rolledItem = ItemPicker.PickItem(ItemPicker.PickItemRarity(wishRarity), rolledItem).Item;
             itemPreview.sprite = rolledItem.Sprite;
             SetBackgroundColour(rolledItem.Rarity);
+            music.setVolume(0f);
         }
 
         public void MakeTutorialWish()
@@ -54,6 +63,7 @@ namespace StarGarden.LootBoxes
             puzzleHolder.SetActive(true);
             uiHolder.SetActive(true);
             puzzle.SetPuzzle(() => RollTutorialItem());
+            music.setVolume(Core.SaveData.SaveDataManager.SaveData.MusicVolume * 0.25f);
         }
 
         public void RollTutorialItem()
@@ -64,6 +74,7 @@ namespace StarGarden.LootBoxes
             rolledItem = tutorialItem;
             itemPreview.sprite = rolledItem.Sprite;
             SetBackgroundColour(Rarity.Common);
+            music.setVolume(0f);
         }
 
         private void SetBackgroundColour(Rarity rarity)
@@ -101,6 +112,11 @@ namespace StarGarden.LootBoxes
             return cost;
         }
 
-        public void CollectItem() => InventoryManager.Main.AddItem(rolledItem);
+        public void CollectItem()
+        { 
+            InventoryManager.Main.AddItem(rolledItem);
+            music.setVolume(Core.SaveData.SaveDataManager.SaveData.MusicVolume);
+        }
+
     }
 }

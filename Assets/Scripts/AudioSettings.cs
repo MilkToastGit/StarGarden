@@ -14,7 +14,11 @@ namespace StarGarden.Core
         FMOD.Studio.Bus Music;
         FMOD.Studio.Bus SFX;
 
-        public void Initialise() { }
+        public void Initialise()
+        {
+            Music = RuntimeManager.GetBus("bus:/Music");
+            SFX = RuntimeManager.GetBus("bus:/SFX");
+        }
 
         public void LateInitialise()
         {
@@ -24,12 +28,6 @@ namespace StarGarden.Core
             SFXSlider.value = SFXVol;
 
             SetVolume();
-        }
-
-        void Awake()
-        {
-            Music = RuntimeManager.GetBus("bus:/Music");
-            SFX = RuntimeManager.GetBus("bus:/SFX");
         }
 
         public void SetVolume()

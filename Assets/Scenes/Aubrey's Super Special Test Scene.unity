@@ -22509,6 +22509,8 @@ GameObject:
   - component: {fileID: 843838978}
   - component: {fileID: 843838977}
   - component: {fileID: 843838976}
+  - component: {fileID: 843838980}
+  - component: {fileID: 843838979}
   m_Layer: 5
   m_Name: StarAnim
   m_TagString: Untagged
@@ -22556,7 +22558,7 @@ VideoPlayer:
   m_AspectRatio: 5
   m_DataSource: 0
   m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
+  m_AudioOutputMode: 0
   m_TargetAudioSources:
   - {fileID: 0}
   m_DirectAudioVolumes:
@@ -22606,6 +22608,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843838974}
   m_CullTransparentMesh: 1
+--- !u!114 &843838979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843838974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c772a1b3fc031bf4eae36c71503a9701, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  video: {fileID: 843838976}
+  sound: {fileID: 843838980}
+--- !u!114 &843838980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843838974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1061493767
+      Data2: 1185107075
+      Data3: 121165214
+      Data4: 1142498044
+    Path: event:/WishOpen
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 1
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &844046993
 GameObject:
   m_ObjectHideFlags: 0
