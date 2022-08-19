@@ -133,6 +133,7 @@ namespace FMODUnity
 
                     try
                     {
+                        RuntimeUtils.EnforceLibraryOrder();
                         #if UNITY_ANDROID && !UNITY_EDITOR
                         // First, obtain the current activity context
                         AndroidJavaObject activity = null;
@@ -152,9 +153,8 @@ namespace FMODUnity
                                 RuntimeUtils.DebugLogWarning("[FMOD] Cannot initialize Java wrapper");
                             }
                         }
-                        #endif
+#endif
 
-                        RuntimeUtils.EnforceLibraryOrder();
                         initResult = instance.Initialize();
                     }
                     catch (Exception e)

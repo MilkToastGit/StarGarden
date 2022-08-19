@@ -71,7 +71,7 @@ namespace StarGarden.Items
             if (!firstPlacement)
                 decorInst.Unplace(lastPlacedPoint, IslandManager.Main.ActiveIsland.Index);
             placingDecoration = false;
-            UI.InventorySack.SetState(false, false);
+            UI.InventorySack.ReturnToInventory();
             Destroy(gameObject);
         }
 

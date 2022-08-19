@@ -15,7 +15,7 @@ namespace StarGarden.UI
         [SerializeField] private Image petImage, hatImage, signImage;
         [SerializeField] private HappinessBar happinessBar;
         [SerializeField] private Sprite defaultHatSprite;
-        [SerializeField] private Transform hatParent;
+        [SerializeField] private FMODUnity.StudioEventEmitter cookieSound;
 
         private PetInstance[] pets => PetManager.Main.AllPets;
         private PetInstance[] activePets => PetManager.Main.AllActivePets;
@@ -128,6 +128,7 @@ namespace StarGarden.UI
             float amount = isCommon ? 0.2f : 0.4f;
             pets[currentPet].WanderingPet.IncreaseHappiness(amount);
             happinessBar.SetHappiness(pets[currentPet].WanderingPet.Happiness);
+            cookieSound.Play();
         }
 
         // Placeholder
