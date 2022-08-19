@@ -30,16 +30,20 @@ namespace StarGarden.UI
 
         private void OnEnable() => UpdateUI();
 
-        public void PurchaseDailyOffer(int offer)
+        public void PurchaseDailyOffer(int offerIndex)
         {
-            if (DailyOfferGenerator.DailyOffers[offer].Purchased) return;
-            if (!ResourcesManager.Main.TryPurchase((Rarity)offer, dailyOfferCost[offer]))
+            if (DailyOfferGenerator.DailyOffers[offerIndex].Purchased) return;
+
+            DailyOffer offer = DailyOfferGenerator.DailyOffers[offerIndex];
+            Rarity rarity = offer.Item.Rarity;
+            print(offer.Item.Rarity);
+            if (!ResourcesManager.Main.TryPurchase(rarity, dailyOfferCost[offerIndex]))
             {
                 print("NOT ENOUGH STARDUST");
                 return;
             }
 
-            DailyOfferGenerator.PurchaseDailyOffer(offer);
+            DailyOfferGenerator.PurchaseDailyOffer(offerIndex);
             UpdateUI();
         }
     }

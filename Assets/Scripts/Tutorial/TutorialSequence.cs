@@ -17,11 +17,6 @@ namespace StarGarden.Tutorial
 
         private int currentTutorial = -1;
 
-
-        private void Awake()
-        {
-            print("HERE");
-        }
         public void Initialise() { }
 
         public void LateInitialise() 
@@ -97,6 +92,14 @@ namespace StarGarden.Tutorial
                     InputManager.Main.OnTapCompleted += OnTapCompleted10;
                     break;
             }
+        }
+
+        public void SkipTutorial()
+        {
+            CompleteCurrent();
+            currentTutorial = 11;
+            SaveDataManager.SaveData.TutorialCompleted = true;
+            SaveDataManager.SaveAll();
         }
 
         private void OnActiveIslandChanged(int island)

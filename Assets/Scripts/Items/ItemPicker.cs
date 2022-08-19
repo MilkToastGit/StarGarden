@@ -6,12 +6,11 @@ namespace StarGarden.Items
 {
     public static class ItemPicker
     {
-        public static ItemInstances PickItem(Rarity wishRarity, Item excludedItem = null)
+        public static ItemInstances PickItem(Rarity rarity, Item excludedItem = null)
         {
             ItemInstances[] pool = InventoryManager.Main.GetAllItemsFromCategory(Random.value > 0.65f ? 1 : 0);
 
-            Rarity itemRarity = PickItemRarity(wishRarity);
-            Debug.Log(itemRarity);
+            Debug.Log(rarity);
             //Debug.Log(itemRarity + " " + pool[0].Item.ItemCategory);
 
             //Vector2Int range = -Vector2Int.one;
@@ -29,16 +28,16 @@ namespace StarGarden.Items
 
             List<int> possibleIndexes = new List<int>();
             for (int i = 0; i < pool.Length; i++)
-                if (pool[i].Item.Rarity == itemRarity && 
-                    (excludedItem != null || pool[i].Item != excludedItem))
+                if (pool[i].Item.Rarity == rarity && 
+                    (excludedItem == null || pool[i].Item != excludedItem))
                     possibleIndexes.Add(i);
 
-            if (possibleIndexes.Count < 0) throw new System.Exception($"Error. No {itemRarity} items in the item pool.");
+            if (possibleIndexes.Count < 0) throw new System.Exception($"Error. No {rarity} items in the item pool.");
 
             return pool[possibleIndexes.Random()];
         }
 
-        private static Rarity PickItemRarity(Rarity wishRarity)
+        public static Rarity PickItemRarity(Rarity wishRarity)
         {
             float value = Random.value;
             switch (wishRarity)

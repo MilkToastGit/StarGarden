@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarGarden.Core;
+using FMODUnity;
 
 namespace StarGarden.Stardust
 {
@@ -21,6 +22,7 @@ namespace StarGarden.Stardust
         [SerializeField] private Transform star;
         [SerializeField] private GameObject commonEffect, rareEffect;
         [SerializeField] private SpriteRenderer shadow;
+        [SerializeField] private StudioEventEmitter starSound, collectSound;
 
         private Rarity rarity;
         private bool collected = false;
@@ -48,6 +50,8 @@ namespace StarGarden.Stardust
                 star.GetComponent<SpriteRenderer>().enabled = false;
                 Destroy(transform.parent.gameObject, 5f);
             }
+            starSound.SetParameter("Rarity", (int)rarity);
+            starSound.Play();
 
             GetComponent<Animator>().SetTrigger("Enter");
         }
@@ -62,6 +66,8 @@ namespace StarGarden.Stardust
             if (AutoCollection.Active)
                 Collect();
             OnLanded?.Invoke();
+            if (starSound.IsPlaying())
+            starSound.SetParameter("Landed", 1);
         }
 
         public void Collect()
@@ -75,6 +81,8 @@ namespace StarGarden.Stardust
             shadow.enabled = false;
             if (rarity == Rarity.Common) commonEffect.SetActive(true);
             else rareEffect.SetActive(true);
+
+            collectSound.Play();
 
             OnCollected?.Invoke(this);
             Destroy(transform.parent.gameObject, 2f);

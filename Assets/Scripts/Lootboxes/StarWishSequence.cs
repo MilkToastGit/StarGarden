@@ -40,7 +40,7 @@ namespace StarGarden.LootBoxes
             puzzleHolder.SetActive(false);
             uiHolder.SetActive(false);
             itemHolder.SetActive(true);
-            rolledItem = ItemPicker.PickItem(wishRarity, rolledItem).Item;
+            rolledItem = ItemPicker.PickItem(ItemPicker.PickItemRarity(wishRarity), rolledItem).Item;
             itemPreview.sprite = rolledItem.Sprite;
             SetBackgroundColour(rolledItem.Rarity);
         }

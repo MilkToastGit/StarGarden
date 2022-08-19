@@ -29,24 +29,28 @@ namespace StarGarden.Items
         {
             dailyOffers = new DailyOffer[]
             {
+                null,
                 new DailyOffer(ItemPicker.PickItem(Rarity.Common).Item),
                 new DailyOffer(ItemPicker.PickItem(Rarity.Rare).Item),
                 new DailyOffer(ItemPicker.PickItem(Rarity.Mythical).Item)
             };
 
+            dailyOffers[0] = new DailyOffer(ItemPicker.PickItem(Rarity.Common, dailyOffers[1].Item).Item);
+
             SaveDataManager.SaveData.DailyOfferItems = dailyOffers;
             SaveDataManager.SaveAll();
         }
 
-        public static DailyOffer GetDailyOfferItem(Rarity rarity) => GetDailyOfferItem((int)rarity);
-        public static DailyOffer GetDailyOfferItem(int rarity)
+        //public static DailyOffer GetDailyOfferItem(Rarity rarity) => GetDailyOfferItem((int)rarity);
+        public static DailyOffer GetDailyOfferItem(int offer)
         {
-            DailyOffer item = dailyOffers[rarity];
+            DailyOffer item = dailyOffers[offer];
             return new DailyOffer(InventoryManager.Main.AllItems[item.Category][item.Index].Item);
         }
 
         public static void PurchaseDailyOffer(int offer)
         {
+            print(dailyOffers[offer].Item);
             InventoryManager.Main.AddItem(dailyOffers[offer].Item);
             dailyOffers[offer].Purchased = true;
             SaveDataManager.SaveData.DailyOfferItems[offer].Purchased = true;

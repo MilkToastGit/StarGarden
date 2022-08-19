@@ -362,6 +362,8 @@ GameObject:
   - component: {fileID: 5951968649967552979}
   - component: {fileID: 3061063443640654346}
   - component: {fileID: 8179218211616729875}
+  - component: {fileID: 344402659745537336}
+  - component: {fileID: 1461436828426288654}
   m_Layer: 0
   m_Name: StarFall
   m_TagString: Untagged
@@ -405,6 +407,8 @@ MonoBehaviour:
   commonEffect: {fileID: 8206006062870470404}
   rareEffect: {fileID: 3872730891248352530}
   shadow: {fileID: 2679658725528011580}
+  starSound: {fileID: 344402659745537336}
+  collectSound: {fileID: 1461436828426288654}
 --- !u!58 &3061063443640654346
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -441,6 +445,66 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &344402659745537336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331397069340647308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -398003756
+      Data2: 1155009947
+      Data3: 1587592635
+      Data4: 964575143
+    Path: event:/Starfall
+  Event: 
+  PlayEvent: 0
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 45
+--- !u!114 &1461436828426288654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331397069340647308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 576850430
+      Data2: 1301132651
+      Data3: -477860988
+      Data4: 1218290905
+    Path: event:/StarfallCollect
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &367725664547728985
 PrefabInstance:
   m_ObjectHideFlags: 0

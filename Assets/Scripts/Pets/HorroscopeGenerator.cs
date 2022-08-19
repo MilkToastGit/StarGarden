@@ -24,7 +24,7 @@ namespace StarGarden.Pets
                 SaveDataManager.LastSessionSaveDate.Month,
                 SaveDataManager.LastSessionSaveDate.Day);
 
-            if (SaveDataManager.LastSessionSaveDate == default || lastDate != DateTime.Today)
+            if (SaveDataManager.LastSessionSaveDate == default || serialisedHorroscopes == default || lastDate != DateTime.Today)
                 PickHorroscopes();
             else
                 pickedHorroscopes = SaveDataManager.SaveData.PickedHorroscopes;

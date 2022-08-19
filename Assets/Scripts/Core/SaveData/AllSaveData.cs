@@ -16,6 +16,8 @@ namespace StarGarden.Core.SaveData
         public DateTime LastSave;
         public DateTime AutoCollectExpiry;
         public TimeSpan LastAutoCollectSpan;
+        public float MusicVolume = 0.8f;
+        public float SFXVolume = 0.8f;
         public string LastSaveVersion;
 
         public AllSaveData() { }
