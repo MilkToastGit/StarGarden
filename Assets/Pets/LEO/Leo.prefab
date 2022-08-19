@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8888112827561333911}
   - component: {fileID: 8888112827561333909}
   - component: {fileID: 8888112827561333913}
-  - component: {fileID: 8888112827561333910}
+  - component: {fileID: 3252636109710318117}
   m_Layer: 0
   m_Name: Leo
   m_TagString: Untagged
@@ -100,10 +100,11 @@ MonoBehaviour:
   Pet: {fileID: 11400000, guid: 9adaa61f6272afd4b8b876ff26688007, type: 2}
   hatParentBase: {fileID: 8888112828897297920}
   speed: 1
+  petSound: {fileID: -5610552721797891044, guid: f65abf7620ff95044905977cbe9e5649, type: 3}
   DefaultHatPositions: []
   DefaultHatRotations: []
   DefaultHatScales: []
---- !u!114 &8888112827561333910
+--- !u!114 &3252636109710318117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,23 +113,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8888112827561333915}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fbefc1ad9d52db4e86861bac6cfd624, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hatParentBase: {fileID: 8888112828897297920}
-  sprites:
-  - Sprite: {fileID: 21300000, guid: 3d75c10511e4bf34caa9c1187c3a07d1, type: 3}
-    LocalHatPositions:
-    - {x: -0.252, y: 0.914}
-  - Sprite: {fileID: 21300000, guid: 02bc7d46ad8a75540ba99ab57018e2b0, type: 3}
-    LocalHatPositions:
-    - {x: -0.156, y: 0.86}
-  - Sprite: {fileID: 21300000, guid: c3022b326dd9d6e4f98ad94a74397806, type: 3}
-    LocalHatPositions:
-    - {x: -0.173, y: 0.914}
-  - Sprite: {fileID: 21300000, guid: 29c16246703a2a448a59adf5e737a567, type: 3}
-    LocalHatPositions:
-    - {x: -0.14, y: 0.918}
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2073603794
+      Data2: 1266059351
+      Data3: 1160880520
+      Data4: 1769602178
+    Path: event:/Leo
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &8888112828243894135
 GameObject:
   m_ObjectHideFlags: 0

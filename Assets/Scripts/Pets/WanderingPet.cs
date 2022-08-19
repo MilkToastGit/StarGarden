@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using StarGarden.Core;
 using StarGarden.Items;
+using FMODUnity;
 
 namespace StarGarden.Pets
 {
@@ -11,6 +12,7 @@ namespace StarGarden.Pets
         public Pet Pet;
         [SerializeField] private Transform hatParentBase;
         [SerializeField] private float speed;
+        [SerializeField] private StudioEventEmitter petSound;
 
         [HideInInspector] public Vector2[] DefaultHatPositions;
         [HideInInspector] public Quaternion[] DefaultHatRotations;
@@ -149,6 +151,7 @@ namespace StarGarden.Pets
             }
             
             anim.SetTrigger("EmoteTrigger");
+            petSound.Play();
         }
 
         private IEnumerator BehaviourCycle()

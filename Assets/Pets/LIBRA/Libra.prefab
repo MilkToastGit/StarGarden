@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 7464248382517352695}
   - component: {fileID: 7464248382517352693}
   - component: {fileID: 7464248382517352697}
-  - component: {fileID: 7464248382517352694}
+  - component: {fileID: 662161660481294149}
   m_Layer: 0
   m_Name: Libra
   m_TagString: Untagged
@@ -217,10 +217,11 @@ MonoBehaviour:
   Pet: {fileID: 11400000, guid: c2b5e24f52d3ffe408956742d1dc2669, type: 2}
   hatParentBase: {fileID: 7464248381714319968}
   speed: 1
+  petSound: {fileID: -5610552721797891044, guid: f65abf7620ff95044905977cbe9e5649, type: 3}
   DefaultHatPositions: []
   DefaultHatRotations: []
   DefaultHatScales: []
---- !u!114 &7464248382517352694
+--- !u!114 &662161660481294149
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -229,27 +230,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 7464248382517352699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fbefc1ad9d52db4e86861bac6cfd624, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hatParentBase: {fileID: 7464248381714319968}
-  sprites:
-  - Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
-    LocalHatPositions:
-    - {x: -0.338, y: 1.581}
-    - {x: 0.258, y: 1.572}
-  - Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
-    LocalHatPositions:
-    - {x: -0.338, y: 1.581}
-    - {x: 0.258, y: 1.572}
-  - Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
-    LocalHatPositions:
-    - {x: -0.338, y: 1.581}
-    - {x: 0.258, y: 1.572}
-  - Sprite: {fileID: 21300000, guid: 71f35a91a641f464491529cb1f1ecdc8, type: 3}
-    LocalHatPositions:
-    - {x: -0.338, y: 1.581}
-    - {x: 0.258, y: 1.572}
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -929212515
+      Data2: 1244336084
+      Data3: -154131778
+      Data4: -1431883320
+    Path: event:/Libra
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7464248382904079127
 GameObject:
   m_ObjectHideFlags: 0
