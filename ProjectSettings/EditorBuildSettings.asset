@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Aubrey's Super Special Test Scene.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Rhys Probably Need to be Fired.unity
     guid: 09b4ea241ac71f64a86523f19b7c862d
   m_configObjects:

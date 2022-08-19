@@ -85,9 +85,9 @@ namespace StarGarden.Items
                 sprite.color = Color.white;
                 state = State.Idle;
                 sprite.sortingLayerName = "Default";
+                placingDecoration = false;
+                UI.InventorySack.SetState(false, false);
             }
-            placingDecoration = false;
-            UI.InventorySack.SetState(false, false);
         }
 
         private void StartDragging()

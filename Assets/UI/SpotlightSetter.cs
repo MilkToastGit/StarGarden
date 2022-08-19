@@ -4,40 +4,39 @@ using UnityEngine.UI;
 public class SpotlightSetter : MonoBehaviour
 {
     public Camera cam;
-    public Transform spotlightCentre;
+    public Transform centreTransform;
     public float SpotlightRadius;
+    public Vector2 spotlightCentre;
 
-    private Image image;
-    [HideInInspector] public Vector2 centre;
+    [SerializeField] private Image image;
 
     private void SetCentre()
     {
-        if (spotlightCentre == null)
+        if (centreTransform == null)
             return;
         if (cam == null)
             cam = Camera.main;
-        image = GetComponent<Image>();
-        Vector2 pos = spotlightCentre.position;
+        Vector2 pos = centreTransform.position;
         pos.y *= -1;
-        centre = cam.WorldToScreenPoint(pos);
+        spotlightCentre = cam.WorldToScreenPoint(pos);
     }
 
     private void OnEnable()
     {
+        SetCentre();
         SetProperties();
     }
 
     private void OnValidate()
     {
+        SetCentre();
         SetProperties();
     }
 
     public void SetProperties()
     {
-        SetCentre();
-
-        image.material.SetFloat("_SpotX", centre.x);
-        image.material.SetFloat("_SpotY", centre.y);
+        image.material.SetFloat("_SpotX", spotlightCentre.x);
+        image.material.SetFloat("_SpotY", spotlightCentre.y);
         image.material.SetFloat("_SpotRad", SpotlightRadius);
     }
 }

@@ -63,15 +63,25 @@ namespace StarGarden.Core
         private void OnTap(Vector2 pos)
         {
             if (UI.UIManager.Main.PanelShowing) return;
-            foreach (Collider2D collider in Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition))
+
+            Collider2D[] hits = Physics2D.OverlapPointAll(InputManager.Main.WorldTouchPosition);
+            List<Interactable> interactables = new List<Interactable>();
+
+            foreach (Collider2D hit in hits)
+                if (hit.TryGetComponent(out Interactable t))
+                    interactables.Add(t);
+
+            interactables.Sort(new InteractableComparer());
+
+            foreach (Interactable t in interactables)
+                print(t.Layer);
+
+            foreach (Interactable t in interactables)
             {
-                if (collider.TryGetComponent(out Interactable t))
-                {
-                    held.Add(t);
-                    t.OnTap();
-                    if (!t.Passthrough)
-                        return;
-                }
+                held.Add(t);
+                t.OnTap();
+                if (!t.Passthrough)
+                    return;
             }
         }
 

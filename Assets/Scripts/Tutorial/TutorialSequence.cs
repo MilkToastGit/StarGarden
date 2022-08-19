@@ -10,18 +10,32 @@ namespace StarGarden.Tutorial
     public class TutorialSequence : MonoBehaviour, Manager
     {
         public Tutorial[] tutorials;
+        public Pets.PetUnlocker petUnlocker;
         public Stardust.Starfall starfall;
         public UI.UIPanel shopPanel, inventoryPanel, petMenuPanel;
         public Button wishSummonButton, wishCollectButton;
 
         private int currentTutorial = -1;
 
+
+        private void Awake()
+        {
+            print("HERE");
+        }
         public void Initialise() { }
 
         public void LateInitialise() 
         {
+            print($"tutorial complete: {SaveDataManager.SaveData.TutorialCompleted}");
             if (!SaveDataManager.SaveData.TutorialCompleted)
-                NextTutorial();
+                petUnlocker.OnFinalPetUnlocked += OnFinalPetUnlocked;
+        }
+
+        private void OnFinalPetUnlocked()
+        {
+            print("Final pet unlocked");
+            petUnlocker.OnFinalPetUnlocked -= NextTutorial;
+            NextTutorial();
         }
 
         private void NextTutorial()

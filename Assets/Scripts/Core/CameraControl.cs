@@ -16,6 +16,11 @@ namespace StarGarden.Core
         private float camWidth;
         private float xVelocity;
 
+        private bool active = true;
+
+        public void Disable() => active = false;
+        public void Enable() => active = true;
+
         private void Awake()
         {
             camWidth = GetComponent<IslandNavigation>().zoomedInSize;
@@ -36,7 +41,7 @@ namespace StarGarden.Core
 
         private void Update()
         {
-            if (UI.UIManager.Main.PanelShowing) return;
+            if (!active || UI.UIManager.Main.PanelShowing) return;
 
             if (Items.PlaceableDecoration.placingDecoration)
             {
@@ -60,7 +65,7 @@ namespace StarGarden.Core
 
         private void OnTouchDrag(Vector2 position)
         {
-            if (Items.PlaceableDecoration.placingDecoration) return;
+            if (!active || Items.PlaceableDecoration.placingDecoration) return;
 
             startTouchX = position.x;
             startCamX = transform.position.x;

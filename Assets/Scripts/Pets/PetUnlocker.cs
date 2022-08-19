@@ -9,6 +9,9 @@ namespace StarGarden.Pets
 {
     public class PetUnlocker : MonoBehaviour, Manager
     {
+        public delegate void FinalPetUnlockedEvent();
+        public FinalPetUnlockedEvent OnFinalPetUnlocked;
+
         [SerializeField] private Button PetUnlockCloseButton;
 
         private Queue<Starsign> petsToUnlock = new Queue<Starsign>();
@@ -25,6 +28,8 @@ namespace StarGarden.Pets
             GetPetsToUnlock();
             if (petsToUnlock.Count > 0)
                 UnlockNextPet();
+            else
+                OnFinalPetUnlocked?.Invoke();
         }
 
         private void GetPetsToUnlock()
@@ -46,7 +51,16 @@ namespace StarGarden.Pets
             if (petsToUnlock.Count > 0)
                 PetUnlockCloseButton.onClick.AddListener(UnlockNextPet);
             else
+            {
                 PetUnlockCloseButton.onClick.RemoveListener(UnlockNextPet);
+                PetUnlockCloseButton.onClick.AddListener(FinalPetCollected);
+            }
+        }
+
+        private void FinalPetCollected()
+        {
+            OnFinalPetUnlocked?.Invoke();
+            PetUnlockCloseButton.onClick.RemoveListener(FinalPetCollected);
         }
 
         //public void UnlockBirthPet()

@@ -12,6 +12,7 @@ namespace StarGarden.LootBoxes
         public GameObject uiHolder, puzzleHolder, itemHolder;
         public ConstellationPuzzle puzzle;
         public int commonCost, rareCost, mythicalCost;
+        public Item tutorialItem;
 
         public Image itemPreview;
         public Image itemBackground;
@@ -24,19 +25,8 @@ namespace StarGarden.LootBoxes
         {
             wishRarity = (Rarity)rarity;
             rolledItem = null;
-            int cost = 0;
 
-            switch (rarity)
-            {
-                case 0: cost = commonCost;
-                    break;
-                case 1: cost = rareCost;
-                    break;
-                case 2: cost = mythicalCost;
-                    break;
-            }
-
-            if (!ResourcesManager.Main.TryPurchase(wishRarity, cost))
+            if (!ResourcesManager.Main.TryPurchase(wishRarity, GetCost(wishRarity)))
                 return;
 
             rerollButton.SetActive(true);
@@ -52,7 +42,33 @@ namespace StarGarden.LootBoxes
             itemHolder.SetActive(true);
             rolledItem = ItemPicker.PickItem(wishRarity, rolledItem).Item;
             itemPreview.sprite = rolledItem.Sprite;
-            switch (rolledItem.Rarity)
+            SetBackgroundColour(rolledItem.Rarity);
+        }
+
+        public void MakeTutorialWish()
+        {
+            wishRarity = tutorialItem.Rarity;
+            ResourcesManager.Main.TryPurchase(wishRarity, GetCost(wishRarity));
+
+            rerollButton.SetActive(false);
+            puzzleHolder.SetActive(true);
+            uiHolder.SetActive(true);
+            puzzle.SetPuzzle(() => RollTutorialItem());
+        }
+
+        public void RollTutorialItem()
+        {
+            puzzleHolder.SetActive(false);
+            uiHolder.SetActive(false);
+            itemHolder.SetActive(true);
+            rolledItem = tutorialItem;
+            itemPreview.sprite = rolledItem.Sprite;
+            SetBackgroundColour(Rarity.Common);
+        }
+
+        private void SetBackgroundColour(Rarity rarity)
+        {
+            switch (rarity)
             {
                 case Rarity.Common:
                     itemBackground.color = new Color(0.96f, 1f, 0.38f);
@@ -64,6 +80,25 @@ namespace StarGarden.LootBoxes
                     itemBackground.color = new Color(0f, 1f, 0.85f);
                     break;
             }
+        }
+
+        private int GetCost(Rarity rarity)
+        {
+            int cost = 0;
+            switch ((int)rarity)
+            {
+                case 0:
+                    cost = commonCost;
+                    break;
+                case 1:
+                    cost = rareCost;
+                    break;
+                case 2:
+                    cost = mythicalCost;
+                    break;
+            }
+
+            return cost;
         }
 
         public void CollectItem() => InventoryManager.Main.AddItem(rolledItem);

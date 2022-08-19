@@ -13,6 +13,7 @@ namespace StarGarden.Items
         [SerializeField] private Decoration[] serialisedAllDecorations;
         [SerializeField] private Hat[] serialisedAllHats;
         [SerializeField] private GameObject decorationPrefab;
+        [SerializeField] private Decoration tutorialDecoration;
 
         public void Initialise()
         {
@@ -53,6 +54,7 @@ namespace StarGarden.Items
         public ItemInstances[] GetAllItemsFromCategory(int category) => AllItems[category];
         public ItemInstances GetItemInstance(Item item) => AllItems[item.ItemCategory][item.ItemIndex];
 
+        public void SpawnTutorialItem() => SpawnItem(AllItems[0][tutorialDecoration.ItemIndex] as DecorationInstances, false);
         public void SpawnItem(DecorationInstances item, bool place, Vector3Int point = default)
         {
             if (place)

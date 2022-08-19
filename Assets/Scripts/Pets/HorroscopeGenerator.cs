@@ -22,9 +22,9 @@ namespace StarGarden.Pets
             DateTime lastDate = new DateTime(
                 SaveDataManager.LastSessionSaveDate.Year,
                 SaveDataManager.LastSessionSaveDate.Month,
-                SaveDataManager.LastSessionSaveDate.Day); 
-            
-            if (lastDate != DateTime.Today)
+                SaveDataManager.LastSessionSaveDate.Day);
+
+            if (SaveDataManager.LastSessionSaveDate == default || lastDate != DateTime.Today)
                 PickHorroscopes();
             else
                 pickedHorroscopes = SaveDataManager.SaveData.PickedHorroscopes;
