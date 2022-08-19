@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 namespace StarGarden.Core
 {
@@ -11,6 +12,7 @@ namespace StarGarden.Core
         public SpriteRenderer cloudFill;
         public GameObject islandSelect;
         public GameObject zoomButton;
+        public StudioEventEmitter music, zoomSound;
 
         private bool busyZoomin = false;
         private Camera cam;
@@ -33,6 +35,8 @@ namespace StarGarden.Core
             cloudsOut.Play();
             zoomButton.SetActive(false);
 
+            zoomSound.Play();
+
             float targetScale = zoomedOutSize / zoomedInSize;
             //Vector3 cloudFillStartSize = cloudFill.transform.localScale;
             Color cloudFillStart = cloudFill.color;
@@ -45,6 +49,8 @@ namespace StarGarden.Core
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
                 float t = elapsed / zoomTime;
+                music.SetParameter("ZoomedOut", t);
+
                 t = t * t;// * (3f - 2f * t);
 
                 cam.orthographicSize = Mathf.Lerp(zoomedInSize, zoomedOutSize, t);
@@ -72,6 +78,9 @@ namespace StarGarden.Core
             camControl.enabled = false;
             cloudsIn.Play();
             zoomButton.SetActive(true);
+            music.SetParameter("ActiveIsland", island);
+
+            zoomSound.Play();
 
             Vector3 targetPos = IslandManager.Main.Islands[island].Bounds.center;
             targetPos.z = -10;
@@ -86,6 +95,8 @@ namespace StarGarden.Core
             for (float elapsed = 0; elapsed < zoomTime; elapsed += Time.deltaTime)
             {
                 float t = elapsed / zoomTime;
+                music.SetParameter("ZoomedOut", 1f - t);
+                
                 t = t * t * (3f - 2f * t);
 
                 cam.orthographicSize = Mathf.Lerp(zoomedOutSize, zoomedInSize, t);
