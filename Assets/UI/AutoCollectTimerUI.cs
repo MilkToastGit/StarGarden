@@ -1,13 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using StarGarden.Stardust;
+using StarGarden.Core.SaveData;
 
 namespace StarGarden.UI
 {
     public class AutoCollectTimerUI : MonoBehaviour
     {
         public GameObject baseObject;
+        public Image timerImage;
 
         private IEnumerator TimeUpdater()
         {
@@ -16,6 +19,8 @@ namespace StarGarden.UI
             {
                 remaining = AutoCollection.Expiry - DateTime.Now;
                 print("remaining: " + remaining);
+                float t = (float)remaining.TotalMinutes / (float)SaveDataManager.SaveData.LastAutoCollectSpan.TotalMinutes;
+                timerImage.fillAmount = t;
 
                 yield return new WaitForSecondsRealtime(1f);
             }

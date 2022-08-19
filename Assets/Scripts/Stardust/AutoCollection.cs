@@ -75,6 +75,11 @@ namespace StarGarden.Stardust
             //print(expiry);
 
             expiry += amount;
+            if (activated)
+                SaveDataManager.SaveData.LastAutoCollectSpan = expiry - DateTime.Now;
+            else
+                SaveDataManager.SaveData.LastAutoCollectSpan += amount;
+
             SaveDataManager.SaveData.AutoCollectExpiry = expiry;
             SaveDataManager.SaveAll();
 

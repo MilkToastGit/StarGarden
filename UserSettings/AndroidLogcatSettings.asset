@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "09141JEC203049",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 12129,
+        "processId": 14200,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -366,6 +366,12 @@
             "deviceId": "09141JEC203049",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 12129,
+            "exited": false
+        },
+        {
+            "deviceId": "09141JEC203049",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 14200,
             "exited": false
         },
         {

@@ -15,6 +15,7 @@ namespace StarGarden.Core.SaveData
         public DateTime UserBirthdate;
         public DateTime LastSave;
         public DateTime AutoCollectExpiry;
+        public TimeSpan LastAutoCollectSpan;
         public string LastSaveVersion;
 
         public AllSaveData() { }
