@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97705d05f4d6e3419ddcb6ae8cce3a8, type: 3}
   m_Name: Campfire
   m_EditorClassIdentifier: 
-  Name: Bear Star
-  Rarity: 2
-  Sprite: {fileID: 21300000, guid: dbf1cfdc175a3dc4abd5ed3360355778, type: 3}
-  Prefab: {fileID: 7231205281149985725, guid: 76edf2c552081484f85270376d6776c4, type: 3}
+  Name: Campfire
+  Rarity: 0
+  Sprite: {fileID: 21300000, guid: 867d129b3a2cd224db737502f9e2f330, type: 3}
+  Prefab: {fileID: 7231205281149985725, guid: 1021ee622cb764a41bb7e0668e306cb1, type: 3}
   ItemIndex: 2
-  Size: {x: 3, y: 1}
+  Size: {x: 3, y: 4}
   Element: 0

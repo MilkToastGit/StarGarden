@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5533719
 Transform:
   m_ObjectHideFlags: 0
@@ -733,6 +733,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85b48243f7feccd419c7b631197d1979, type: 2}
   - {fileID: 11400000, guid: a2e3ceabee376d14b97705e966d54e17, type: 2}
   decorationPrefab: {fileID: 3879647180055823420, guid: c7abf155b4a8b8a4f98d3ee9bfe27d3c, type: 3}
+  tutorialDecoration: {fileID: 0}
 --- !u!4 &163626003
 Transform:
   m_ObjectHideFlags: 0
@@ -15713,7 +15714,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &348254702
 Transform:
   m_ObjectHideFlags: 0
@@ -21042,6 +21043,9 @@ MonoBehaviour:
   cloudsOut: {fileID: 1015801671}
   cloudFill: {fileID: 1675708768}
   islandSelect: {fileID: 5533718}
+  zoomButton: {fileID: 0}
+  music: {fileID: 0}
+  zoomSound: {fileID: 0}
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21066,6 +21070,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226ee38ba2dab364d8f1fc3cd82b5dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseObject: {fileID: 0}
+  timerImage: {fileID: 0}
 --- !u!1 &541347858
 GameObject:
   m_ObjectHideFlags: 0
@@ -21484,7 +21490,7 @@ RectTransform:
   - {fileID: 892360211}
   - {fileID: 72679926}
   m_Father: {fileID: 420057204}
-  m_RootOrder: 9
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -27396,6 +27402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e027fb9a9ef9c73409d783fbbf6360e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starfallSpawner: {fileID: 0}
   IslandMask:
     serializedVersion: 2
     m_Bits: 8
@@ -38913,12 +38920,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1948878856034378136, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 36.654053
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948878856034378136, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -45
       objectReference: {fileID: 0}
     - target: {fileID: 1948878856034378137, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1948878856054047661, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -27.86621
       objectReference: {fileID: 0}
     - target: {fileID: 1948878856054047662, guid: 21a0b97772335614dbe7c61f81c95cdd, type: 3}
       propertyPath: m_IsActive
@@ -44261,6 +44276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1250796709}
   - component: {fileID: 1250796710}
+  - component: {fileID: 1250796711}
   m_Layer: 0
   m_Name: Water_Island
   m_TagString: Untagged
@@ -44324,7 +44340,7 @@ SpriteRenderer:
   m_SortingLayerID: 442561847
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d459f6e54cf4bc44e8c6b03c98c4244c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f18ec2a88d6eca14db9d4f39321bb956, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -44335,6 +44351,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1250796711
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250796708}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c9c999318c037547ae3477cfdaeabc4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1256983693
 GameObject:
   m_ObjectHideFlags: 0
@@ -75587,6 +75623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d6eb52c38ca13c4ca469850dddca511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serialisedSackSound: {fileID: 0}
 --- !u!1 &1936957974
 GameObject:
   m_ObjectHideFlags: 0
