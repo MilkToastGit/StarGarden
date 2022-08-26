@@ -32,11 +32,9 @@ namespace StarGarden.Tutorial
 
             IslandManager.Main.OnActiveIslandChanged += EnableIslandColliders;
 
-            //button.transform.position = islandPos;
             Vector2 islandPos = island.IslandNavigationObject.transform.position;
             islandPos = cam.WorldToScreenPoint(islandPos);
             islandPos.y = Screen.height - islandPos.y;
-            //spotlightCentre.position = island.IslandNavigationObject.transform.position;
             spotlightSetter.spotlightCentre = islandPos;
             spotlightSetter.SetProperties();
         }

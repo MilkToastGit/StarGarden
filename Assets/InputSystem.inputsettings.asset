@@ -26,7 +26,7 @@ MonoBehaviour:
   m_DefaultTapTime: 0.3
   m_DefaultSlowTapTime: 0.5
   m_DefaultHoldTime: 0.35
-  m_TapRadius: 5
+  m_TapRadius: 10
   m_MultiTapDelayTime: 0.75
   m_DisableRedundantEventsMerging: 0
   m_iOSSettings:

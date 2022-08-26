@@ -11,16 +11,33 @@ public class PlaySoundWithVideo : MonoBehaviour
 
     private void OnEnable()
     {
-        video.started += Play;
+        video.prepareCompleted += PrepareCompleted;
+        video.started += Started;
+        video.errorReceived += ErrorReceived;
+        video.Prepare();
     }
+
+    private void PrepareCompleted(VideoPlayer source)
+    {
+        video.Play();
+    }
+
+    private void Started(VideoPlayer source)
+    {
+        sound.Play();
+    }
+
+    private void ErrorReceived(VideoPlayer source, string message)
+    {
+        print(message);
+        Handheld.PlayFullScreenMovie("StreamingAssets/StarGardenGacha.mp4");
+    }
+
 
     private void OnDisable()
     {
-        video.started -= Play;
-    }
-
-    private void Play(VideoPlayer source)
-    {
-        sound.Play();
+        video.prepareCompleted -= PrepareCompleted;
+        video.started -= Started;
+        video.errorReceived -= ErrorReceived;
     }
 }

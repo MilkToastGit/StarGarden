@@ -34,20 +34,20 @@ namespace StarGarden.Pets
 
         private void GetPetsToUnlock()
         {
-            //Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
-            //Starsign currentStarsign = Zodiac.GetStarsignFromDate(System.DateTime.Today);
-            //if (currentStarsign == userStarsign)
-            //    currentStarsign = Zodiac.Zodiacs[F.Wrap((int)currentStarsign - 1, 0, Zodiac.Zodiacs.Length)].Starsign;
+            Starsign userStarsign = Zodiac.GetStarsignFromDate(SaveDataManager.SaveData.UserBirthdate);
+            Starsign currentStarsign = Zodiac.GetStarsignFromDate(System.DateTime.Today);
+            if (currentStarsign == userStarsign)
+                currentStarsign = Zodiac.Zodiacs[F.Wrap((int)currentStarsign - 1, 0, Zodiac.Zodiacs.Length)].Starsign;
 
-            //if (!PetManager.Main.GetPetFromStarsign(userStarsign).Obtained)
-            //    petsToUnlock.Enqueue(userStarsign);
-            //if (!PetManager.Main.GetPetFromStarsign(currentStarsign).Obtained)
-            //    petsToUnlock.Enqueue(currentStarsign);
+            if (!PetManager.Main.GetPetFromStarsign(userStarsign).Obtained)
+                petsToUnlock.Enqueue(userStarsign);
+            if (!PetManager.Main.GetPetFromStarsign(currentStarsign).Obtained)
+                petsToUnlock.Enqueue(currentStarsign);
 
             // ** SHOWCASE BUILD **
-            foreach (Zodiac zodiac in Zodiac.Zodiacs)
-                if (!PetManager.Main.GetPetFromStarsign(zodiac.Starsign).Obtained)
-                    petsToUnlock.Enqueue(zodiac.Starsign);
+            //foreach (Zodiac zodiac in Zodiac.Zodiacs)
+            //    if (!PetManager.Main.GetPetFromStarsign(zodiac.Starsign).Obtained)
+            //        petsToUnlock.Enqueue(zodiac.Starsign);
         }
 
         private void UnlockNextPet()
