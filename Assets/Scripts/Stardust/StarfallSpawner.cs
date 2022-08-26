@@ -39,6 +39,8 @@ namespace StarGarden.Stardust
 
             for (int i = 0; i < maxSpawnAmount * timeMult; i++)
                 SpawnStarfall(true);
+
+            OnActiveStarfallsChanged?.Invoke(activeStarfalls);
         }
 
         private void Invoke() => Invoke("SpawnStarfallRepeating", Random.Range(SecondPerStarfallRange.x, SecondPerStarfallRange.y));
